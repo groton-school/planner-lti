@@ -4,7 +4,6 @@ import { Core } from '@battis/qui-cli.core';
 import { Log } from '@battis/qui-cli.log';
 import { Root } from '@battis/qui-cli.root';
 import { Shell } from '@battis/qui-cli.shell';
-import { Validators } from '@battis/qui-cli.validators';
 import input from '@inquirer/input';
 import path from 'node:path';
 import open from 'open';

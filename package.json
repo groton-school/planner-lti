@@ -22,7 +22,6 @@
     "@battis/qui-cli.log": "^2.1.0",
     "@battis/qui-cli.root": "^2.0.2",
     "@battis/qui-cli.shell": "^2.0.2",
-    "@battis/qui-cli.validators": "^2.0.1",
     "@battis/webpack": "^2.0.5",
     "@inquirer/input": "^4.1.9",
     "move-file-cli": "^3.0.0",
