@@ -26,6 +26,7 @@
     "groton-school/slim-lti-infrastructure-gae": "^1.0",
     "groton-school/slim-lti-shim": "^1.0",
     "monolog/monolog": "^2.9",
+    "odan/session": "^6.3",
     "php-di/php-di": "^6.4",
     "slim/php-view": "^3.4",
     "slim/psr7": "^1.6",

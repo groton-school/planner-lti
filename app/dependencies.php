@@ -18,6 +18,9 @@ use GrotonSchool\Slim\LTI\Infrastructure\CookieInterface;
 use GrotonSchool\Slim\LTI\Infrastructure\DatabaseInterface;
 use GrotonSchool\Slim\LTI\Infrastructure\GAE\Cache;
 use GrotonSchool\Slim\LTI\Infrastructure\GAE\Database;
+use Odan\Session\PhpSession;
+use Odan\Session\SessionInterface;
+use Odan\Session\SessionManagerInterface;
 use Packback\Lti1p3\Interfaces\ICache;
 use Packback\Lti1p3\Interfaces\ICookie;
 use Packback\Lti1p3\Interfaces\IDatabase;
@@ -67,6 +70,12 @@ return function (ContainerBuilder $containerBuilder) {
         * registration) to an endpoint handled by
         * GrotonSchool\Slim\LTI\Action\RegistrationCompleteAction
         */
-        RegistrationConfigureActionInterface::class => DI\autowire(RegistrationConfigurePassthruAction::class)
+        RegistrationConfigureActionInterface::class => DI\autowire(RegistrationConfigurePassthruAction::class),
+
+        SessionManagerInterface::class => DI\get(SessionInterface::class),
+        SessionInterface::class => function (ContainerInterface $container) {
+            $options = $container->get(SettingsInterface::class)->get(SessionInterface::class);
+            return new PhpSession($options);
+        }
     ]);
 };
