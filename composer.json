@@ -23,6 +23,7 @@
     "php": "^7.4 || ^8.0",
     "ext-json": "*",
     "battis/lazy-secrets": "^1.1",
+    "google/cloud-firestore": "^1.50",
     "groton-school/slim-gae-shim": "^1.0",
     "groton-school/slim-lti-infrastructure-gae": "^1.0",
     "groton-school/slim-lti-shim": "^1.0",
