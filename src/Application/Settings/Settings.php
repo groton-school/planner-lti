@@ -14,6 +14,7 @@ class Settings implements SettingsInterface
     public const TOOL_REGISTRATION = 'TOOL_REGISTRATION';
     public const SCOPES = 'SCOPES';
     public const CACHE_DURATION = 'CACHE_DURATION';
+    public const REDIRECT_URI = 'REDIRECT_URI';
 
     private array $settings;
 
@@ -66,5 +67,10 @@ class Settings implements SettingsInterface
     public function getDuration(): int
     {
         return $this->settings[self::CACHE_DURATION];
+    }
+
+    public function getOAuth2RedirectUri(): string
+    {
+        return $this->settings[self::REDIRECT_URI];
     }
 }
