@@ -23,3 +23,6 @@ composer.lock
 !.env.example
 # Node
 /node_modules/
+# Webpack
+/public/
+/templates/ui.php
