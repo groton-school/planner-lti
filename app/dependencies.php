@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Application\Actions\OAuth2;
 use App\Application\Handlers\LaunchHandler;
 use App\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
@@ -44,6 +45,7 @@ return function (ContainerBuilder $containerBuilder) {
         GAE\SettingsInterface::class => DI\get(SettingsInterface::class),
         LTI\SettingsInterface::class => DI\get(SettingsInterface::class),
         Infrastructure\GAE\SettingsInterface::class => DI\get(SettingsInterface::class),
+        OAuth2\SettingsInterface::class => DI\get(SettingsInterface::class),
 
         // autowire packbackbooks/lti-1p3-tool implementations
         ILtiServiceConnector::class => DI\autowire(LtiServiceConnector::class),
