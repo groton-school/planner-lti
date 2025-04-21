@@ -4,54 +4,56 @@ declare(strict_types=1);
 
 namespace App\Domain\User;
 
-use JsonSerializable;
+use League\OAuth2\Client\Token\AccessToken;
 
-class User implements JsonSerializable
+class User
 {
-    private ?int $id;
+    private string $locator;
+    private array $data;
+    private bool $dirty = false;
 
-    private string $username;
-
-    private string $firstName;
-
-    private string $lastName;
-
-    public function __construct(?int $id, string $username, string $firstName, string $lastName)
+    public function __construct(string $locator, array $data,)
     {
-        $this->id = $id;
-        $this->username = strtolower($username);
-        $this->firstName = ucfirst($firstName);
-        $this->lastName = ucfirst($lastName);
+        $this->locator = $locator;
+        $this->data = $data;
     }
 
-    public function getId(): ?int
+    public function getLocator()
     {
-        return $this->id;
+        return $this->locator;
     }
 
-    public function getUsername(): string
+    public function getId()
     {
-        return $this->username;
+        return $this->data['id'];
     }
 
-    public function getFirstName(): string
+    public function getTokens()
     {
-        return $this->firstName;
+        return new AccessToken($this->data['tokens']);
     }
 
-    public function getLastName(): string
+    public function setTokens(AccessToken $tokens)
     {
-        return $this->lastName;
+        if (!$tokens->getRefreshToken() && $this->getTokens()->getRefreshToken()) {
+            $tokens->setRefreshToken($this->getTokens()->getRefreshToken());
+        }
+        $this->data['tokens'] = $tokens->jsonSerialize();
+        $this->dirty = true;
     }
 
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize(): array
+    public function getData()
     {
-        return [
-            'id' => $this->id,
-            'username' => $this->username,
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
-        ];
+        return $this->data;
+    }
+
+    public function isDirty()
+    {
+        return $this->dirty;
+    }
+
+    public function setDirty(bool $dirty)
+    {
+        $this->dirty = $dirty;
     }
 }
