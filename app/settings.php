@@ -12,7 +12,7 @@ return function (ContainerBuilder $containerBuilder) {
     // Global Settings Object
     $containerBuilder->addDefinitions([
         SettingsInterface::class => function () {
-            $TOOL_NAME = 'slim-lti-gae-skeleton';
+            $TOOL_NAME = 'Planner LTI';
             $PROJECT_URL = 'https://' . getenv('HTTP_HOST');
             $SCOPES = ['https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly'];
             return new Settings([
@@ -43,10 +43,8 @@ return function (ContainerBuilder $containerBuilder) {
                         'messages' => [
                             [
                                 "type" => "LtiResourceLinkRequest",
-                                "label" => $TOOL_NAME,
+                                "label" => "Planner",
                                 "custom_parameters" => [
-                                    "foo" => "bar",
-                                    "context_id" => '$Context.id'
                                 ],
                                 "placements" => ["course_navigation"],
                                 "roles" => [],

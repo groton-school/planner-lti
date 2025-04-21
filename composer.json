@@ -1,28 +1,15 @@
 {
   "name": "groton-school/slim-lti-gae-skeleton",
-  "description": "A Slim Framework skeleton LTI Tool for rapid development on Google App Engine",
+  "description": "A more planner-oriented Canvas calendar view for students",
   "keywords": [
-    "microframework",
-    "rest",
-    "router",
-    "psr7",
-    "google",
-    "gae",
+    "canvas",
+    "calendar",
+    "planner",
     "lti"
   ],
   "homepage": "http://github.com/groton-school/slim-lti-gae-skeleton",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "authors": [
-    {
-      "name": "Josh Lockhart",
-      "email": "info@joshlockhart.com",
-      "homepage": "http://www.joshlockhart.com/"
-    },
-    {
-      "name": "Pierre Berube",
-      "email": "pierre@lgse.com",
-      "homepage": "http://www.lgse.com/"
-    },
     {
       "name": "Seth Battis",
       "email": "sbattis@groton.org",
