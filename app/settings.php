@@ -26,6 +26,7 @@ return function (ContainerBuilder $containerBuilder) {
                 Settings::TOOL_NAME => $TOOL_NAME,
                 Settings::SCOPES => $SCOPES,
                 Settings::CACHE_DURATION => 3600, // seconds
+                Settings::REDIRECT_URI => "{$PROJECT_URL}/login/oauth2/redirect",
                 Settings::TOOL_REGISTRATION => [
                     'application_type' => 'web',
                     'client_name' => $TOOL_NAME,
@@ -43,12 +44,15 @@ return function (ContainerBuilder $containerBuilder) {
                         'messages' => [
                             [
                                 "type" => "LtiResourceLinkRequest",
+                                "icon_uri" => "{$PROJECT_URL}/assets/icon.svg",
                                 "label" => "Planner",
                                 "custom_parameters" => [
+                                    'user_id' => '$Canvas.user.id',
+                                    'prefers_high_contrast' => '$Canvas.user.prefersHighContrast'
                                 ],
-                                "placements" => ["course_navigation"],
+                                "placements" => ["global_navigation"],
                                 "roles" => [],
-                                "target_link_uri" => "{$PROJECT_URL}/lti/launch?placement=course_navigation"
+                                "target_link_uri" => "{$PROJECT_URL}/lti/launch?placement=global_navigation"
                             ]
                         ],
                         "claims" => [

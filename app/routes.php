@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Application\Actions\OAuth2;
 use GrotonSchool\Slim\GAE\Actions\EmptyAction;
 use GrotonSchool\Slim\LTI\Actions\JWKSAction;
 use GrotonSchool\Slim\LTI\Actions\LaunchAction;
@@ -28,5 +29,11 @@ return function (App $app) {
         $lti->get('/jwks', JWKSAction::class);
         $lti->get('/register', RegistrationStartAction::class);
         $lti->post('/login', LoginAction::class);
+    })->add(SessionStartMiddleware::class);
+
+    // OAuth2 authorization for Canvas API
+    $app->group('/login', function (Group $login) {
+        $login->get('/oauth2', OAuth2\Login::class);
+        $login->get('/oauth2/redirect', OAuth2\Redirect::class);
     })->add(SessionStartMiddleware::class);
 };
