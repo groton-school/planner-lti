@@ -1,4 +1,9 @@
+import { Spinner } from './Spinner';
+import './styles.scss';
+
 (async () => {
-  const response = await (await fetch('/api/upcoming_events')).json();
-  console.log(response);
+  const content = document.getElementById('content');
+  if (content) {
+    content.innerHTML = Spinner({ centered: true });
+  }
 })();
