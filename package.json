@@ -5,7 +5,7 @@
     "build": "webpack",
     "deploy": "run-s deploy:*",
     "deploy:build": "run-s build",
-    "deploy:spa-template": "move-file ./public/index.html ./templates/spa.php",
+    "deploy:spa-template": "move-file ./public/index.html ./templates/SPA.php",
     "deploy:gae": "node ./bin/deploy.js -v"
   },
   "dependencies": {

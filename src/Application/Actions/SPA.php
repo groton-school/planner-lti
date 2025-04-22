@@ -8,6 +8,6 @@ class SPA extends AbstractAuthenticatedViewAction
 {
     protected function authenticatedAction(): ResponseInterface
     {
-        return $this->renderView($this->response, 'spa.php');
+        return $this->renderView($this->response, 'SPA.php');
     }
 }

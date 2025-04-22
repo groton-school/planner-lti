@@ -1,9 +1,9 @@
-import bundle from "@battis/webpack";
+import bundle from '@battis/webpack';
 
 export default bundle.fromTS.toSPA({
   root: import.meta.dirname,
-  appName: "Planner",
-  entry: "./src/UI/index.ts",
-  template: "./templates/spa",
-  output: { path: "public" },
+  appName: 'Planner',
+  entry: './src/SPA/index.ts',
+  template: './templates/SPA',
+  output: { path: 'public' }
 });
