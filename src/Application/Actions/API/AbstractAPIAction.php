@@ -1,0 +1,67 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Application\Actions\API;
+
+use App\Application\Actions\AbstractAction;
+use App\Application\Actions\OAuth2\SettingsInterface;
+use App\Application\LoggerTrait;
+use App\Domain\LTI\LaunchDataRepositoryInterface;
+use App\Domain\LTI\LaunchDataTrait;
+use App\Domain\OAuth2\AppCredentialsRepositoryInterface;
+use App\Domain\OAuth2\OAuth2Trait;
+use App\Domain\User\UserRepositoryInterface;
+use App\Domain\User\UsersTrait;
+use GuzzleHttp\Client;
+use Psr\Log\LoggerInterface;
+
+abstract class AbstractAPIAction extends AbstractAction
+{
+    use LoggerTrait, UsersTrait, OAuth2Trait, LaunchDataTrait;
+
+    protected Client $client;
+
+    public function __construct(
+        LaunchDataRepositoryInterface $launchData,
+        UserRepositoryInterface $users,
+        AppCredentialsRepositoryInterface $credentials,
+        SettingsInterface $settings,
+        LoggerInterface $logger
+    ) {
+        $this->initLogger($logger);
+        $this->initLaunchData($launchData);
+        $this->initUsers($launchData, $users);
+        $this->initOAuth2($settings, $credentials, $launchData);
+        $this->client = new Client([
+            'base_uri' => $this->launchData->getLaunchData()->getConsumerInstanceUrl()
+        ]);
+    }
+
+    protected function passThroughAPIRequest(
+        string $method,
+        string $url,
+        array $options = []
+    ) {
+        $user = $this->getCurrentUser();
+        if ($user) {
+            if ($user->getTokens()->hasExpired()) {
+                $user->setTokens($this->canvas->getAccessToken(
+                    'refresh_token',
+                    ['refresh_token' => $user->getTokens()->getRefreshToken()]
+                ));
+                $this->users->saveUser($user);
+                $this->logger->info('Refreshed token for ' . $user->getLocator());
+            }
+            return $this->client->send(
+                $this->canvas->getAuthenticatedRequest(
+                    $method,
+                    $url,
+                    $user->getTokens(),
+                    $options
+                )
+            );
+        }
+        return $this->response->withStatus(401);
+    }
+}

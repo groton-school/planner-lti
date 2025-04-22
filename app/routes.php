@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Application\Actions\API;
 use App\Application\Actions\OAuth2;
 use App\Application\Actions\SPA;
 use GrotonSchool\Slim\GAE\Actions\EmptyAction;
@@ -26,6 +27,11 @@ return function (App $app) {
     $app->group('/login', function (Group $login) {
         $login->get('/oauth2', OAuth2\Login::class);
         $login->get('/oauth2/redirect', OAuth2\Redirect::class);
+    })->add(SessionStartMiddleware::class);
+
+    // api
+    $app->group('/api', function (Group $api) {
+        $api->get('/upcoming_events', API\UpcomingEvents::class);
     })->add(SessionStartMiddleware::class);
 
     // app
