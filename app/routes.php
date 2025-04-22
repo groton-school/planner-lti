@@ -5,10 +5,7 @@ declare(strict_types=1);
 use App\Application\Actions\OAuth2;
 use App\Application\Actions\SPA;
 use GrotonSchool\Slim\GAE\Actions\EmptyAction;
-use GrotonSchool\Slim\LTI\Actions\JWKSAction;
-use GrotonSchool\Slim\LTI\Actions\LaunchAction;
-use GrotonSchool\Slim\LTI\Actions\LoginAction;
-use GrotonSchool\Slim\LTI\Actions\RegistrationStartAction;
+use GrotonSchool\Slim\LTI\Actions as LTI;
 use Odan\Session\Middleware\SessionStartMiddleware;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
@@ -19,10 +16,10 @@ return function (App $app) {
 
     // standard LTI endpoints
     $app->group('/lti', function (Group $lti) {
-        $lti->post('/launch', LaunchAction::class);
-        $lti->get('/jwks', JWKSAction::class);
-        $lti->get('/register', RegistrationStartAction::class);
-        $lti->post('/login', LoginAction::class);
+        $lti->post('/launch', LTI\LaunchAction::class);
+        $lti->get('/jwks', LTI\JWKSAction::class);
+        $lti->get('/register', LTI\RegistrationStartAction::class);
+        $lti->post('/login', LTI\LoginAction::class);
     })->add(SessionStartMiddleware::class);
 
     // OAuth2 authorization for Canvas API
