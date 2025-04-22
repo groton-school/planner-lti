@@ -42,6 +42,11 @@ class LaunchData implements JsonSerializable
         return $this->data[LtiConstants::CUSTOM]['user_id'];
     }
 
+    public function getBrandConfigJSONUrl(): string
+    {
+        return $this->data[LtiConstants::CUSTOM]['brand_config_json_url'];
+    }
+
     public function jsonSerialize(): mixed
     {
         return $this->data;

@@ -31,6 +31,7 @@ return function (App $app) {
 
     // api
     $app->group('/api', function (Group $api) {
+        $api->get('/brand_css', API\BrandCSS::class);
         $api->get('/upcoming_events', API\UpcomingEvents::class);
     })->add(SessionStartMiddleware::class);
 

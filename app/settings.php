@@ -48,6 +48,9 @@ return function (ContainerBuilder $containerBuilder) {
                                 "label" => "Planner",
                                 "custom_parameters" => [
                                     'user_id' => '$Canvas.user.id',
+                                    'brand_config_json_url' => '$com.instructure.brandConfigJSON.url',
+                                    'brand_config_js_url' => '$com.instructure.brandConfigJS.url',
+                                    'common_css_url' => '$Canvas.css.common',
                                     'prefers_high_contrast' => '$Canvas.user.prefersHighContrast'
                                 ],
                                 "placements" => ["global_navigation"],
