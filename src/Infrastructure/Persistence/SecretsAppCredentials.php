@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\Persistence;
 
-use App\Domain\AppCredentials\AppCredentials;
-use App\Domain\AppCredentials\AppCredentialsRepositoryInterface;
+use App\Domain\OAuth2\AppCredentials;
+use App\Domain\OAuth2\AppCredentialsRepositoryInterface;
 use Battis\LazySecrets\Cache;
 
 class SecretsAppCredentials implements AppCredentialsRepositoryInterface

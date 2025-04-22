@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Domain\AppCredentials\AppCredentialsRepositoryInterface;
+use App\Domain\OAuth2\AppCredentialsRepositoryInterface;
 use App\Domain\LTI\LaunchDataRepositoryInterface;
 use App\Domain\User\UserRepositoryInterface;
 use App\Infrastructure\Persistence\FirestoreUserRepository;

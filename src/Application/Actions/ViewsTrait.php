@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Application\Actions;
+
+use Psr\Http\Message\ResponseInterface;
+use Slim\Views\PhpRenderer;
+
+trait ViewsTrait
+{
+    protected PhpRenderer $renderer;
+
+    protected function initViews()
+    {
+        $this->renderer = new PhpRenderer(__DIR__ . '/../../../templates');
+    }
+
+    protected function renderView(ResponseInterface $response, string $templateFileName)
+    {
+        return $this->renderer->render($response, $templateFileName);
+    }
+}

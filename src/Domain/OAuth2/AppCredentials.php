@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\AppCredentials;
+namespace App\Domain\OAuth2;
 
 class AppCredentials
 {

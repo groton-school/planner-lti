@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\OAuth2;
 
-use App\Domain\User\User;
 use Psr\Http\Message\ResponseInterface;
 
 class Redirect extends AbstractOAuth2Action
@@ -27,7 +26,7 @@ class Redirect extends AbstractOAuth2Action
         );
         $user->setTokens($this->canvas->getAccessToken('authorization_code', ['code' => $code]));
         $this->users->saveUser($user);
-        $this->response->getBody()->write('Token acquired');
-        return $this->response;
+        $this->logger->info('Registered ' . $user->getLocator());
+        return $this->response->withAddedHeader('Location', '/');
     }
 }

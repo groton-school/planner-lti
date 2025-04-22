@@ -8,7 +8,6 @@ use Psr\Http\Message\ResponseInterface;
 
 class Login extends AbstractOAuth2Action
 {
-
     protected function action(): ResponseInterface
     {
         $authorizationUrl = $this->canvas->getAuthorizationUrl();

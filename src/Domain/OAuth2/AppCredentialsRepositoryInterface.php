@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\AppCredentials;
+namespace App\Domain\OAuth2;
 
 interface AppCredentialsRepositoryInterface
 {
