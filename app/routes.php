@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Application\Actions\OAuth2;
+use App\Application\Actions\SPA;
 use GrotonSchool\Slim\GAE\Actions\EmptyAction;
 use GrotonSchool\Slim\LTI\Actions\JWKSAction;
 use GrotonSchool\Slim\LTI\Actions\LaunchAction;
@@ -36,4 +37,7 @@ return function (App $app) {
         $login->get('/oauth2', OAuth2\Login::class);
         $login->get('/oauth2/redirect', OAuth2\Redirect::class);
     })->add(SessionStartMiddleware::class);
+
+    // app
+    $app->get('/', SPA::class)->add(SessionStartMiddleware::class);
 };

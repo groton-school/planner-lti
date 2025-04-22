@@ -32,7 +32,7 @@ class LaunchHandler implements LaunchHandlerInterface
         $this->lti->saveLaunchData($lti);
         $user = $this->users->findUser($lti->getConsumerInstanceHostname(), $lti->getUserId());
         if ($user) {
-            return $this->renderer->render($response, 'ui.php');
+            return $response->withAddedHeader('Location', '/');
         } else {
             return $this->renderer->render($response, 'permission.php');
         }

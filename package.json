@@ -5,8 +5,8 @@
     "build": "webpack",
     "deploy": "run-s deploy:*",
     "deploy:build": "run-s build",
-    "deploy:spa-template": "move-file ./public/index.html ./templates/ui.php",
-    "deploy:gae": "node ./bin/deploy.js"
+    "deploy:spa-template": "move-file ./public/index.html ./templates/spa.php",
+    "deploy:gae": "node ./bin/deploy.js -v"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.17",
