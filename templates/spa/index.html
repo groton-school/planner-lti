@@ -11,117 +11,6 @@
       crossorigin="anonymous"
     />
     <link href="/api/brand_css" rel="stylesheet" />
-    <style>
-      .loader-wrapper {
-        position: absolute;
-        top: 38vh;
-        left: 50vh;
-      }
-
-      .loader {
-        color: #aaa;
-        font-size: 10px;
-        width: 1em;
-        height: 1em;
-        border-radius: 50%;
-        position: relative;
-        text-indent: -9999em;
-        animation: mulShdSpin 1.3s infinite linear;
-        transform: translateZ(0);
-      }
-
-      @keyframes mulShdSpin {
-        0%,
-        100% {
-          box-shadow:
-            0 -3em 0 0.2em,
-            2em -2em 0 0em,
-            3em 0 0 -1em,
-            2em 2em 0 -1em,
-            0 3em 0 -1em,
-            -2em 2em 0 -1em,
-            -3em 0 0 -1em,
-            -2em -2em 0 0;
-        }
-        12.5% {
-          box-shadow:
-            0 -3em 0 0,
-            2em -2em 0 0.2em,
-            3em 0 0 0,
-            2em 2em 0 -1em,
-            0 3em 0 -1em,
-            -2em 2em 0 -1em,
-            -3em 0 0 -1em,
-            -2em -2em 0 -1em;
-        }
-        25% {
-          box-shadow:
-            0 -3em 0 -0.5em,
-            2em -2em 0 0,
-            3em 0 0 0.2em,
-            2em 2em 0 0,
-            0 3em 0 -1em,
-            -2em 2em 0 -1em,
-            -3em 0 0 -1em,
-            -2em -2em 0 -1em;
-        }
-        37.5% {
-          box-shadow:
-            0 -3em 0 -1em,
-            2em -2em 0 -1em,
-            3em 0em 0 0,
-            2em 2em 0 0.2em,
-            0 3em 0 0em,
-            -2em 2em 0 -1em,
-            -3em 0em 0 -1em,
-            -2em -2em 0 -1em;
-        }
-        50% {
-          box-shadow:
-            0 -3em 0 -1em,
-            2em -2em 0 -1em,
-            3em 0 0 -1em,
-            2em 2em 0 0em,
-            0 3em 0 0.2em,
-            -2em 2em 0 0,
-            -3em 0em 0 -1em,
-            -2em -2em 0 -1em;
-        }
-        62.5% {
-          box-shadow:
-            0 -3em 0 -1em,
-            2em -2em 0 -1em,
-            3em 0 0 -1em,
-            2em 2em 0 -1em,
-            0 3em 0 0,
-            -2em 2em 0 0.2em,
-            -3em 0 0 0,
-            -2em -2em 0 -1em;
-        }
-        75% {
-          box-shadow:
-            0em -3em 0 -1em,
-            2em -2em 0 -1em,
-            3em 0em 0 -1em,
-            2em 2em 0 -1em,
-            0 3em 0 -1em,
-            -2em 2em 0 0,
-            -3em 0em 0 0.2em,
-            -2em -2em 0 0;
-        }
-        87.5% {
-          box-shadow:
-            0em -3em 0 0,
-            2em -2em 0 -1em,
-            3em 0 0 -1em,
-            2em 2em 0 -1em,
-            0 3em 0 -1em,
-            -2em 2em 0 0,
-            -3em 0em 0 0,
-            -2em -2em 0 0.2em;
-        }
-      }
-    </style>
     <script>
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const consumer_instance_url = '<?= $consumer_instance_url ?>';
@@ -129,9 +18,7 @@
   </head>
   <body>
     <div id="content" class="container">
-      <div class="loader-wrapper">
-        <span class="loader"></span>
-      </div>
+      <progress class="m-5 p-3" style="width: 100%"></progress>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
