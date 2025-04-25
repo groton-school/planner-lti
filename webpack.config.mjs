@@ -5,5 +5,6 @@ export default bundle.fromTS.toSPA({
   appName: 'Planner',
   entry: './src/SPA/index.ts',
   template: './templates/SPA',
+  externals: { bootstrap: 'bootstrap' },
   output: { path: 'public' }
 });

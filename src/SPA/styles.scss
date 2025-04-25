@@ -1,0 +1,13 @@
+.done {
+  text-decoration: line-through !important;
+}
+
+.btn-brand-primary {
+  background: var(--ic-brand-button--primary-bgd);
+  color: var(--ic-brand-button--primary-text);
+}
+
+.btn-brand-secondary {
+  background: var(--ic-brand-button--secondary-bgd);
+  color: var(--ic-brand-button--secondary-text);
+}
