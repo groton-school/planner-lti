@@ -16,8 +16,8 @@ trait ViewsTrait
         $this->renderer = new PhpRenderer(__DIR__ . '/../../../templates');
     }
 
-    protected function renderView(ResponseInterface $response, string $templateFileName)
+    protected function renderView(ResponseInterface $response, string $templateFileName, array $data = [])
     {
-        return $this->renderer->render($response, $templateFileName);
+        return $this->renderer->render($response, $templateFileName, $data);
     }
 }
