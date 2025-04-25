@@ -32,6 +32,19 @@ return function (App $app) {
     // api
     $app->group('/api/v1', function (Group $api) {
         $api->get('/brand/stylesheet', API\Brand\Stylesheet::class);
+        $api->group('/courses', function (Group $courses) {
+            $courses->get('/{course_id}', API\Courses\Get::class);
+            $courses->group('/{course_id}', function (Group $course) {
+                $course->get('/assignments/{assignment_id}', API\Assignments\Get::class);
+            });
+        });
+        $api->group('/planner', function (Group $planner) {
+            $planner->get('/items', API\Planner\ListItems::class);
+        });
+        $api->group('/users/self', function (Group $self) {
+            $self->get('/colors', API\Users\ListCustomColors::class);
+            $self->get('/todo', API\Users\ListTodoItems::class);
+        });
     })->add(SessionStartMiddleware::class);
 
     // app
