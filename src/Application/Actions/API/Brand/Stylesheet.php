@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Actions\API;
+namespace App\Application\Actions\API\Brand;
 
-use Exception;
-use Packback\Lti1p3\LtiConstants;
+use App\Application\Actions\API\AbstractAPIAction;
 use Psr\Http\Message\ResponseInterface;
 
-class BrandCSS extends AbstractAPIAction
+class Stylesheet extends AbstractAPIAction
 {
     protected function action(): ResponseInterface
     {

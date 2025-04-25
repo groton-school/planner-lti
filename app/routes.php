@@ -30,9 +30,8 @@ return function (App $app) {
     })->add(SessionStartMiddleware::class);
 
     // api
-    $app->group('/api', function (Group $api) {
-        $api->get('/brand_css', API\BrandCSS::class);
-        $api->get('/upcoming_events', API\UpcomingEvents::class);
+    $app->group('/api/v1', function (Group $api) {
+        $api->get('/brand/stylesheet', API\Brand\Stylesheet::class);
     })->add(SessionStartMiddleware::class);
 
     // app
