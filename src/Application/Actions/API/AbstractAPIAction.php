@@ -38,7 +38,7 @@ abstract class AbstractAPIAction extends AbstractAction
         ]);
     }
 
-    protected function passThroughAPIRequest(
+    protected function proxyRequest(
         string $method,
         string $url,
         array $options = []
@@ -56,7 +56,7 @@ abstract class AbstractAPIAction extends AbstractAction
             return $this->client->send(
                 $this->canvas->getAuthenticatedRequest(
                     $method,
-                    $url,
+                    "$url?" . http_build_query($this->request->getQueryParams()),
                     $user->getTokens(),
                     $options
                 )
