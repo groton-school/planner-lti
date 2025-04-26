@@ -35,6 +35,7 @@ return function (App $app) {
         $api->group('/courses', function (Group $courses) {
             $courses->get('/{course_id}', API\Courses\Get::class);
             $courses->group('/{course_id}', function (Group $course) {
+                $course->get('/assignments', API\Assignments\ListForCourse::class);
                 $course->get('/assignments/{assignment_id}', API\Assignments\Get::class);
             });
         });
@@ -43,6 +44,7 @@ return function (App $app) {
         });
         $api->group('/users/self', function (Group $self) {
             $self->get('/colors', API\Users\ListCustomColors::class);
+            $self->get('/courses', API\Users\ListCoursesForUser::class);
             $self->get('/todo', API\Users\ListTodoItems::class);
         });
     })->add(SessionStartMiddleware::class);

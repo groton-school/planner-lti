@@ -2,17 +2,30 @@ import * as Canvas from '@groton/canvas-cli.api';
 import bootstrap from 'bootstrap';
 import * as Colors from './Colors';
 import { Course } from './Course';
+import { paginatedCallback } from './paginatedCallback';
 
 type Options = { course_id: string | number; assignment_id: string | number };
 
 export class Assignment {
   private static cache: Record<string | number, Assignment> = {};
 
-  private constructor(private assignment: Canvas.Assignments.Assignment) {}
+  private constructor(private assignment: Canvas.Assignments.Assignment) {
+    Assignment.cache[assignment.id] = this;
+  }
+
+  public static async list(
+    course_id: string | number,
+    callback?: (assignment: Assignment) => unknown
+  ) {
+    return await paginatedCallback<Canvas.Assignments.Assignment, Assignment>(
+      `/api/v1/courses/${course_id}/assignments?include[]=submission`,
+      (assignment) => new Assignment(assignment)
+    )(callback);
+  }
 
   public static async get({ course_id, assignment_id }: Options) {
     if (!(assignment_id in this.cache)) {
-      this.cache[assignment_id] = new Assignment(
+      return new Assignment(
         await (
           await fetch(
             `/api/v1/courses/${course_id}/assignments/${assignment_id}?include[]=submission`
@@ -33,7 +46,7 @@ export class Assignment {
         <div class="modal-header ${Colors.classNameFromCourseId(this.assignment.course_id)}">
           <div class="modal-title">
             <small>
-              ${(await Course.get(this.assignment.course_id)).courseCode()}
+              ${(await Course.get(this.assignment.course_id)).course_code}
             </small>
             <h5>
               ${this.assignment.name}

@@ -1,6 +1,7 @@
 import { Assignment } from './Assignment';
 import * as Calendar from './Calendar';
 import * as CustomColors from './Colors';
+import { Course } from './Course';
 import { PlannerItem } from './PlannerItem';
 import { TodoItem } from './TodoItem';
 import './styles.scss';
@@ -40,5 +41,6 @@ import './styles.scss';
         todoElt.appendChild(item.card());
       }
     });
+    (await Course.list()).map((course) => Assignment.list(course.id));
   });
 })();
