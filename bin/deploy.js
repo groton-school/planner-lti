@@ -6,7 +6,6 @@ import { Root } from '@battis/qui-cli.root';
 import { Shell } from '@battis/qui-cli.shell';
 import input from '@inquirer/input';
 import path from 'node:path';
-import open from 'open';
 
 (async () => {
   Root.configure({ root: path.dirname(import.meta.dirname) });
@@ -65,11 +64,6 @@ import open from 'open';
         validate: (value) => value && /^[a-z0-9]{64}$/i.test(value)
       })
     });
-    const authUrl = `https://${appEngine.defaultHostname}/login/oauth2`;
-    Log.debug(
-      `Open this URL in your web browser to authorize this LTI as a Canvas User with sufficient privileges to masquerade as students: ${authUrl}`
-    );
-    open(authUrl);
   }
 
   Log.info(
