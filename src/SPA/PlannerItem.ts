@@ -48,6 +48,83 @@ export class PlannerItem {
     (item: CanvasPlannerItem) => new PlannerItem(item)
   );
 
+  public get plannable_type() {
+    return this.item.plannable_type;
+  }
+
+  public get plannable_id() {
+    return this.item.plannable_id;
+  }
+
+  public get plannable_date() {
+    return this.item.plannable_date;
+  }
+
+  public get course_id() {
+    return this.item.course_id;
+  }
+
+  public get done() {
+    return (
+      this.item.submissions?.graded ||
+      this.item.submissions?.submitted ||
+      this.item.planner_override?.dismissed ||
+      this.item.planner_override?.marked_complete
+    );
+  }
+
+  public isEvent() {
+    return (
+      this.item.plannable_type === 'assignment' && !!this.item.plannable_date
+    );
+  }
+
+  public async markComplete() {
+    if (this.item.planner_override) {
+      this.item.planner_override = await (
+        await fetch(
+          `/api/v1/planner/overrides/${this.item.planner_override.id}`,
+          {
+            method: 'PUT',
+            body: new URLSearchParams({
+              marked_complete: 'true',
+              dismissed: 'true'
+            })
+          }
+        )
+      ).json();
+    } else {
+      this.item.planner_override = await (
+        await fetch('/api/v1/planner/overrides', {
+          method: 'POST',
+          body: new URLSearchParams({
+            plannable_type: this.item.plannable_type,
+            plannable_id: this.item.plannable_id.toString(),
+            marked_complete: 'true',
+            dismissed: 'true'
+          })
+        })
+      ).json();
+    }
+  }
+
+  public async markIncomplete() {
+    if (this.item.planner_override) {
+      this.item.planner_override = await (
+        await fetch(
+          `/api/v1/planner/overrides/${this.item.planner_override.id}`,
+          {
+            method: 'PUT',
+            body: new URLSearchParams({
+              marked_complete: 'false',
+              dismissed: 'false'
+            })
+          }
+        )
+      ).json();
+    }
+  }
+
   public toEvent(): EventInput {
     const color = `var(${Colors.varNameFromCourseId(this.item.course_id)})`;
     return {
@@ -56,17 +133,12 @@ export class PlannerItem {
       start: new Date(this.item.plannable_date),
       classNames: [
         Colors.classNameFromCourseId(this.item.course_id),
-        this.item.submissions?.graded ||
-        this.item.submissions?.submitted ||
-        this.item.planner_override?.dismissed ||
-        this.item.planner_override?.marked_complete
-          ? 'done'
-          : 'not-done'
+        this.done ? 'done' : ''
       ],
       backgroundColor: color,
       textColor: color,
       borderColor: color,
-      extendedProps: this.item
+      extendedProps: { planner_item: this }
     };
   }
 }

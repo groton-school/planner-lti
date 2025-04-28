@@ -1,3 +1,4 @@
+import { EventClickArg } from '@fullcalendar/core';
 import * as Canvas from '@groton/canvas-cli.api';
 import bootstrap from 'bootstrap';
 import * as Colors from './Colors';
@@ -36,21 +37,25 @@ export class Assignment {
     return this.cache[assignment_id];
   }
 
-  public async modal() {
+  public async modal(info: EventClickArg) {
+    const markCompleteId = `${info.event.extendedProps.planner_item.plannable_type}_${info.event.extendedProps.planner_item.plannable_id}_complete`;
     const modal = document.createElement('div');
     modal.classList.add('modal');
     modal.tabIndex = -1;
     modal.innerHTML = `
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header ${Colors.classNameFromCourseId(this.assignment.course_id)}">
+        <div class="modal-header ${Colors.classNameFromCourseId(this.assignment.course_id)} ${info.event.extendedProps.planner_item.done ? 'done' : ''}">
           <div class="modal-title">
-            <small>
+            <small class="course_code">
               ${(await Course.get(this.assignment.course_id)).course_code}
             </small>
-            <h5>
-              ${this.assignment.name}
-            </h5>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="${markCompleteId}" ${info.event.extendedProps.planner_item.done ? 'checked' : ''}>
+              <label class="form-check-label assignment name h5" for="${markCompleteId}">
+                ${this.assignment.name}
+              </label>
+            </div>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -92,6 +97,17 @@ export class Assignment {
       </div>
     </div>
   `;
+    modal.querySelector(`#${markCompleteId}`)?.addEventListener('click', () => {
+      if (info.event.extendedProps.planner_item.done) {
+        info.event.extendedProps.planner_item.markIncomplete();
+        modal.querySelector('.modal-header')?.classList.remove('done');
+        info.el.classList.remove('done');
+      } else {
+        info.event.extendedProps.planner_item.markComplete();
+        modal.querySelector('.modal-header')?.classList.add('done');
+        info.el.classList.add('done');
+      }
+    });
     document.body.appendChild(modal);
     new bootstrap.Modal(modal).show();
   }

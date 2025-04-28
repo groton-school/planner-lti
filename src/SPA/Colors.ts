@@ -6,21 +6,41 @@ export async function get() {
     custom_colors: { [asset_string: string]: string };
   };
   const styleElt = document.createElement('style');
-  styleElt.innerHTML =
-    ':root {\n' +
-    Object.keys(colors.custom_colors)
-      .map(
-        (asset_string) =>
-          `--${asset_string}: ${colors.custom_colors[asset_string]};`
-      )
-      .join('\n') +
-    '\n}\n' +
-    Object.keys(colors.custom_colors)
-      .map(
-        (asset_string) =>
-          `.${asset_string} { background: var(--${asset_string}); color: ${tinycolor.isReadable(colors.custom_colors[asset_string], 'black') ? 'black' : 'white'}}`
-      )
-      .join('\n');
+  const vars: string[] = [];
+  const selectors: string[] = [];
+  for (const asset_string of Object.keys(colors.custom_colors)) {
+    const color = tinycolor(colors.custom_colors[asset_string]);
+    let text = tinycolor('black');
+    if (!tinycolor.isReadable(color, text)) {
+      text = tinycolor('white');
+    }
+    vars.push(`--${asset_string}: ${color};`);
+    vars.push(`--${asset_string}_text: ${text};`);
+    vars.push(`--${asset_string}_light: ${color.lighten(25).desaturate(25)};`);
+    vars.push(
+      `--${asset_string}_light_text: ${text.lighten(25).desaturate(25)};`
+    );
+    selectors.push(
+      `.${asset_string} {
+        background: var(--${asset_string});
+        color: var(--${asset_string}_text);
+      }`
+    );
+    selectors.push(
+      `.${asset_string}.done {
+        background: var(--${asset_string}_light);
+        color: var(--${asset_string}_light_text);
+      }`
+    );
+    selectors.push(
+      `.${asset_string}.done .form-check-input:checked {
+        background: var(--${asset_string});
+        border: var(--${asset_string});
+      }`
+    );
+  }
+
+  styleElt.innerHTML = `:root { ${vars.join('\n')} }\n${selectors.join('\n')}`;
   document.head.appendChild(styleElt);
 }
 

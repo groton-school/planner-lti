@@ -19,14 +19,15 @@ import './styles.scss';
     await CustomColors.get();
     const calendar = Calendar.replaceContent(calendarElt, {
       eventClick: async (info) => {
-        switch (info.event.extendedProps.plannable_type) {
+        switch (info.event.extendedProps.planner_item.plannable_type) {
           case 'assignment':
             return (
               await Assignment.get({
-                course_id: info.event.extendedProps.course_id,
-                assignment_id: info.event.extendedProps.plannable_id
+                course_id: info.event.extendedProps.planner_item.course_id,
+                assignment_id:
+                  info.event.extendedProps.planner_item.plannable_id
               })
-            ).modal();
+            ).modal(info);
             break;
           default:
             console.log(info);

@@ -1,5 +1,9 @@
 .done {
-  text-decoration: line-through !important;
+  .fc-event-title,
+  .fc-list-event-title,
+  .assignment.name {
+    text-decoration: line-through 0.1em;
+  }
 }
 
 .btn-brand-primary {

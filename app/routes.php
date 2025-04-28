@@ -41,6 +41,8 @@ return function (App $app) {
         });
         $api->group('/planner', function (Group $planner) {
             $planner->get('/items', API\Planner\ListItems::class);
+            $planner->post('/overrides', API\Planner\CreatePlannerOverride::class);
+            $planner->put('/overrides/{override_id}', API\Planner\UpdatePlannerOverride::class);
         });
         $api->group('/users/self', function (Group $self) {
             $self->get('/colors', API\Users\ListCustomColors::class);
