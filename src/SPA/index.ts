@@ -3,7 +3,6 @@ import * as Calendar from './Calendar';
 import * as CustomColors from './Colors';
 import { Course } from './Course';
 import { PlannerItem } from './PlannerItem';
-import { TodoItem } from './TodoItem';
 import './styles.scss';
 
 (async () => {
@@ -35,11 +34,8 @@ import './styles.scss';
       }
     });
     await PlannerItem.list((item) => {
-      calendar.addEvent(item.toEvent());
-    });
-    await TodoItem.list((item) => {
-      if (!item.hasDate()) {
-        todoElt.appendChild(item.card());
+      if (item.isEvent()) {
+        calendar.addEvent(item.toEvent());
       }
     });
     (await Course.list()).map((course) => Assignment.list(course.id));

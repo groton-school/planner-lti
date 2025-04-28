@@ -47,7 +47,6 @@ return function (App $app) {
         $api->group('/users/self', function (Group $self) {
             $self->get('/colors', API\Users\ListCustomColors::class);
             $self->get('/courses', API\Users\ListCoursesForUser::class);
-            $self->get('/todo', API\Users\ListTodoItems::class);
         });
     })->add(SessionStartMiddleware::class);
 
