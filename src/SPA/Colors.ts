@@ -24,6 +24,7 @@ export async function get() {
       `.${asset_string} {
         background: var(--${asset_string});
         color: var(--${asset_string}_text);
+        border-color: var(--${asset_string});
       }`
     );
     selectors.push(
@@ -34,8 +35,8 @@ export async function get() {
     );
     selectors.push(
       `.${asset_string}.done .form-check-input:checked {
-        background: var(--${asset_string});
-        border: var(--${asset_string});
+        background-color: var(--${asset_string});
+        border-color: var(--${asset_string});
       }`
     );
   }

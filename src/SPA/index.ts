@@ -36,6 +36,12 @@ import './styles.scss';
     await PlannerItem.list((item) => {
       if (item.isEvent()) {
         calendar.addEvent(item.toEvent());
+      } else {
+        if (item.done) {
+          todoElt.querySelector('#done')?.appendChild(item.toTodo());
+        } else {
+          todoElt.querySelector('#incomplete')?.appendChild(item.toTodo());
+        }
       }
     });
     (await Course.list()).map((course) => Assignment.list(course.id));

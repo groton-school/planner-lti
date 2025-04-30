@@ -5,8 +5,9 @@ import {
 } from '@battis/descriptive-types';
 import { EventInput } from '@fullcalendar/core';
 import * as Canvas from '@groton/canvas-cli.api';
-import * as Colors from './Colors';
-import { paginatedCallback } from './paginatedCallback';
+import * as Colors from '../Colors';
+import { paginatedCallback } from '../paginatedCallback';
+import './styles.scss';
 
 type CanvasPlannerItem = {
   context_type: string;
@@ -34,6 +35,7 @@ type CanvasPlannerItem = {
     updated_at: DateTimeString<'ISO'>;
     points_possible?: number;
     due_at: DateTimeString<'ISO'>;
+    read_state?: 'unread' | 'read';
   };
   html_url: PathString;
   context_name: string;
@@ -69,7 +71,8 @@ export class PlannerItem {
       this.item.submissions?.graded ||
       this.item.submissions?.submitted ||
       this.item.planner_override?.dismissed ||
-      this.item.planner_override?.marked_complete
+      this.item.planner_override?.marked_complete ||
+      this.item.plannable.read_state === 'read'
     );
   }
 
@@ -126,19 +129,36 @@ export class PlannerItem {
   }
 
   public toEvent(): EventInput {
-    const color = `var(${Colors.varNameFromCourseId(this.item.course_id)})`;
+    const start = new Date(this.item.plannable_date);
     return {
       id: `${this.item.plannable_type}_${this.item.plannable.id}`,
       title: this.item.plannable.title,
-      start: new Date(this.item.plannable_date),
+      start,
+      allDay: start.getHours() === 23 && start.getMinutes() === 59,
       classNames: [
         Colors.classNameFromCourseId(this.item.course_id),
         this.done ? 'done' : ''
       ],
-      backgroundColor: color,
-      textColor: color,
-      borderColor: color,
       extendedProps: { planner_item: this }
     };
+  }
+
+  public toTodo(): HTMLElement {
+    const todo = document.createElement('div');
+    todo.classList.add(
+      'item',
+      'p-1',
+      'm-1',
+      'rounded',
+      Colors.classNameFromCourseId(this.item.course_id)
+    );
+    if (this.done) {
+      todo.classList.add('done');
+    }
+    todo.innerHTML = `<a target="_top" href="${consumer_instance_url}${this.item.html_url}" class="d-flex">
+      <img class="${this.item.plannable_type} icon me-2" src="/assets/${this.item.plannable_type}.svg" />
+      <span class="${this.item.plannable_type} name">${this.item.plannable.title}</span>
+    </a>`;
+    return todo;
   }
 }

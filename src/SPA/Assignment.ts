@@ -39,6 +39,7 @@ export class Assignment {
 
   public async modal(info: EventClickArg) {
     const markCompleteId = `${info.event.extendedProps.planner_item.plannable_type}_${info.event.extendedProps.planner_item.plannable_id}_complete`;
+    const start = new Date(this.assignment.due_at);
     const modal = document.createElement('div');
     modal.classList.add('modal');
     modal.tabIndex = -1;
@@ -67,13 +68,17 @@ export class Assignment {
             ).toLocaleDateString('en-us', {
               month: 'short',
               day: 'numeric'
-            })} at ${new Date(this.assignment.due_at).toLocaleTimeString(
-              'en-us',
-              {
-                hour: 'numeric',
-                minute: '2-digit'
-              }
-            )}</span>${
+            })}${
+              start.getHours() === 23 && start.getMinutes() === 59
+                ? ''
+                : ` at ${new Date(this.assignment.due_at).toLocaleTimeString(
+                    'en-us',
+                    {
+                      hour: 'numeric',
+                      minute: '2-digit'
+                    }
+                  )}`
+            }</span>${
               this.assignment.points_possible
                 ? // @ts-expect-error-next-line 2339
                   `<strong class="ms-auto p-1">Points</strong> <span class="p-1">${this.assignment.submission?.entered_grade ? `${this.assignment.submission.entered_grade} / ` : ''}${
@@ -97,17 +102,27 @@ export class Assignment {
       </div>
     </div>
   `;
-    modal.querySelector(`#${markCompleteId}`)?.addEventListener('click', () => {
-      if (info.event.extendedProps.planner_item.done) {
-        info.event.extendedProps.planner_item.markIncomplete();
-        modal.querySelector('.modal-header')?.classList.remove('done');
-        info.el.classList.remove('done');
-      } else {
-        info.event.extendedProps.planner_item.markComplete();
-        modal.querySelector('.modal-header')?.classList.add('done');
-        info.el.classList.add('done');
-      }
-    });
+    modal
+      .querySelector(`#${markCompleteId}`)
+      ?.addEventListener('click', async () => {
+        if (info.event.extendedProps.planner_item.done) {
+          modal.querySelector('.modal-header')?.classList.remove('done');
+          info.el.classList.remove('done');
+          await info.event.extendedProps.planner_item.markIncomplete();
+          if (info.event.extendedProps.planner_item.done) {
+            info.el.classList.add('done');
+            modal.querySelector('.modal-header')?.classList.add('done');
+          }
+        } else {
+          modal.querySelector('.modal-header')?.classList.add('done');
+          info.el.classList.add('done');
+          await info.event.extendedProps.planner_item.markComplete();
+          if (!info.event.extendedProps.planner_item.done) {
+            info.el.classList.remove('done');
+            modal.querySelector('.modal_header')?.classList.remove('done');
+          }
+        }
+      });
     document.body.appendChild(modal);
     new bootstrap.Modal(modal).show();
   }

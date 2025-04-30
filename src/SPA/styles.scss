@@ -1,7 +1,7 @@
 .done {
   .fc-event-title,
   .fc-list-event-title,
-  .assignment.name {
+  .name {
     text-decoration: line-through 0.1em;
   }
 }
@@ -14,4 +14,9 @@
 .btn-brand-secondary {
   background: var(--ic-brand-button--secondary-bgd);
   color: var(--ic-brand-button--secondary-text);
+}
+
+.fc-daygrid-event-dot,
+.fc-list-event-dot {
+  border-color: hsla(0, 0%, 100%, 0.5) !important;
 }
