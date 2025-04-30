@@ -6,6 +6,7 @@ namespace App\Infrastructure\Session;
 
 use App\Domain\LTI\LaunchData;
 use App\Domain\LTI\LaunchDataRepositoryInterface;
+use Exception;
 use Odan\Session\SessionInterface;
 
 class SessionLaunchDataRepository implements LaunchDataRepositoryInterface
@@ -29,11 +30,14 @@ class SessionLaunchDataRepository implements LaunchDataRepositoryInterface
 
     public function getLaunchData(): LaunchData
     {
-        return new LaunchData(
-            json_decode(
-                $this->session->get(self::LAUNCH_DATA),
-                true
-            )
-        );
+        if ($this->session->get(self::LAUNCH_DATA) !== null) {
+            return new LaunchData(
+                json_decode(
+                    $this->session->get(self::LAUNCH_DATA),
+                    true
+                )
+            );
+        }
+        throw new Exception('Launch data not present');
     }
 }

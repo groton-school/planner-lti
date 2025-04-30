@@ -5,22 +5,27 @@ declare(strict_types=1);
 namespace App\Application\Actions\API\Brand;
 
 use App\Application\Actions\API\AbstractAPIAction;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 
 class Stylesheet extends AbstractAPIAction
 {
     protected function action(): ResponseInterface
     {
-        $brand = json_decode(file_get_contents($this->getLaunchData()->getBrandConfigJSONUrl()), true);
-        $css = ':root {';
-        foreach ($brand as $key => $value) {
-            if ($value !== 'none' && !is_numeric($value) && !preg_match("/#[a-f0-9]{3,6}/i", $value)) {
-                $value = "\"$value\"";
+        try {
+            $brand = json_decode(file_get_contents($this->getLaunchData()->getBrandConfigJSONUrl()), true);
+            $css = ':root {';
+            foreach ($brand as $key => $value) {
+                if ($value !== 'none' && !is_numeric($value) && !preg_match("/#[a-f0-9]{3,6}/i", $value)) {
+                    $value = "\"$value\"";
+                }
+                $css .= "--$key: $value;";
             }
-            $css .= "--$key: $value;";
+            $css .= "}";
+            $this->response->getBody()->write($css);
+            return $this->response->withAddedHeader('Content-Type', 'text/css');
+        } catch (Exception $e) {
+            return $this->response->withStatus(401);
         }
-        $css .= "}";
-        $this->response->getBody()->write($css);
-        return $this->response->withAddedHeader('Content-Type', 'text/css');
     }
 }
