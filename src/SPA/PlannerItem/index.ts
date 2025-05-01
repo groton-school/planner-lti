@@ -155,6 +155,7 @@ export class PlannerItem {
     if (this.done) {
       todo.classList.add('done');
     }
+    // FIXME planner notes need different handling
     todo.innerHTML = `<a target="_top" href="${consumer_instance_url}${this.item.html_url}" class="d-flex">
       <img class="${this.item.plannable_type} icon me-2" src="/assets/${this.item.plannable_type}.svg" />
       <span class="${this.item.plannable_type} name">${this.item.plannable.title}</span>
