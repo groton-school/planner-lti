@@ -33,8 +33,10 @@ class Events extends AbstractAuthenticatedViewAction
     protected function authenticatedAction(): ResponseInterface
     {
         $params = $this->request->getQueryParams();
-        if ($params['q']) {
+        if (isset($params['q'])) {
             $params['q'] = $this->getLaunchData()->getUserEmail() . ' ' . $params['q'];
+        } else {
+            $params['q'] = $this->getLaunchData()->getUserEmail();
         }
         $events =  $this->calendar->events->listEvents(
             $this->credentials->getCalendarId(),
