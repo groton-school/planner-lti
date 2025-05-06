@@ -13,7 +13,7 @@ class ListCustomColors extends AbstractAPIAction
     {
         return $this->proxyRequest(
             'GET',
-            '/api/v1/users/self/colors'
+            '/api/v1/users/' . $this->args['user_id'] . '/colors'
         );
     }
 }

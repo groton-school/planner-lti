@@ -14,7 +14,7 @@ class ListCoursesForUser extends AbstractAPIAction
 
         return $this->proxyRequest(
             'GET',
-            '/api/v1/users/self/courses'
+            '/api/v1/users/' . $this->args['user_id'] . '/courses'
         );
     }
 }

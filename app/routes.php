@@ -46,7 +46,7 @@ return function (App $app) {
             $planner->post('/overrides', API\Planner\CreatePlannerOverride::class);
             $planner->put('/overrides/{override_id}', API\Planner\UpdatePlannerOverride::class);
         });
-        $api->group('/users/self', function (Group $self) {
+        $api->group('/users/{user_id}', function (Group $self) {
             $self->get('/colors', API\Users\ListCustomColors::class);
             $self->get('/courses', API\Users\ListCoursesForUser::class);
         });
