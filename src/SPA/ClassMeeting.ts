@@ -54,10 +54,7 @@ export class ClassMeeting {
       title: canonicalTitle,
       start: new Date(this.event.start.dateTime),
       end: new Date(this.event.end.dateTime),
-      classNames: [
-        course ? Colors.classNameFromCourseId(course.id) : '',
-        'class_meeting'
-      ],
+      classNames: [Colors.classNameFromCourseId(course?.id), 'class_meeting'],
       extendedProps: { class_meeting: this, course }
     };
   }
