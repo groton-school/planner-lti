@@ -10,35 +10,44 @@ export async function get() {
   const selectors: string[] = [];
   for (const asset_string of Object.keys(colors.custom_colors)) {
     const color = tinycolor(colors.custom_colors[asset_string]);
-    let text = tinycolor('black');
-    if (!tinycolor.isReadable(color, text)) {
-      text = tinycolor('white');
+    const lighter = tinycolor(color).lighten(25).desaturate(25);
+    const darker = tinycolor(color).darken(25);
+
+    function readableText(
+      background: tinycolor.Instance | string,
+      text = darker
+    ) {
+      if (!tinycolor.isReadable(background, text)) {
+        text = tinycolor('white');
+      }
+      return text;
     }
+
     vars.push(`--${asset_string}: ${color};`);
-    vars.push(`--${asset_string}_text: ${text};`);
-    vars.push(`--${asset_string}_light: ${color.lighten(25).desaturate(25)};`);
-    vars.push(
-      `--${asset_string}_light_text: ${text.lighten(25).desaturate(25)};`
-    );
     selectors.push(
-      `.${asset_string} {
-        background: var(--${asset_string});
-        color: var(--${asset_string}_text);
-        border-color: var(--${asset_string});
+      `.${asset_string}.planner_item, #todo .${asset_string}.item {
+        background: ${color};
+        color: ${readableText(color)};
+        border-color: ${color} solid 1px;
       }`
     );
     selectors.push(
-      `.${asset_string}.done {
-        background: var(--${asset_string}_light);
-        color: var(--${asset_string}_light_text);
+      `.${asset_string}.planner_item.done, #todo .${asset_string}.item.done {
+        background: ${lighter};
+        color: ${readableText(lighter)};
       }`
     );
     selectors.push(
-      `.${asset_string}.done .form-check-input:checked {
-        background-color: var(--${asset_string});
-        border-color: var(--${asset_string});
+      `.${asset_string} .form-check-input:checked {
+        background-color: ${color};
+        border-color: ${color};
       }`
     );
+    selectors.push(`.${asset_string}.class_meeting {
+      background: white;
+      color: ${color};
+      border: ${color} solid 1px;  
+    }`);
   }
 
   styleElt.innerHTML = `:root { ${vars.join('\n')} }\n${selectors.join('\n')}`;

@@ -29,4 +29,17 @@ export class Course {
   public get course_code() {
     return this.course.course_code;
   }
+
+  public get name() {
+    return this.course.name;
+  }
+
+  public static fromName(name: string) {
+    for (const id in this.cache) {
+      if (this.cache[id].course.name == name) {
+        return this.cache[id];
+      }
+    }
+    return undefined;
+  }
 }

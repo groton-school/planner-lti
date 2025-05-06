@@ -46,7 +46,7 @@ export class Assignment {
     modal.innerHTML = `
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header ${Colors.classNameFromCourseId(this.assignment.course_id)} ${info.event.extendedProps.planner_item.done ? 'done' : ''}">
+        <div class="modal-header ${Colors.classNameFromCourseId(this.assignment.course_id)} planner_item assignment ${info.event.extendedProps.planner_item.done ? 'done' : ''}">
           <div class="modal-title">
             <small class="course_code">
               ${(await Course.get(this.assignment.course_id)).course_code}

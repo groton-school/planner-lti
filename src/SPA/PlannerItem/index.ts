@@ -137,6 +137,7 @@ export class PlannerItem {
       allDay: start.getHours() === 23 && start.getMinutes() === 59,
       classNames: [
         Colors.classNameFromCourseId(this.item.course_id),
+        'planner_item',
         this.done ? 'done' : ''
       ],
       extendedProps: { planner_item: this }

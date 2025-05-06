@@ -1,3 +1,34 @@
+:root {
+  --course_undefined: #999;
+  --course_undefined_text: #eee;
+  --course_undefined_light: #ccc;
+  --course_undefined_light_text: #eeee;
+  --course_undefined_dark: #777;
+  --course_undefined_dark_text: #eee;
+}
+
+.course_undefined.planner_item {
+  background: var(--course_undefined);
+  color: var(--course_undefined_text);
+  border: var(--course_undefined);
+}
+
+.course_undefined.planner_item.done {
+  background: var(--course_undefined_light);
+  color: var(--course_undefined_light_text);
+}
+
+.course_undefined .form-check-input:checked {
+  color: var(--course_undefined);
+  border: var(--course_undefined);
+}
+
+.course_undefined.class_meeting {
+  background: var(--course_undefined_dark_text);
+  color: var(--course_undefined_dark);
+  border: var(--course_undefined);
+}
+
 .done {
   .fc-event-title,
   .fc-list-event-title,
