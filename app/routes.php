@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 use App\Application\Actions\API;
 use App\Application\Actions\OAuth2;
+use App\Application\Actions\Calendar;
 use App\Application\Actions\SPA;
+use Delight\Cookie\Session;
 use GrotonSchool\Slim\GAE\Actions\EmptyAction;
 use GrotonSchool\Slim\LTI\Actions as LTI;
 use Odan\Session\Middleware\SessionStartMiddleware;
@@ -49,6 +51,12 @@ return function (App $app) {
             $self->get('/courses', API\Users\ListCoursesForUser::class);
         });
     })->add(SessionStartMiddleware::class);
+
+    // Google Calendar
+    $app->group('/calendar', function (Group $calendar) {
+        $calendar->get('/events', Calendar\Events::class)->add(SessionStartMiddleware::class);
+        $calendar->get('/accept', Calendar\Accept::class);
+    });
 
     // app
     $app->get('/', SPA::class)->add(SessionStartMiddleware::class);

@@ -6,6 +6,7 @@ use App\Application\Actions\OAuth2;
 use App\Application\Handlers\LaunchHandler;
 use App\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
+use Google\Client;
 use Google\Cloud\Logging\LoggingClient;
 use GrotonSchool\Slim\GAE;
 use GrotonSchool\Slim\LTI;
@@ -78,6 +79,13 @@ return function (ContainerBuilder $containerBuilder) {
         SessionInterface::class => function (ContainerInterface $container) {
             $options = $container->get(SettingsInterface::class)->get(SessionInterface::class);
             return new PhpSession($options);
+        },
+
+        // Google API client
+        Client::class => function () {
+            $client = new Client();
+            $client->useApplicationDefaultCredentials();
+            return $client;
         }
     ]);
 };

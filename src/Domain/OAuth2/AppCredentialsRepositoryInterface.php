@@ -8,4 +8,5 @@ interface AppCredentialsRepositoryInterface
 {
     public function getClientID(): string;
     public function getClientSecret(): string;
+    public function getCalendarId(): string;
 }

@@ -51,4 +51,9 @@ class LaunchData implements JsonSerializable
     {
         return $this->data;
     }
+
+    public function getUserEmail()
+    {
+        return $this->data['email'];
+    }
 }

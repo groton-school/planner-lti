@@ -24,4 +24,9 @@ class SecretsAppCredentials implements AppCredentialsRepositoryInterface
     {
         return $this->secrets->get(AppCredentials::CANVAS_CLIENT_SECRET);
     }
+
+    public function getCalendarId(): string
+    {
+        return $this->secrets->get(AppCredentials::CALENDER_ID);
+    }
 }

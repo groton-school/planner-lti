@@ -23,6 +23,7 @@
     "php": "^7.4 || ^8.0",
     "ext-json": "*",
     "battis/lazy-secrets": "^1.1",
+    "google/apiclient": "^2.18",
     "google/cloud-firestore": "^1.50",
     "groton-school/oauth2-canvaslms": "^1.1",
     "groton-school/slim-gae-shim": "^1.0",
@@ -63,6 +64,12 @@
   },
   "scripts": {
     "start": "php -S localhost:8080 -t public",
-    "test": "phpunit"
+    "test": "phpunit",
+    "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
+  },
+  "extra": {
+    "google/apiclient-services": [
+      "Calendar"
+    ]
   }
 }
