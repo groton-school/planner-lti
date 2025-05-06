@@ -1,7 +1,6 @@
 *
 .DS_Store
 .htaccess
-!/.env
 !/app.yaml
 !/php.ini
 !/composer.*
