@@ -16,9 +16,9 @@ return function (ContainerBuilder $containerBuilder) {
             $PROJECT_URL = 'https://' . getenv('HTTP_HOST');
             $SCOPES = ['https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly'];
             return new Settings([
-                'displayErrorDetails' => true, // TODO Should be set to false in production
-                'logError'            => false,
-                'logErrorDetails'     => false,
+                'displayErrorDetails' => false,
+                'logError'            => true,
+                'logErrorDetails'     => true,
 
                 // get Google Cloud Project ID and URL from local environment
                 Settings::PROJECT_ID => getenv('GOOGLE_CLOUD_PROJECT'),
