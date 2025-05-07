@@ -50,7 +50,6 @@ export class ClassMeeting {
     const canonicalTitle = this.event.summary.slice(2);
     const course = Course.fromName(canonicalTitle);
     return {
-      id: this.event.id,
       title: canonicalTitle,
       start: new Date(this.event.start.dateTime),
       end: new Date(this.event.end.dateTime),
