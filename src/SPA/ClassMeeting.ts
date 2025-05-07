@@ -1,8 +1,10 @@
 import GoogleCalendar from '@battis/google.calendar';
 import { EventClickArg, EventInput, ViewApi } from '@fullcalendar/core';
 import bootstrap from 'bootstrap';
+import view from '../../views/ejs/classMeeting.modal.ejs';
 import * as Colors from './Colors';
 import { Course } from './Course';
+import { render } from './Views';
 
 export class ClassMeeting {
   private static fetched: Record<string, boolean> = {};
@@ -50,6 +52,7 @@ export class ClassMeeting {
     const canonicalTitle = this.event.summary.slice(2);
     const course = Course.fromName(canonicalTitle);
     return {
+      id: this.event.iCalUID,
       title: canonicalTitle,
       start: new Date(this.event.start.dateTime),
       end: new Date(this.event.end.dateTime),
@@ -58,41 +61,15 @@ export class ClassMeeting {
     };
   }
 
-  public modal(info: EventClickArg) {
-    const course = info.event.extendedProps.course as Course;
-    const modal = document.createElement('div');
-    modal.classList.add('modal');
-    modal.tabIndex = -1;
-    modal.innerHTML = `
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header ${Colors.classNameFromCourseId(course.id)} class_meeting">
-              <div class="modal-title">
-              <h5>${course.name}</h5>
-              </div>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            <p>
-              ${info.event.start?.toLocaleDateString('en-us', {
-                day: 'numeric',
-                weekday: 'long',
-                month: 'long'
-              })}<br/>
-              ${info.event.start?.toLocaleTimeString('en-us', {
-                hour: 'numeric',
-                minute: 'numeric'
-              })}&nbsp;&ndash;&nbsp;${info.event.end?.toLocaleTimeString(
-                'en-us',
-                { hour: 'numeric', minute: 'numeric' }
-              )}
-            </p>
-              <p>${this.event.location}</p>
-            </div>
-          </div>
-        </div>
-      `;
-    document.body.appendChild(modal);
+  public async modal(info: EventClickArg) {
+    const modal = await render({
+      template: view,
+      data: {
+        event: info.event,
+        location: this.event.location,
+        course: info.event.extendedProps.course
+      }
+    });
     new bootstrap.Modal(modal).show();
   }
 }

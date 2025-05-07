@@ -69,10 +69,6 @@ export class PlannerItem {
     return this.item.course_id;
   }
 
-  public get html_url() {
-    return this.item.html_url;
-  }
-
   public get done() {
     return (
       this.item.submissions?.graded ||
@@ -156,7 +152,8 @@ export class PlannerItem {
       template: view,
       data: {
         consumer_instance_url,
-        item: this,
+        done: this.done,
+        item: this.item,
         course: this.item.course_id
           ? await Course.get(this.item.course_id)
           : undefined

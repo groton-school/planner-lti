@@ -35,7 +35,7 @@ import './styles.scss';
               console.log(info);
           }
         } else if (info.event.classNames.includes('class_meeting')) {
-          info.event.extendedProps.class_meeting.modal(info);
+          await info.event.extendedProps.class_meeting.modal(info);
         }
       },
       viewClassNames: (info) => {
