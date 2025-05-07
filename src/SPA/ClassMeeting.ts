@@ -64,6 +64,7 @@ export class ClassMeeting {
   public async modal(info: EventClickArg) {
     const modal = await render({
       template: view,
+      parent: document.body,
       data: {
         event: info.event,
         location: this.event.location,
