@@ -5,8 +5,11 @@ import {
 } from '@battis/descriptive-types';
 import { EventInput } from '@fullcalendar/core';
 import * as Canvas from '@groton/canvas-cli.api';
+import view from '../../../views/ejs/todo.ejs';
 import * as Colors from '../Colors';
+import { Course } from '../Course';
 import { paginatedCallback } from '../paginatedCallback';
+import { render } from '../Views';
 import './styles.scss';
 
 type CanvasPlannerItem = {
@@ -64,6 +67,10 @@ export class PlannerItem {
 
   public get course_id() {
     return this.item.course_id;
+  }
+
+  public get html_url() {
+    return this.item.html_url;
   }
 
   public get done() {
@@ -144,23 +151,16 @@ export class PlannerItem {
     };
   }
 
-  public toTodo(): HTMLElement {
-    const todo = document.createElement('div');
-    todo.classList.add(
-      'item',
-      'p-1',
-      'm-1',
-      'rounded',
-      Colors.classNameFromCourseId(this.item.course_id)
-    );
-    if (this.done) {
-      todo.classList.add('done');
-    }
-    // FIXME planner notes need different handling
-    todo.innerHTML = `<a target="_top" href="${consumer_instance_url}${this.item.html_url}" class="d-flex">
-      <img class="${this.item.plannable_type} icon me-2" src="/assets/${this.item.plannable_type}.svg" />
-      <span class="${this.item.plannable_type} name">${this.item.plannable.title}</span>
-    </a>`;
-    return todo;
+  public async toTodo() {
+    return await render({
+      template: view,
+      data: {
+        consumer_instance_url,
+        item: this,
+        course: this.item.course_id
+          ? await Course.get(this.item.course_id)
+          : undefined
+      }
+    });
   }
 }

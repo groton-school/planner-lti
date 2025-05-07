@@ -47,14 +47,16 @@ import './styles.scss';
         return [];
       }
     });
-    PlannerItem.list((item) => {
+    PlannerItem.list(async (item) => {
       if (item.isEvent()) {
         calendar.addEvent(item.toEvent());
       } else {
         if (item.done) {
-          todoElt.querySelector('#done')?.appendChild(item.toTodo());
+          todoElt.querySelector('#done')?.appendChild(await item.toTodo());
         } else {
-          todoElt.querySelector('#incomplete')?.appendChild(item.toTodo());
+          todoElt
+            .querySelector('#incomplete')
+            ?.appendChild(await item.toTodo());
         }
       }
     });

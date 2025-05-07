@@ -1,4 +1,5 @@
 import * as Canvas from '@groton/canvas-cli.api';
+import * as Colors from './Colors';
 import { paginatedCallback } from './paginatedCallback';
 
 export class Course {
@@ -32,6 +33,10 @@ export class Course {
 
   public get name() {
     return this.course.name;
+  }
+
+  public get className() {
+    return Colors.classNameFromCourseId(this.course.id);
   }
 
   public static fromName(name: string) {

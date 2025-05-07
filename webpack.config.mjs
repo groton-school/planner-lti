@@ -4,7 +4,26 @@ export default bundle.fromTS.toSPA({
   root: import.meta.dirname,
   appName: 'Planner',
   entry: './src/SPA/index.ts',
-  template: './templates/SPA',
-  externals: { bootstrap: 'bootstrap' },
+  template: './views/SPA',
+  module: {
+    rules: [
+      {
+        test: /\.ejs$/,
+        loader: 'html-loader',
+        options: {
+          // don't process the sources in ejs files -- they may not exist (yet)!
+          sources: false
+        }
+      }
+    ]
+  },
+  externals: {
+    bootstrap: 'bootstrap',
+    ejs: 'ejs',
+    '@fullcalendar/core': 'FullCalendar',
+    '@fullcalendar/daygrid': 'FullCalendar.DayGrid',
+    '@fullcalendar/timegrid': 'FullCalendar.TimeGrid',
+    '@fullcalendar/list': 'FullCalendar.List'
+  },
   output: { path: 'public' }
 });

@@ -7,5 +7,5 @@
 !/app
 !/public
 !/src
-!/templates
-/templates/SPA/
+!/views
+/views/SPA/

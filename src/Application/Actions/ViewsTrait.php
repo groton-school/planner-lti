@@ -13,7 +13,7 @@ trait ViewsTrait
 
     protected function initViews()
     {
-        $this->renderer = new PhpRenderer(__DIR__ . '/../../../templates');
+        $this->renderer = new PhpRenderer(__DIR__ . '/../../../views/slim');
     }
 
     protected function renderView(ResponseInterface $response, string $templateFileName, array $data = [])

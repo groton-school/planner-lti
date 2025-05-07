@@ -1,9 +1,10 @@
 import { EventClickArg } from '@fullcalendar/core';
 import * as Canvas from '@groton/canvas-cli.api';
 import bootstrap from 'bootstrap';
-import * as Colors from './Colors';
+import view from '../../views/ejs/assignment.modal.ejs';
 import { Course } from './Course';
 import { paginatedCallback } from './paginatedCallback';
+import { render } from './Views';
 
 type Options = { course_id: string | number; assignment_id: string | number };
 
@@ -39,69 +40,18 @@ export class Assignment {
 
   public async modal(info: EventClickArg) {
     const markCompleteId = `${info.event.extendedProps.planner_item.plannable_type}_${info.event.extendedProps.planner_item.plannable_id}_complete`;
-    const start = new Date(this.assignment.due_at);
-    const modal = document.createElement('div');
-    modal.classList.add('modal');
-    modal.tabIndex = -1;
-    modal.innerHTML = `
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header ${Colors.classNameFromCourseId(this.assignment.course_id)} planner_item assignment ${info.event.extendedProps.planner_item.done ? 'done' : ''}">
-          <div class="modal-title">
-            <small class="course_code">
-              ${(await Course.get(this.assignment.course_id)).course_code}
-            </small>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="${markCompleteId}" ${info.event.extendedProps.planner_item.done ? 'checked' : ''}>
-              <label class="form-check-label assignment name h5" for="${markCompleteId}">
-                ${this.assignment.name}
-              </label>
-            </div>
-          </div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="d-flex">
-            <strong class="p-1">Due</strong>
-            <span class="p-1">${new Date(
-              this.assignment.due_at
-            ).toLocaleDateString('en-us', {
-              month: 'short',
-              day: 'numeric'
-            })}${
-              start.getHours() === 23 && start.getMinutes() === 59
-                ? ''
-                : ` at ${new Date(this.assignment.due_at).toLocaleTimeString(
-                    'en-us',
-                    {
-                      hour: 'numeric',
-                      minute: '2-digit'
-                    }
-                  )}`
-            }</span>${
-              this.assignment.points_possible
-                ? // @ts-expect-error-next-line 2339
-                  `<strong class="ms-auto p-1">Points</strong> <span class="p-1">${this.assignment.submission?.entered_grade ? `${this.assignment.submission.entered_grade} / ` : ''}${
-                    this.assignment.points_possible
-                  }${this.assignment.submission?.workflow_state ? ` (${this.assignment.submission.workflow_state})` : ''}</span>`
-                : ''
-            }
-          </div>
-            ${this.assignment.description ? `<hr/>${this.assignment.description}` : ''}
-        </div>
-        <div class="modal-footer">
-          <a
-            target="_top"
-            href="${consumer_instance_url}/courses/${this.assignment.course_id}/assignments/${this.assignment.id}"
-            type="button"
-            class="btn btn-brand-primary"
-          >
-            Details
-          </a>
-        </div>
-      </div>
-    </div>
-  `;
+    const modal = await render({
+      template: view,
+      parent: document.body,
+      data: {
+        markCompleteId,
+        assignment: this.assignment,
+        course: await Course.get(this.assignment.course_id),
+        planner_item: info.event.extendedProps.planner_item,
+        consumer_instance_url
+      }
+    });
+
     modal
       .querySelector(`#${markCompleteId}`)
       ?.addEventListener('click', async () => {
