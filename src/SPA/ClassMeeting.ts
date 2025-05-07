@@ -68,7 +68,9 @@ export class ClassMeeting {
       data: {
         event: info.event,
         location: this.event.location,
-        course: info.event.extendedProps.course
+        course_class: Colors.classNameFromCourseId(
+          info.event.extendedProps.course?.id
+        )
       }
     });
     new bootstrap.Modal(modal).show();
