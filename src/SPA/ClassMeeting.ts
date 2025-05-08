@@ -73,6 +73,7 @@ export class ClassMeeting {
         )
       }
     });
+    modal.addEventListener('hidden.bs.modal', () => modal.remove());
     new bootstrap.Modal(modal).show();
   }
 }
