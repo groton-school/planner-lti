@@ -21,6 +21,7 @@ export class Assignment {
     callback?: (assignment: Assignment) => unknown
   ) {
     return await paginatedCallback<Canvas.Assignments.Assignment, Assignment>(
+      `/canvas/api/v1/courses/${course_id}/assignments`,
       (assignment) => new Assignment(assignment)
     )(callback);
   }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Application\Actions\API;
+use App\Application\Actions\Canvas;
 use App\Application\Actions\OAuth2;
 use App\Application\Actions\Google;
 use App\Application\Actions\SPA;
@@ -31,8 +31,8 @@ return function (App $app) {
     })->add(SessionStartMiddleware::class);
 
     $app->group('/canvas', function (Group $canvas) {
-        $canvas->get('/brand/stylesheet', API\Brand\Stylesheet::class);
-        $canvas->any('/{path:.*}', API\CanvasProxyAction::class);
+        $canvas->get('/brand/stylesheet', Canvas\Theme\Stylesheet::class);
+        $canvas->any('/{path:.*}', Canvas\Proxy::class);
     })->add(SessionStartMiddleware::class);
 
     // Google Calendar
