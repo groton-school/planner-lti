@@ -61,4 +61,7 @@ import './styles.scss';
       }
     });
   });
+  document.addEventListener('hidden.bs.modal', () =>
+    (this as HTMLElement | undefined)?.remove()
+  );
 })();

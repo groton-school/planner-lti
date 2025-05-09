@@ -79,7 +79,6 @@ export class Assignment {
         }
       });
     document.body.appendChild(modal);
-    modal.addEventListener('hidden.bs.modal', () => modal.remove());
     new bootstrap.Modal(modal).show();
   }
 }
