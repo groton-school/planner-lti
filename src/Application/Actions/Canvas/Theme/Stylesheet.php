@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Actions\API\Brand;
+namespace App\Application\Actions\Canvas\Theme;
 
-use App\Application\Actions\API\AbstractAPIAction;
-use App\Application\Actions\API\CanvasProxyAction;
+use App\Application\Actions\Canvas\Proxy;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 
-class Stylesheet extends CanvasProxyAction
+class Stylesheet extends Proxy
 {
     protected function action(): ResponseInterface
     {

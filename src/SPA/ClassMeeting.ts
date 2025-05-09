@@ -29,7 +29,7 @@ export class ClassMeeting {
     if (!this.fetched[params]) {
       this.fetched[params] = true;
       const response = (await (
-        await fetch(`/calendar/events?${params}`)
+        await fetch(`/google/calendar/events?${params}`)
       ).json()) as {
         items: GoogleCalendar.v3.Event[];
       };

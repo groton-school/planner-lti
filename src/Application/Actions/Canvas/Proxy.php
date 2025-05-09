@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Actions\API;
+namespace App\Application\Actions\Canvas;
 
 use App\Application\Actions\AbstractAction;
 use App\Application\Actions\OAuth2\SettingsInterface;
@@ -14,10 +14,11 @@ use App\Domain\OAuth2\OAuth2Trait;
 use App\Domain\User\UserRepositoryInterface;
 use App\Domain\User\UsersTrait;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-class CanvasProxyAction extends AbstractAction
+class Proxy extends AbstractAction
 {
     use LoggerTrait, UsersTrait, OAuth2Trait, LaunchDataTrait;
 
@@ -63,14 +64,18 @@ class CanvasProxyAction extends AbstractAction
                 $this->users->saveUser($user);
                 $this->logger->info('Refreshed token for ' . $user->getLocator());
             }
-            return $this->client->send(
-                $this->canvas->getAuthenticatedRequest(
-                    $method,
-                    "$url?" . http_build_query($this->request->getQueryParams()),
-                    $user->getTokens(),
-                    $options
-                )
-            );
+            try {
+                return $this->client->send(
+                    $this->canvas->getAuthenticatedRequest(
+                        $method,
+                        "$url?" . http_build_query($this->request->getQueryParams()),
+                        $user->getTokens(),
+                        $options
+                    )
+                );
+            } catch (RequestException $exception) {
+                return $exception->getResponse();
+            }
         }
         return $this->response->withStatus(401);
     }
