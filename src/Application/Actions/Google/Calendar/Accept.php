@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Actions\Calendar;
+namespace App\Application\Actions\Google\Calendar;
 
 use App\Application\Actions\AbstractAction;
 use App\Application\Actions\ViewsTrait;

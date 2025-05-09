@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Actions\Calendar;
+namespace App\Application\Actions\Google\Calendar;
 
 use App\Application\Actions\AbstractAuthenticatedViewAction;
 use App\Domain\LTI\LaunchDataRepositoryInterface;
