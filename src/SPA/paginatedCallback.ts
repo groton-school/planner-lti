@@ -24,7 +24,7 @@ export function paginatedCallback<APIResponse, ObjectType>(
         );
         nextEndpoint =
           matches && matches.length >= 2
-            ? matches[1].replace(new RegExp(`^${consumer_instance_url}`), '')
+            ? `/canvas${matches[1].replace(new RegExp(`^${consumer_instance_url}`), '')}`
             : undefined;
       } else {
         throw new Error();
