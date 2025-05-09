@@ -6,7 +6,6 @@ use App\Application\Actions\API;
 use App\Application\Actions\OAuth2;
 use App\Application\Actions\Google;
 use App\Application\Actions\SPA;
-use Delight\Cookie\Session;
 use GrotonSchool\Slim\GAE\Actions\EmptyAction;
 use GrotonSchool\Slim\LTI\Actions as LTI;
 use Odan\Session\Middleware\SessionStartMiddleware;
