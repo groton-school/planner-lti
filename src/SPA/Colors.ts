@@ -65,7 +65,9 @@ class ColorSet {
 }
 
 export async function get() {
-  const colors = (await (await fetch('/api/v1/users/self/colors')).json()) as {
+  const colors = (await (
+    await fetch('/canvas/api/v1/users/self/colors')
+  ).json()) as {
     custom_colors: { [asset_string: string]: string };
   };
   colors.custom_colors['course_undefined'] = '#999';

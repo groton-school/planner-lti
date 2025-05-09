@@ -1,5 +1,6 @@
 import { EventClickArg } from '@fullcalendar/core';
 import * as Canvas from '@groton/canvas-cli.api';
+import { stringify } from '@groton/canvas-cli.client/dist/Utilities';
 import bootstrap from 'bootstrap';
 import view from '../../views/ejs/assignment.modal.ejs';
 import { Course } from './Course';
@@ -20,7 +21,6 @@ export class Assignment {
     callback?: (assignment: Assignment) => unknown
   ) {
     return await paginatedCallback<Canvas.Assignments.Assignment, Assignment>(
-      `/api/v1/courses/${course_id}/assignments?include[]=submission`,
       (assignment) => new Assignment(assignment)
     )(callback);
   }
@@ -30,7 +30,11 @@ export class Assignment {
       return new Assignment(
         await (
           await fetch(
-            `/api/v1/courses/${course_id}/assignments/${assignment_id}?include[]=submission`
+            `/canvas/api/v1/courses/${course_id}/assignments/${assignment_id}?${new URLSearchParams(
+              stringify({
+                'include[]': 'submission'
+              })
+            )}`
           )
         ).json()
       );

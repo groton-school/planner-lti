@@ -49,7 +49,7 @@ export class PlannerItem {
   private constructor(private item: CanvasPlannerItem) {}
 
   public static list = paginatedCallback<CanvasPlannerItem, PlannerItem>(
-    '/api/v1/planner/items',
+    '/canvas/api/v1/planner/items',
     (item: CanvasPlannerItem) => new PlannerItem(item)
   );
 
@@ -89,7 +89,7 @@ export class PlannerItem {
     if (this.item.planner_override) {
       this.item.planner_override = await (
         await fetch(
-          `/api/v1/planner/overrides/${this.item.planner_override.id}`,
+          `/canvas/api/v1/planner/overrides/${this.item.planner_override.id}`,
           {
             method: 'PUT',
             body: new URLSearchParams({
@@ -101,7 +101,7 @@ export class PlannerItem {
       ).json();
     } else {
       this.item.planner_override = await (
-        await fetch('/api/v1/planner/overrides', {
+        await fetch('/canvas/api/v1/planner/overrides', {
           method: 'POST',
           body: new URLSearchParams({
             plannable_type: this.item.plannable_type,
@@ -118,7 +118,7 @@ export class PlannerItem {
     if (this.item.planner_override) {
       this.item.planner_override = await (
         await fetch(
-          `/api/v1/planner/overrides/${this.item.planner_override.id}`,
+          `/canvas/api/v1/planner/overrides/${this.item.planner_override.id}`,
           {
             method: 'PUT',
             body: new URLSearchParams({

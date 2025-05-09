@@ -14,9 +14,10 @@ use App\Domain\OAuth2\OAuth2Trait;
 use App\Domain\User\UserRepositoryInterface;
 use App\Domain\User\UsersTrait;
 use GuzzleHttp\Client;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-abstract class AbstractAPIAction extends AbstractAction
+class CanvasProxyAction extends AbstractAction
 {
     use LoggerTrait, UsersTrait, OAuth2Trait, LaunchDataTrait;
 
@@ -36,6 +37,15 @@ abstract class AbstractAPIAction extends AbstractAction
         $this->client = new Client([
             'base_uri' => $this->launchData->getLaunchData()->getConsumerInstanceUrl()
         ]);
+    }
+
+    protected function action(): ResponseInterface
+    {
+        return $this->proxyRequest(
+            $this->request->getMethod(),
+            $this->args['path'],
+            ['body' => $this->request->getBody()]
+        );
     }
 
     protected function proxyRequest(

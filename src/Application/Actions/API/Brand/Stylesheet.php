@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Application\Actions\API\Brand;
 
 use App\Application\Actions\API\AbstractAPIAction;
+use App\Application\Actions\API\CanvasProxyAction;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 
-class Stylesheet extends AbstractAPIAction
+class Stylesheet extends CanvasProxyAction
 {
     protected function action(): ResponseInterface
     {

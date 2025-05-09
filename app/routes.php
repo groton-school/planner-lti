@@ -31,25 +31,9 @@ return function (App $app) {
         $login->get('/oauth2/redirect', OAuth2\Redirect::class);
     })->add(SessionStartMiddleware::class);
 
-    // api
-    $app->group('/api/v1', function (Group $api) {
-        $api->get('/brand/stylesheet', API\Brand\Stylesheet::class);
-        $api->group('/courses', function (Group $courses) {
-            $courses->get('/{course_id}', API\Courses\Get::class);
-            $courses->group('/{course_id}', function (Group $course) {
-                $course->get('/assignments', API\Assignments\ListForCourse::class);
-                $course->get('/assignments/{assignment_id}', API\Assignments\Get::class);
-            });
-        });
-        $api->group('/planner', function (Group $planner) {
-            $planner->get('/items', API\Planner\ListItems::class);
-            $planner->post('/overrides', API\Planner\CreatePlannerOverride::class);
-            $planner->put('/overrides/{override_id}', API\Planner\UpdatePlannerOverride::class);
-        });
-        $api->group('/users/{user_id}', function (Group $self) {
-            $self->get('/colors', API\Users\ListCustomColors::class);
-            $self->get('/courses', API\Users\ListCoursesForUser::class);
-        });
+    $app->group('/canvas', function (Group $canvas) {
+        $canvas->get('/brand/stylesheet', API\Brand\Stylesheet::class);
+        $canvas->any('/{path:.*}', API\CanvasProxyAction::class);
     })->add(SessionStartMiddleware::class);
 
     // Google Calendar
