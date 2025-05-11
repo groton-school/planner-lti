@@ -1,59 +1,22 @@
-import {
-  DateTimeString,
-  PathString,
-  URLString
-} from '@battis/descriptive-types';
 import { EventInput } from '@fullcalendar/core';
-import * as Canvas from '@groton/canvas-cli.api';
-import view from '../../../views/ejs/todo.ejs';
+import { stringify } from '@groton/canvas-cli.utilities';
+import todo from '../../../views/ejs/PlannerItem/todo.ejs';
+import * as Canvas from '../Canvas';
 import * as Colors from '../Colors';
 import { Course } from '../Course';
 import * as Utilities from '../Utilities';
 import { render } from '../Views';
 import './styles.scss';
 
-type CanvasPlannerItem = {
-  context_type: string;
-  course_id?: number;
-  plannable_id: number;
-  planner_override?: Canvas.Planner.PlannerOverride;
-  plannable_type: string;
-  new_activity: boolean;
-  submissions?: {
-    submitted: boolean;
-    excused: boolean;
-    graded: boolean;
-    posted_at: DateTimeString<'ISO'>;
-    late: boolean;
-    missing: boolean;
-    needs_grading: boolean;
-    has_feedback: boolean;
-    redo_request: boolean;
-  };
-  plannable_date: DateTimeString<'ISO'>;
-  plannable: {
-    id: number;
-    title: string;
-    created_at: DateTimeString<'ISO'>;
-    updated_at: DateTimeString<'ISO'>;
-    points_possible?: number;
-    due_at: DateTimeString<'ISO'>;
-    read_state?: 'unread' | 'read';
-  };
-  html_url: PathString;
-  context_name: string;
-  context_image: URLString;
-};
-
 export class PlannerItem {
-  private constructor(private item: CanvasPlannerItem) {}
+  private constructor(private item: Canvas.Planner.PlannerItem) {}
 
   public static list = Utilities.paginatedCallback<
     Canvas.Planner.PlannerItem,
     PlannerItem
   >(
     '/canvas/api/v1/planner/items',
-    (item: CanvasPlannerItem) => new PlannerItem(item)
+    (item: Canvas.Planner.PlannerItem) => new PlannerItem(item)
   );
 
   public get plannable_type() {
@@ -95,7 +58,7 @@ export class PlannerItem {
           `/canvas/api/v1/planner/overrides/${this.item.planner_override.id}`,
           {
             method: 'PUT',
-            body: new URLSearchParams({
+            body: stringify({
               marked_complete: 'true',
               dismissed: 'true'
             })
@@ -106,7 +69,7 @@ export class PlannerItem {
       this.item.planner_override = await (
         await fetch('/canvas/api/v1/planner/overrides', {
           method: 'POST',
-          body: new URLSearchParams({
+          body: stringify({
             plannable_type: this.item.plannable_type,
             plannable_id: this.item.plannable_id.toString(),
             marked_complete: 'true',
@@ -124,7 +87,7 @@ export class PlannerItem {
           `/canvas/api/v1/planner/overrides/${this.item.planner_override.id}`,
           {
             method: 'PUT',
-            body: new URLSearchParams({
+            body: stringify({
               marked_complete: 'false',
               dismissed: 'false'
             })
@@ -134,8 +97,9 @@ export class PlannerItem {
     }
   }
 
-  public toEvent(): EventInput {
+  public async toEvent(): Promise<EventInput> {
     const start = new Date(this.item.plannable_date);
+    const course = await Course.get(this.item.plannable_id);
     return {
       id: `${this.item.plannable_type}_${this.item.plannable.id}`,
       title: this.item.plannable.title,
@@ -146,13 +110,13 @@ export class PlannerItem {
         'planner_item',
         this.done ? 'done' : ''
       ],
-      extendedProps: { planner_item: this }
+      extendedProps: { planner_item: this, course }
     };
   }
 
   public async toTodo() {
     return await render({
-      template: view,
+      template: todo,
       data: {
         consumer_instance_url,
         done: this.done,
