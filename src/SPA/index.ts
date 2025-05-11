@@ -8,17 +8,13 @@ import './styles.scss';
 
 (async () => {
   document.addEventListener('DOMContentLoaded', async () => {
-    const calendarElt = document.querySelector('#calendar');
     const todoElt = document.querySelector('#todo');
-    if (!calendarElt) {
-      throw new Error(`Missing #calendar element`);
-    }
     if (!todoElt) {
       throw new Error(`Missing #todo element`);
     }
     CustomColors.get();
     await Course.list();
-    const calendar = Calendar.replaceContent(calendarElt, {
+    Calendar.replaceContent('#calendar', {
       eventClick: async (info) => {
         if (info.event.classNames.includes('planner_item')) {
           switch (info.event.extendedProps.planner_item.plannable_type) {
@@ -41,18 +37,18 @@ import './styles.scss';
       viewClassNames: (info) => {
         ClassMeeting.list(info.view).then((classMeetings) => {
           for (const classMeeting of classMeetings) {
-            calendar.addEvent(classMeeting.toEvent());
+            Calendar.addEvent(classMeeting.toEvent());
           }
         });
         return [];
       }
     });
-    PlannerItem.list(async (item) => {
-      if (item.isEvent()) {
-        calendar.addEvent(item.toEvent());
       } else {
         if (item.done) {
           todoElt.querySelector('#done')?.appendChild(await item.toTodo());
+    PlannerItem.list({
+      callback: async (item) => {
+        if (item.isEvent()) {
         } else {
           todoElt
             .querySelector('#incomplete')

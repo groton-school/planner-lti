@@ -1,12 +1,22 @@
-import { Calendar, CalendarOptions } from '@fullcalendar/core';
+import { Calendar, CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
 
-export function replaceContent(parent: Element, options: CalendarOptions = {}) {
-  const calendarElt = document.createElement('div');
-  calendarElt.id = 'calendar';
-  const calendar = new Calendar(calendarElt, {
+let calendar: Calendar | undefined = undefined;
+
+const READY = 'calendar.ready';
+
+export function replaceContent(
+  selector: string,
+  options: CalendarOptions = {}
+) {
+  const elt = document.querySelector(selector) as HTMLElement;
+  if (!elt) {
+    throw new Error(`${selector} not found in DOM`);
+  }
+  elt.innerHTML = '';
+  calendar = new Calendar(elt, {
     plugins: [dayGridPlugin, listPlugin, timeGridPlugin],
     initialView: 'timeGridWeek',
     headerToolbar: {
@@ -16,7 +26,18 @@ export function replaceContent(parent: Element, options: CalendarOptions = {}) {
     },
     ...options
   });
-  parent.replaceChildren(calendarElt);
   calendar.render();
-  return calendar;
+  document.dispatchEvent(new Event(READY));
+}
+
+export function addEvent(event: EventInput) {
+  if (!calendar) {
+    document.addEventListener(READY, () => addEvent(event));
+    return;
+  }
+  if (event.id) {
+    if (!calendar.getEventById(event.id)) {
+      calendar.addEvent(event);
+    }
+  }
 }
