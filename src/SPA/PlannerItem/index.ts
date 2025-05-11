@@ -8,7 +8,7 @@ import * as Canvas from '@groton/canvas-cli.api';
 import view from '../../../views/ejs/todo.ejs';
 import * as Colors from '../Colors';
 import { Course } from '../Course';
-import { paginatedCallback } from '../paginatedCallback';
+import * as Utilities from '../Utilities';
 import { render } from '../Views';
 import './styles.scss';
 
@@ -48,7 +48,10 @@ type CanvasPlannerItem = {
 export class PlannerItem {
   private constructor(private item: CanvasPlannerItem) {}
 
-  public static list = paginatedCallback<CanvasPlannerItem, PlannerItem>(
+  public static list = Utilities.paginatedCallback<
+    Canvas.Planner.PlannerItem,
+    PlannerItem
+  >(
     '/canvas/api/v1/planner/items',
     (item: CanvasPlannerItem) => new PlannerItem(item)
   );
