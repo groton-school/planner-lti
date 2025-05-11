@@ -99,7 +99,9 @@ export class PlannerItem {
 
   public async toEvent(): Promise<EventInput> {
     const start = new Date(this.item.plannable_date);
-    const course = await Course.get(this.item.plannable_id);
+    const course = this.item.course_id
+      ? await Course.get(this.item.course_id)
+      : undefined;
     return {
       id: `${this.item.plannable_type}_${this.item.plannable.id}`,
       title: this.item.plannable.title,
