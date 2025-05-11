@@ -22,6 +22,8 @@ class Proxy extends AbstractAction
 {
     use LoggerTrait, UsersTrait, OAuth2Trait, LaunchDataTrait;
 
+    private const ACTUAL_URL_HEADER = 'X-Actual-URL';
+
     protected Client $client;
 
     public function __construct(
@@ -77,9 +79,9 @@ class Proxy extends AbstractAction
                         $user->getTokens(),
                         $options
                     )
-                );
+                )->withAddedHeader(self::ACTUAL_URL_HEADER, $url);
             } catch (RequestException $exception) {
-                return $exception->getResponse();
+                return $exception->getResponse()->withAddedHeader(self::ACTUAL_URL_HEADER, $url);
             }
         }
         return $this->response->withStatus(401);
