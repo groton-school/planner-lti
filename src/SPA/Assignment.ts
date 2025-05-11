@@ -1,6 +1,5 @@
 import { EventClickArg } from '@fullcalendar/core';
 import * as Canvas from '@groton/canvas-cli.api';
-import { stringify } from '@groton/canvas-cli.client/dist/Utilities';
 import bootstrap from 'bootstrap';
 import view from '../../views/ejs/assignment.modal.ejs';
 import { Course } from './Course';
