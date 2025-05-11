@@ -7,5 +7,7 @@
 !/app
 !/public
 !/src
+/src/SPA
 !/views
-/views/SPA/
+/views/*
+!/views/slim
