@@ -1,5 +1,6 @@
 import { Assignment } from './Assignment';
 import * as Calendar from './Calendar';
+import { CalendarEvent } from './CalendarEvent';
 import { ClassMeeting } from './ClassMeeting';
 import * as CustomColors from './Colors';
 import { Course } from './Course';
@@ -17,42 +18,68 @@ import './styles.scss';
     Calendar.replaceContent('#calendar', {
       eventClick: async (info) => {
         if (info.event.classNames.includes('planner_item')) {
-          switch (info.event.extendedProps.planner_item.plannable_type) {
+          const plannerItem = info.event.extendedProps
+            .planner_item as PlannerItem;
+          switch (plannerItem.plannable_type) {
             case 'assignment':
               return (
                 await Assignment.get({
-                  course_id: info.event.extendedProps.planner_item.course_id,
-                  assignment_id:
-                    info.event.extendedProps.planner_item.plannable_id
+                  course_id: plannerItem.course_id!,
+                  assignment_id: plannerItem.plannable_id
                 })
-              ).modal(info);
+              ).detail(info);
               break;
             default:
               console.log(info);
           }
         } else if (info.event.classNames.includes('class_meeting')) {
-          await info.event.extendedProps.class_meeting.modal(info);
+          await (info.event.extendedProps.class_meeting as ClassMeeting).detail(
+            info
+          );
         }
       },
-      viewClassNames: (info) => {
-        ClassMeeting.list(info.view).then((classMeetings) => {
+      datesSet: (info) => {
+        ClassMeeting.list({
+          params: {
+            timeMin: info.view.activeStart.toISOString(),
+            timeMax: info.view.activeEnd.toISOString()
+          }
+        }).then((classMeetings) => {
           for (const classMeeting of classMeetings) {
             Calendar.addEvent(classMeeting.toEvent());
           }
         });
-        return [];
+        Course.list().then((courses) => {
+          for (let i = 0; i < courses.length; i += 10) {
+            CalendarEvent.list({
+              params: {
+                context_codes: courses
+                  .slice(i, i + 10)
+                  .map((course) => course.context_code),
+                type: 'assignment',
+                start_date: info.view.activeStart.toISOString(),
+                end_date: info.view.activeEnd.toISOString()
+              },
+              callback: (calendarEvent) => {
+                Calendar.addEvent(calendarEvent.toEvent());
+              }
+            });
+          }
+        });
       }
     });
-      } else {
-        if (item.done) {
-          todoElt.querySelector('#done')?.appendChild(await item.toTodo());
     PlannerItem.list({
       callback: async (item) => {
         if (item.isEvent()) {
+          Calendar.addEvent(await item.toEvent());
         } else {
-          todoElt
-            .querySelector('#incomplete')
-            ?.appendChild(await item.toTodo());
+          if (item.done) {
+            todoElt.querySelector('#done')?.appendChild(await item.toTodo());
+          } else {
+            todoElt
+              .querySelector('#incomplete')
+              ?.appendChild(await item.toTodo());
+          }
         }
       }
     });
