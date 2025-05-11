@@ -42,9 +42,14 @@ class Proxy extends AbstractAction
 
     protected function action(): ResponseInterface
     {
+        $uri = $this->request->getUri();
+        $partial = str_replace('/canvas', '', $uri->getPath());
+        if (strlen($query = $uri->getQuery())) {
+            $partial .= "?$query";
+        }
         return $this->proxyRequest(
             $this->request->getMethod(),
-            $this->args['path'],
+            $partial,
             ['body' => $this->request->getBody()]
         );
     }
@@ -68,7 +73,7 @@ class Proxy extends AbstractAction
                 return $this->client->send(
                     $this->canvas->getAuthenticatedRequest(
                         $method,
-                        "$url?" . http_build_query($this->request->getQueryParams()),
+                        $url,
                         $user->getTokens(),
                         $options
                     )
