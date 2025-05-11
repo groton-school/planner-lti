@@ -1,35 +1,31 @@
+import { DateTimeString } from '@battis/descriptive-types';
 import GoogleCalendar from '@battis/google.calendar';
-import { EventClickArg, EventInput, ViewApi } from '@fullcalendar/core';
+import { EventClickArg, EventInput } from '@fullcalendar/core';
+import { stringify } from '@groton/canvas-cli.utilities';
 import bootstrap from 'bootstrap';
-import view from '../../views/ejs/classMeeting.modal.ejs';
+import detailModal from '../../views/ejs/ClassMeeting/detail.modal.ejs';
 import * as Colors from './Colors';
 import { Course } from './Course';
 import { render } from './Views';
+
+type Params = {
+  timeMin?: DateTimeString<'ISO'>;
+  timeMax?: DateTimeString<'ISO'>;
+  singleEvents?: 'true' | 'false';
+};
 
 export class ClassMeeting {
   private static fetched: Record<string, boolean> = {};
 
   public constructor(private event: GoogleCalendar.v3.Event) {}
 
-  public static async list(view?: ViewApi) {
-    const now = new Date();
-    let start = new Date(
-      `${now.getMonth()}/${now.getDate()}/${now.getFullYear()} 12:00 AM`
-    );
-    let end = new Date(`${now.getMonth() + 1}/1/${now.getFullYear()} 12:00 AM`);
-    if (view) {
-      start = view.activeStart;
-      end = view.activeEnd;
-    }
-    const params = new URLSearchParams({
-      timeMin: start.toISOString(),
-      timeMax: end.toISOString(),
-      singleEvents: 'true'
-    }).toString();
-    if (!this.fetched[params]) {
-      this.fetched[params] = true;
+  public static async list({ params }: { params: Params } = { params: {} }) {
+    params.singleEvents = 'true';
+    const paramString = stringify(params);
+    if (!this.fetched[paramString]) {
+      this.fetched[paramString] = true;
       const response = (await (
-        await fetch(`/google/calendar/events?${params}`)
+        await fetch(`/google/calendar/events?${paramString}`)
       ).json()) as {
         items: GoogleCalendar.v3.Event[];
       };
@@ -61,9 +57,9 @@ export class ClassMeeting {
     };
   }
 
-  public async modal(info: EventClickArg) {
+  public async detail(info: EventClickArg) {
     const modal = await render({
-      template: view,
+      template: detailModal,
       parent: document.body,
       data: {
         event: info.event,
@@ -73,7 +69,6 @@ export class ClassMeeting {
         )
       }
     });
-    modal.addEventListener('hidden.bs.modal', () => modal.remove());
     new bootstrap.Modal(modal).show();
   }
 }
