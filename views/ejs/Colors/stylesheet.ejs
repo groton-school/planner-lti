@@ -1,0 +1,35 @@
+<style>
+  <% for (const asset of assets) { %>
+    :root {
+        --<%= asset.contextCode %>: <%= asset.base %>;
+    }
+
+    .<%= asset.contextCode %>.class_meeting,
+    .<%= asset.contextCode %>.class_meeting .fc-event-main {
+      background: white;
+      color: <%= asset.whiteText %>;
+      border: <%= asset.base %> solid 1pt;
+    }
+
+    .<%= asset.contextCode %>.planner_item,
+    #todo .<%= asset.contextCode %>.item,
+    .<%= asset.contextCode %>.assignment,
+    .<%= asset.contextCode %>.class_meeting.modal-header {
+      background: <%= asset.base %>;
+      color: <%= asset.baseText %>;
+      border-color: <%= asset.base %> solid 1px;
+    }
+
+    .<%= asset.contextCode %>.planner_item.done,
+    #todo .<%= asset.contextCode %>.item.done {
+      background: <%= asset.lighter %>;
+      color: <%= asset.lighterText %>;
+    }
+
+    .<%= asset.contextCode %> .form-check-input:checked {
+      background-color: <%= asset.base %>;
+      border-color: <%= asset.base %>;
+      color: <%= asset.baseText %>;
+    }
+  <% } %>
+</style>
