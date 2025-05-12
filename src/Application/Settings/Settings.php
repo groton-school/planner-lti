@@ -15,6 +15,7 @@ class Settings implements SettingsInterface
     public const SCOPES = 'SCOPES';
     public const CACHE_DURATION = 'CACHE_DURATION';
     public const REDIRECT_URI = 'REDIRECT_URI';
+    public const LOG_REQUESTS = 'LOG_REQUESTS';
 
     private array $settings;
 
@@ -72,5 +73,10 @@ class Settings implements SettingsInterface
     public function getOAuth2RedirectUri(): string
     {
         return $this->settings[self::REDIRECT_URI];
+    }
+
+    public function logRequests(): bool
+    {
+        return isset($this->settings[self::LOG_REQUESTS]) && $this->settings[self::LOG_REQUESTS];
     }
 }

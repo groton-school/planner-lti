@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Application\Settings\Settings;
 use App\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
+use Google\Service\Calendar\Setting;
 use Odan\Session\SessionInterface;
 
 return function (ContainerBuilder $containerBuilder) {
@@ -16,9 +17,10 @@ return function (ContainerBuilder $containerBuilder) {
             $PROJECT_URL = 'https://' . getenv('HTTP_HOST');
             $SCOPES = ['https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly'];
             return new Settings([
-                'displayErrorDetails' => false,
-                'logError'            => true,
-                'logErrorDetails'     => true,
+                'displayErrorDetails'   => false,
+                'logError'              => true,
+                'logErrorDetails'       => true,
+                Settings::LOG_REQUESTS  => true,
 
                 // get Google Cloud Project ID and URL from local environment
                 Settings::PROJECT_ID => getenv('GOOGLE_CLOUD_PROJECT'),

@@ -22,8 +22,6 @@ class Proxy extends AbstractAction
 {
     use LoggerTrait, UsersTrait, OAuth2Trait, LaunchDataTrait;
 
-    private const ACTUAL_URL_HEADER = 'X-Actual-URL';
-
     protected Client $client;
 
     public function __construct(
@@ -72,16 +70,36 @@ class Proxy extends AbstractAction
                 $this->logger->info('Refreshed token for ' . $user->getLocator());
             }
             try {
-                return $this->client->send(
-                    $this->canvas->getAuthenticatedRequest(
-                        $method,
-                        $url,
-                        $user->getTokens(),
-                        $options
-                    )
-                )->withAddedHeader(self::ACTUAL_URL_HEADER, $url);
+                $request = $this->canvas->getAuthenticatedRequest(
+                    $method,
+                    $url,
+                    $user->getTokens(),
+                    $options
+                );
+                $response = $this->client->send($request);
+                if ($this->settings->logRequests()) {
+                    $this->logger->debug($request->getMethod() . ' ' . $request->getUri(), [
+                        'headers' => $request->getHeaders(),
+                        'body' => $request->getBody(),
+                        'response' => [
+                            'status' => $response->getStatusCode(),
+                            'headers' => $response->getHeaders(),
+                            'body' => $response->getBody()
+                        ]
+                    ]);
+                }
+                return $response;
             } catch (RequestException $exception) {
-                return $exception->getResponse()->withAddedHeader(self::ACTUAL_URL_HEADER, $url);
+                $this->logger->error($request->getMethod() . ' ' . $request->getUri(), [
+                    'headers' => $request->getHeaders(),
+                    'body' => $request->getBody(),
+                    'response' => [
+                        'status' => $exception->getResponse()->getStatusCode(),
+                        'headers' => $exception->getResponse()->getHeaders(),
+                        'body' => $exception->getResponse()->getBody()
+                    ]
+                ]);
+                return $exception->getResponse();
             }
         }
         return $this->response->withStatus(401);
