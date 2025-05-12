@@ -1,6 +1,7 @@
-import * as Canvas from '@groton/canvas-cli.api';
 import { stringify } from '@groton/canvas-cli.utilities';
-import { Options, paginatedCallback } from './Utilities/paginatedCallback';
+import { Options, paginatedCallback } from '../Utilities/paginatedCallback';
+import * as Canvas from './Canvas';
+import * as Client from './Client';
 
 const minimalCourse = {
   id: undefined,
@@ -29,7 +30,7 @@ export class Course {
         Canvas.v1.Users.Courses.listSearchParameters
       >(
         '/canvas/api/v1/users/self/favorites/courses',
-        (course) => new Course(course)
+        (course: Canvas.Courses.Course) => new Course(course)
       )({ callback, params });
     } else if (callback) {
       for (const course of Course.lists[key]) {
@@ -39,13 +40,24 @@ export class Course {
     return Course.lists[key];
   }
 
-  public static async get(course_id: string | number) {
-    if (!(course_id in this.cache)) {
-      return new Course(
-        await (await fetch(`/canvas/api/v1/courses/${course_id}`)).json()
-      );
+  public static async get(id: string | number) {
+    if (!(id in this.cache)) {
+      const course = await Client.Get<
+        Canvas.Courses.Course,
+        Canvas.v1.Courses.getPathParameters,
+        Canvas.v1.Courses.getSearchParameters,
+        never
+      >({
+        endpoint: '/canvas/api/v1/courses/:id',
+        params: {
+          path: { id: id.toString() }
+        }
+      });
+      if (course) {
+        this.cache[id] = new Course(course);
+      }
     }
-    return this.cache[course_id];
+    return this.cache[id];
   }
 
   public get id() {
@@ -62,6 +74,10 @@ export class Course {
 
   public get context_code() {
     return `course_${this.course.id}`;
+  }
+
+  public isTeacher(): boolean {
+    return !!this.course.enrollments.find((e) => e.type === 'teacher');
   }
 
   public static fromName(name: string) {

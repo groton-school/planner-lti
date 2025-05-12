@@ -9,5 +9,4 @@
 !/src
 /src/SPA
 !/views
-/views/*
-!/views/slim
+/views/SPA

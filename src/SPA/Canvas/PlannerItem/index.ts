@@ -1,15 +1,19 @@
 import { EventInput } from '@fullcalendar/core';
-import { stringify } from '@groton/canvas-cli.utilities';
-import todo from '../../../views/ejs/PlannerItem/todo.ejs';
+import * as Utilities from '../../Utilities';
+import { render } from '../../Utilities/Views';
 import * as Canvas from '../Canvas';
+import * as Client from '../Client';
 import * as Colors from '../Colors';
 import { Course } from '../Course';
-import * as Utilities from '../Utilities';
-import { render } from '../Views';
 import './styles.scss';
+import todo from './todo.ejs';
 
 export class PlannerItem {
-  private constructor(private item: Canvas.Planner.PlannerItem) {}
+  private static cache: PlannerItem[] = [];
+
+  private constructor(private item: Canvas.Planner.PlannerItem) {
+    PlannerItem.cache.push(this);
+  }
 
   public static list = Utilities.paginatedCallback<
     Canvas.Planner.PlannerItem,
@@ -53,55 +57,63 @@ export class PlannerItem {
 
   public async markComplete() {
     if (this.item.planner_override) {
-      this.item.planner_override = await (
-        await fetch(
-          `/canvas/api/v1/planner/overrides/${this.item.planner_override.id}`,
-          {
-            method: 'PUT',
-            body: stringify({
-              marked_complete: 'true',
-              dismissed: 'true'
-            })
+      this.item.planner_override = await Client.Put<
+        Canvas.Planner.PlannerOverride,
+        Canvas.v1.Planner.Overrides.updatePathParameters,
+        never,
+        Canvas.v1.Planner.Overrides.updateFormParameters
+      >({
+        endpoint: '/canvas/api/v1/planner/overrides/:id',
+        params: {
+          path: { id: this.item.planner_override.id.toString() },
+          form: {
+            marked_complete: true.toString(),
+            dismissed: true.toString()
           }
-        )
-      ).json();
+        }
+      });
     } else {
-      this.item.planner_override = await (
-        await fetch('/canvas/api/v1/planner/overrides', {
-          method: 'POST',
-          body: stringify({
+      this.item.planner_override = await Client.Post<
+        Canvas.Planner.PlannerOverride,
+        never,
+        never,
+        Canvas.v1.Planner.Overrides.createFormParameters
+      >({
+        endpoint: '/canvas/api/v1/planner/overrides',
+        params: {
+          form: {
             plannable_type: this.item.plannable_type,
-            plannable_id: this.item.plannable_id.toString(),
-            marked_complete: 'true',
-            dismissed: 'true'
-          })
-        })
-      ).json();
+            plannable_id: this.item.plannable_id,
+            marked_complete: true,
+            dismissed: true
+          }
+        }
+      });
     }
   }
 
   public async markIncomplete() {
     if (this.item.planner_override) {
-      this.item.planner_override = await (
-        await fetch(
-          `/canvas/api/v1/planner/overrides/${this.item.planner_override.id}`,
-          {
-            method: 'PUT',
-            body: stringify({
-              marked_complete: 'false',
-              dismissed: 'false'
-            })
+      this.item.planner_override = await Client.Put<
+        Canvas.Planner.PlannerOverride,
+        Canvas.v1.Planner.Overrides.updatePathParameters,
+        never,
+        Canvas.v1.Planner.Overrides.updateFormParameters
+      >({
+        endpoint: '/canvas/api/v1/planner/overrides/:id',
+        params: {
+          path: { id: this.item.planner_override.id.toString() },
+          form: {
+            marked_complete: false.toString(),
+            dismissed: false.toString()
           }
-        )
-      ).json();
+        }
+      });
     }
   }
 
   public async toEvent(): Promise<EventInput> {
     const start = new Date(this.item.plannable_date);
-    const course = this.item.course_id
-      ? await Course.get(this.item.course_id)
-      : undefined;
     return {
       id: `${this.item.plannable_type}_${this.item.plannable.id}`,
       title: this.item.plannable.title,
@@ -109,10 +121,11 @@ export class PlannerItem {
       allDay: start.getHours() === 23 && start.getMinutes() === 59,
       classNames: [
         Colors.classNameFromCourseId(this.item.course_id),
+        'canvas',
         'planner_item',
+        this.item.plannable_type,
         this.done ? 'done' : ''
-      ],
-      extendedProps: { planner_item: this, course }
+      ]
     };
   }
 
@@ -128,5 +141,13 @@ export class PlannerItem {
           : undefined
       }
     });
+  }
+
+  public static fromAssignmentId(plannable_id: string | number) {
+    return this.cache.find(
+      (item) =>
+        item.plannable_type === 'assignment' &&
+        `${item.plannable_id}` === `${plannable_id}`
+    );
   }
 }

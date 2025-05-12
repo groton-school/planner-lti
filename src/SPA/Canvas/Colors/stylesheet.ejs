@@ -4,23 +4,23 @@
         --<%= asset.contextCode %>: <%= asset.base %>;
     }
 
-    .<%= asset.contextCode %>.class_meeting,
-    .<%= asset.contextCode %>.class_meeting .fc-event-main {
+    .<%= asset.contextCode %>.google.calendar_event,
+    .<%= asset.contextCode %>.google.calendar_event .fc-event-main {
       background: white;
       color: <%= asset.whiteText %>;
       border: <%= asset.base %> solid 1pt;
     }
 
-    .<%= asset.contextCode %>.planner_item,
+    .<%= asset.contextCode %>.canvas.planner_item,
     #todo .<%= asset.contextCode %>.item,
-    .<%= asset.contextCode %>.assignment,
-    .<%= asset.contextCode %>.class_meeting.modal-header {
+    .<%= asset.contextCode %>.canvas.assignment,
+    .<%= asset.contextCode %>.google.calendar_event.modal-header {
       background: <%= asset.base %>;
       color: <%= asset.baseText %>;
       border-color: <%= asset.base %> solid 1px;
     }
 
-    .<%= asset.contextCode %>.planner_item.done,
+    .<%= asset.contextCode %>.canvas.planner_item.done,
     #todo .<%= asset.contextCode %>.item.done {
       background: <%= asset.lighter %>;
       color: <%= asset.lighterText %>;

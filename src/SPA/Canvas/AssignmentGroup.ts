@@ -1,5 +1,5 @@
-import * as Canvas from '@groton/canvas-cli.api';
-import { Options, paginatedCallback } from './Utilities/paginatedCallback';
+import { Options, paginatedCallback } from '../Utilities/paginatedCallback';
+import * as Canvas from './Canvas';
 
 type ListOptions = Options<
   AssignmentGroup,

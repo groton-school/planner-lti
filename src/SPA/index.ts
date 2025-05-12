@@ -1,10 +1,7 @@
-import { Assignment } from './Assignment';
-import * as Calendar from './Calendar';
-import { CalendarEvent } from './CalendarEvent';
-import { ClassMeeting } from './ClassMeeting';
-import * as CustomColors from './Colors';
-import { Course } from './Course';
-import { PlannerItem } from './PlannerItem';
+import { index_of_active_global_notification_for_user } from '@groton/canvas-cli.api/dist/Endpoints/V1/Accounts/AccountNotifications';
+import * as Canvas from './Canvas';
+import * as FullCalendar from './FullCalendar';
+import * as Google from './Google';
 import './styles.scss';
 
 (async () => {
@@ -13,45 +10,34 @@ import './styles.scss';
     if (!todoElt) {
       throw new Error(`Missing #todo element`);
     }
-    CustomColors.get();
-    await Course.list();
-    Calendar.replaceContent('#calendar', {
+    Canvas.Colors.get();
+    await Canvas.Course.list();
+    FullCalendar.replaceContent('#calendar', {
       eventClick: async (info) => {
-        if (info.event.classNames.includes('planner_item')) {
-          const plannerItem = info.event.extendedProps
-            .planner_item as PlannerItem;
-          switch (plannerItem.plannable_type) {
-            case 'assignment':
-              return (
-                await Assignment.get({
-                  course_id: plannerItem.course_id!,
-                  assignment_id: plannerItem.plannable_id
-                })
-              ).detail(info);
-              break;
-            default:
-              console.log(info);
+        if (Canvas.CalendarEvent.isAssociated(info)) {
+          const assignment: Canvas.Assignment | undefined =
+            Canvas.CalendarEvent.fromEventId(info.event.id).assignment;
+          if (assignment) {
+            assignment.detail(info);
           }
-        } else if (info.event.classNames.includes('class_meeting')) {
-          await (info.event.extendedProps.class_meeting as ClassMeeting).detail(
-            info
-          );
+        } else if (Google.CalendarEvent.isAssociated(info)) {
+          await Google.CalendarEvent.fromEventId(info.event.id).detail(info);
         }
       },
       datesSet: (info) => {
-        ClassMeeting.list({
+        Google.CalendarEvent.list({
           params: {
             timeMin: info.view.activeStart.toISOString(),
             timeMax: info.view.activeEnd.toISOString()
           }
         }).then((classMeetings) => {
           for (const classMeeting of classMeetings) {
-            Calendar.addEvent(classMeeting.toEvent());
+            FullCalendar.addEvent(classMeeting.toEvent());
           }
         });
-        Course.list().then((courses) => {
+        Canvas.Course.list().then((courses) => {
           for (let i = 0; i < courses.length; i += 10) {
-            CalendarEvent.list({
+            Canvas.CalendarEvent.list({
               params: {
                 context_codes: courses
                   .slice(i, i + 10)
@@ -61,18 +47,16 @@ import './styles.scss';
                 end_date: info.view.activeEnd.toISOString()
               },
               callback: (calendarEvent) => {
-                Calendar.addEvent(calendarEvent.toEvent());
+                FullCalendar.addEvent(calendarEvent.toEvent());
               }
             });
           }
         });
       }
     });
-    PlannerItem.list({
+    Canvas.PlannerItem.list({
       callback: async (item) => {
-        if (item.isEvent()) {
-          Calendar.addEvent(await item.toEvent());
-        } else {
+        if (!item.isEvent()) {
           if (item.done) {
             todoElt.querySelector('#done')?.appendChild(await item.toTodo());
           } else {

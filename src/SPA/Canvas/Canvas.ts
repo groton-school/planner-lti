@@ -3,17 +3,20 @@ import {
   PathString,
   URLString
 } from '@battis/descriptive-types';
-import { Planner as CPlanner } from '@groton/canvas-cli.api';
+import { Planner as CanvasPlanner } from '@groton/canvas-cli.api';
 
 export * from '@groton/canvas-cli.api';
 
 /* eslint @typescript-eslint/no-namespace: 0 */
 export namespace Planner {
+  export type PlannerOverride = CanvasPlanner.PlannerOverride;
+  export type PlannerNote = CanvasPlanner.PlannerNote;
+
   export type PlannerItem = {
     context_type: string;
     course_id?: number;
     plannable_id: number;
-    planner_override?: CPlanner.PlannerOverride;
+    planner_override?: CanvasPlanner.PlannerOverride;
     plannable_type: string;
     new_activity: boolean;
     submissions?: {

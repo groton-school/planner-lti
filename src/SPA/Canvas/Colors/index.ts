@@ -1,6 +1,6 @@
-import stylesheet from '../../../views/ejs/Colors/stylesheet.ejs';
-import { render } from '../Views';
+import { render } from '../../Utilities/Views';
 import { ColorSet } from './ColorSet';
+import stylesheet from './stylesheet.ejs';
 
 export async function get() {
   const colors = (await (
