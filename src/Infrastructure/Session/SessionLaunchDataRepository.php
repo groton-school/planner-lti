@@ -6,7 +6,7 @@ namespace App\Infrastructure\Session;
 
 use App\Domain\LTI\LaunchData;
 use App\Domain\LTI\LaunchDataRepositoryInterface;
-use Exception;
+use App\Domain\User\UnauthorizedException;
 use Odan\Session\SessionInterface;
 
 class SessionLaunchDataRepository implements LaunchDataRepositoryInterface
@@ -38,6 +38,6 @@ class SessionLaunchDataRepository implements LaunchDataRepositoryInterface
                 )
             );
         }
-        throw new Exception('Launch data not present');
+        throw new UnauthorizedException('Launch data not present');
     }
 }

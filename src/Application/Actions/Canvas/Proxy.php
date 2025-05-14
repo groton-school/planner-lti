@@ -11,10 +11,12 @@ use App\Domain\LTI\LaunchDataRepositoryInterface;
 use App\Domain\LTI\LaunchDataTrait;
 use App\Domain\OAuth2\AppCredentialsRepositoryInterface;
 use App\Domain\OAuth2\OAuth2Trait;
+use App\Domain\User\UnauthorizedException;
 use App\Domain\User\UserRepositoryInterface;
 use App\Domain\User\UsersTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
@@ -35,30 +37,31 @@ class Proxy extends AbstractAction
         $this->initLaunchData($launchData);
         $this->initUsers($launchData, $users);
         $this->initOAuth2($settings, $credentials, $launchData);
-        $this->client = new Client([
-            'base_uri' => $this->launchData->getLaunchData()->getConsumerInstanceUrl()
-        ]);
+        $this->client = new Client();
     }
 
     protected function action(): ResponseInterface
     {
-        $uri = $this->request->getUri();
-        $partial = str_replace('/canvas', '', $uri->getPath());
-        if (strlen($query = $uri->getQuery())) {
-            $partial .= "?$query";
+        try {
+            $request = $this->canvas->getAuthenticatedRequest(
+                $this->request->getMethod(),
+                $this->getCanvasUri(),
+                $this->getUserToken(),
+                $this->getBodyOptions()
+            );
+            try {
+                $response = $this->client->send($request);
+                return $this->logRequest($request, $response);
+            } catch (RequestException $exception) {
+                return $this->logRequest($request, $exception->getResponse());
+            }
+        } catch (UnauthorizedException $e) {
+            return $this->response->withStatus(401);
         }
-        return $this->proxyRequest(
-            $this->request->getMethod(),
-            $partial,
-            ['body' => $this->request->getBody()]
-        );
     }
 
-    protected function proxyRequest(
-        string $method,
-        string $url,
-        array $options = []
-    ) {
+    private function getUserToken()
+    {
         $user = $this->getCurrentUser();
         if ($user) {
             if ($user->getTokens()->hasExpired()) {
@@ -69,39 +72,56 @@ class Proxy extends AbstractAction
                 $this->users->saveUser($user);
                 $this->logger->info('Refreshed token for ' . $user->getLocator());
             }
-            try {
-                $request = $this->canvas->getAuthenticatedRequest(
-                    $method,
-                    $url,
-                    $user->getTokens(),
-                    $options
-                );
-                $response = $this->client->send($request);
-                if ($this->settings->logRequests()) {
-                    $this->logger->debug($request->getMethod() . ' ' . $request->getUri(), [
-                        'headers' => $request->getHeaders(),
-                        'body' => $request->getBody(),
-                        'response' => [
-                            'status' => $response->getStatusCode(),
-                            'headers' => $response->getHeaders(),
-                            'body' => $response->getBody()
-                        ]
-                    ]);
-                }
-                return $response;
-            } catch (RequestException $exception) {
-                $this->logger->error($request->getMethod() . ' ' . $request->getUri(), [
-                    'headers' => $request->getHeaders(),
-                    'body' => $request->getBody(),
-                    'response' => [
-                        'status' => $exception->getResponse()->getStatusCode(),
-                        'headers' => $exception->getResponse()->getHeaders(),
-                        'body' => $exception->getResponse()->getBody()
-                    ]
-                ]);
-                return $exception->getResponse();
-            }
+            return $user->getTokens();
         }
-        return $this->response->withStatus(401);
+        throw new UnauthorizedException();
+    }
+
+    private function getCanvasUri()
+    {
+        return $this->request->getUri()
+            ->withHost($this->getLaunchData()->getConsumerInstanceHostname())
+            ->withPort(443)
+            ->withPath(str_replace('/canvas/', '/', $this->request->getUri()->getPath()));
+    }
+
+    private function getBodyOptions()
+    {
+        $options = [
+            // bodyParsingMiddleware destroys the raw body in the process
+            'body' => (string)$this->request->getBody()
+        ];
+        $contentType = $this->request->getHeader('Content-Type');
+        $contentType = array_pop($contentType);
+        if ($contentType && strlen($contentType)) {
+            $options['headers'] = [
+                'Content-Type' => $contentType
+            ];
+        }
+        return $options;
+    }
+
+    private function logRequest(RequestInterface $request, ResponseInterface $response)
+    {
+        if ($this->settings->logRequests()) {
+            $this->logger->debug($request->getMethod() . ' ' . $request->getUri(), [
+                'received' => [
+                    'uri' => $this->request->getUri(),
+                    'headers' => $this->request->getHeaders(),
+                    'body' => (string) $this->request->getBody(),
+                ],
+                'sent' => [
+                    'uri' => $request->getUri(),
+                    'headers' => $request->getHeaders(),
+                    'body' => $request->getBody()
+                ],
+                'response' => [
+                    'status' => $response->getStatusCode(),
+                    'headers' => $response->getHeaders(),
+                    'body' => $response->getBody()
+                ]
+            ]);
+        }
+        return $response;
     }
 }
