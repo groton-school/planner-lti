@@ -20,7 +20,7 @@ type RequestOptions<
 };
 
 export async function request<
-  Result extends JSONValue,
+  ExpectedJSONResponse extends JSONValue,
   P extends PathParameter | never = PathParameter,
   Q extends QueryParameter | never = QueryParameter,
   F extends FormParameter | never = FormParameter
@@ -29,15 +29,18 @@ export async function request<
   endpoint,
   headers,
   params
-}: RequestOptions<P, Q, F>): Promise<Result | undefined> {
+}: RequestOptions<P, Q, F>): Promise<ExpectedJSONResponse | undefined> {
   endpoint =
     toPath({ endpoint, params: params?.path }) +
-    toQuery(toFormData({ data: params?.query }));
+    toQuery(toSearchParams({ data: params?.query }));
   const options: RequestInit = { method, headers };
   if (params?.form) {
-    options.body = toFormData({ data: params.form });
+    options.body = toSearchParams({ data: params.form });
   }
-  return (await (await fetch(endpoint, options)).json()) as Result;
+  console.log({ options });
+  return (await (
+    await fetch(endpoint, options)
+  ).json()) as ExpectedJSONResponse;
 }
 
 export const Get = request;
@@ -79,12 +82,10 @@ function toPath({ endpoint, params = {} }: ToPathOptions): string {
   return path;
 }
 
-function toQuery(data: FormData): string {
+function toQuery(data: URLSearchParams): string {
   const params: string[] = [];
   for (const [key, value] of data.entries()) {
-    if (!(value instanceof File)) {
-      params.push(`${key}=${encodeURIComponent(value)}`);
-    }
+    params.push(`${key}=${encodeURIComponent(value)}`);
   }
   if (params.length) {
     return `?${params.join('&')}`;
@@ -95,19 +96,19 @@ function toQuery(data: FormData): string {
 type ToFormDataOptions = {
   data: unknown;
   key?: string;
-  formData?: FormData;
+  formData?: URLSearchParams;
   includeNumericIndices?: boolean;
 };
 
-function toFormData({
+function toSearchParams({
   data,
   key,
-  formData = new FormData(),
+  formData = new URLSearchParams(),
   includeNumericIndices = false
 }: ToFormDataOptions) {
   if (data && typeof data === 'object') {
     for (const prop in data) {
-      toFormData({
+      toSearchParams({
         data: data[prop as keyof typeof data],
         key: key
           ? `${key}[${includeNumericIndices || isNaN(parseInt(prop)) ? prop : ''}]`
@@ -120,4 +121,24 @@ function toFormData({
     formData.append(key, typeof data === 'string' ? data : `${data}`);
   }
   return formData;
+}
+
+export function asParams<FormParams extends Record<string, JSONValue>>({
+  form,
+  container
+}: {
+  form: HTMLFormElement;
+  container?: string;
+}): FormParams {
+  const params: Record<string, JSONValue> = {};
+  // eslint-disable-next-line prefer-const
+  for (let [key, value] of new FormData(form)) {
+    if (container) {
+      key = `${container}[${key}]`;
+    }
+    if (!(value instanceof File)) {
+      params[key] = value;
+    }
+  }
+  return params as FormParams;
 }
