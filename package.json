@@ -6,7 +6,8 @@
     "deploy": "run-s deploy:*",
     "deploy:build": "run-s build",
     "deploy:spa-template": "move-file ./public/index.html ./views/slim/SPA.php",
-    "deploy:gae": "node ./bin/deploy.js -v"
+    "deploy:gae": "node ./bin/deploy.js -v",
+    "release": "commit-and-tag-version"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.17",
@@ -36,6 +37,7 @@
     "@types/bootstrap": "^5.2.10",
     "@types/ejs": "^3.1.5",
     "@types/tinycolor2": "^1.4.6",
+    "commit-and-tag-version": "^12.5.1",
     "html-loader": "^5.1.0",
     "move-file-cli": "^3.0.0",
     "npm-run-all": "^4.1.5",

@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "planner-lti/",
+  "releaseCommitMessageFormat": "chore: groton-school/planner-lti@{{currentTag}}"
+}

@@ -1,13 +1,16 @@
 {
-  "name": "groton-school/slim-lti-gae-skeleton",
-  "description": "A more planner-oriented Canvas calendar view for students",
+  "name": "groton-school/planner-lti",
+  "description": "A more planner-oriented Canvas calendar view for students and teachers",
+  "version": "0.0.0",
   "keywords": [
     "canvas",
+    "google",
     "calendar",
     "planner",
+    "todo",
     "lti"
   ],
-  "homepage": "http://github.com/groton-school/slim-lti-gae-skeleton",
+  "homepage": "http://github.com/groton-school/planner-lti",
   "license": "GPL-3.0",
   "authors": [
     {
