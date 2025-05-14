@@ -8,7 +8,7 @@ This LTI provides an alternative calendar view in canvas for students and teache
 
 ![Student view](https://raw.githubusercontent.com/groton-school/planner-lti/refs/heads/main/docs/student-view.png)
 
-In it, students can (1) check off assignments as complete or incomplete and track their todos ((2)undated assignments and planner items). This is an alternative to the default calendar's approach of "now you see it, now you don't" when you mark a to do item as complete. (3) All of this is overlaid on the schedule of class meetings, color-coded based on the user's course color settings in Canvas.
+In it, students can (1) check off assignments as complete or incomplete and track their todos ((2) undated assignments and planner items). This is an alternative to the default calendar's approach of "now you see it, now you don't" when you mark a to do item as complete. (3) All of this is overlaid on the schedule of class meetings, color-coded based on the user's course color settings in Canvas.
 
 ![Student view](https://raw.githubusercontent.com/groton-school/planner-lti/refs/heads/main/docs/teacher-view.png)
 
