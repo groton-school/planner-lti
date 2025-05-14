@@ -24,9 +24,10 @@ To set this up you will need:
 
 1. A Google account with access to create billable Cloud Projects (and a billing account)
 2. A Canvas admin account that can create developer keys and configure LTI apps
-3. A computer with [Composer](https://getcomposer.org/), [Node](https://nodejs.), and [gcloud](https://cloud.google.com/sdk/docs/install) installed.
+3. A computer [Node](https://nodejs.) and [gcloud](https://cloud.google.com/sdk/docs/install) installed.
 4. Make sure that `gcloud` is [initialized](https://cloud.google.com/sdk/docs/initializing) and [authorized](https://cloud.google.com/sdk/docs/authorizing).
 5. (Optional) I prefer [pnpm](https://pnpm.io/) over Node's built in [npm](https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager) package manager.
+6. (Optional) If you intend to tweak any of the PHP code, you will need [Composer](https://getcomposer.org/) as well.
 
 ## Admin Installation
 
@@ -41,6 +42,12 @@ Install the Node dependencies (necessary for admin tasks):
 ```sh
 cd <path/to/working/folder>
 pnpm install
+```
+
+Optionaly, install the PHP dependencies (if planning to edit the backend):
+
+```sh
+composer install
 ```
 
 Run the deploy script to create a Google Cloud project and configure it for use:
