@@ -59,6 +59,6 @@ When user's first visit the Planner (in the global navigation sidebar), they are
 
 This warning is to prepare them for the more ominous-appearing Canvas API authorization that comes next.
 
-![Canvas API authorization](https://raw.githubusercontent.com/groton-school/planner-lti/refs/heads/main/docs/student-view.png)
+![Canvas API authorization](https://raw.githubusercontent.com/groton-school/planner-lti/refs/heads/main/docs/authorize.png)
 
 This authorization is necessary so that the Planner can access their course, assignment, and planner information _as the student themselves_.
