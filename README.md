@@ -18,7 +18,7 @@ For teachers, this provides a similar view, with the addition that, when clickin
 
 In order to provide the class schedule overlay, the class meetings are pulled from a Google Calendar that contains all class meetings for all students and teachers. We just happen to have such a calendar because we use [SchoolCal](https://schoolcal.co) to sync this information out of our SIS and into student and teacher Google Calendars.
 
-The app is built to run on Google App Engine storing its data in Firestore (although it could easily be adapted to run on other cloud services: look in [/src/App/Infrastructure](./src/App/Infrastructure) for implementation details and [/app/dependencies.php](./app/dependencies.php), [/app/repositories.php](./app/repositories.php), and [/app/settings.php](./app/settings.php) for configuration details).
+The app is built to run on Google App Engine storing its data in Firestore (although it could easily be adapted to run on other cloud services: look in [/src/Infrastructure](./src/Infrastructure) for implementation details and [/app/dependencies.php](./app/dependencies.php), [/app/repositories.php](./app/repositories.php), and [/app/settings.php](./app/settings.php) for configuration details).
 
 To set this up you will need:
 
