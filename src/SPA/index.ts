@@ -1,4 +1,3 @@
-import { index_of_active_global_notification_for_user } from '@groton/canvas-cli.api/dist/Endpoints/V1/Accounts/AccountNotifications';
 import * as Canvas from './Canvas';
 import * as FullCalendar from './FullCalendar';
 import * as Google from './Google';
@@ -20,6 +19,8 @@ import './styles.scss';
           if (assignment) {
             assignment.detail(info);
           }
+        } else if (Canvas.Assignment.isAssociated(info)) {
+          Canvas.Assignment.fromEventId(info.event.id).detail(info);
         } else if (Google.CalendarEvent.isAssociated(info)) {
           await Google.CalendarEvent.fromEventId(info.event.id).detail(info);
         }

@@ -47,11 +47,18 @@ export class CalendarEvent {
   }
 
   public toEvent(): EventInput {
+    const allDay = 'all_day' in this.event && !!this.event.all_day;
     return {
       id: this.event.iCalUID,
       title: this.title,
-      start: new Date(this.event.start.dateTime),
-      end: new Date(this.event.end.dateTime),
+      allDay,
+      start:
+        allDay &&
+        'all_day_date' in this.event &&
+        typeof this.event.all_day_date === 'string'
+          ? new Date(this.event.all_day_date)
+          : new Date(this.event.start.dateTime),
+      end: allDay ? undefined : new Date(this.event.end.dateTime),
       classNames: [
         Canvas.Colors.classNameFromCourseId(this.course?.id),
         ...CalendarEvent.classNames
@@ -69,7 +76,19 @@ export class CalendarEvent {
         course: this.course
       }
     });
-    new bootstrap.Modal(modal).show();
+    const bsModal = new bootstrap.Modal(modal);
+    if (this.course.isTeacher()) {
+      const form = await Canvas.Assignment.createFrom({
+        course: this.course as Canvas.Course,
+        event: info.event,
+        parent: modal.querySelector('modal-body') || undefined
+      });
+      modal.querySelector('.modal-body')?.appendChild(form);
+      form.addEventListener(Canvas.Assignment.CreatedEvent, () =>
+        bsModal.hide()
+      );
+    }
+    bsModal.show();
   }
 
   public get title() {
