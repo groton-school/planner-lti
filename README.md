@@ -69,3 +69,7 @@ This warning is to prepare them for the more ominous-appearing Canvas API author
 ![Canvas API authorization](https://raw.githubusercontent.com/groton-school/planner-lti/refs/heads/main/docs/authorize.png)
 
 This authorization is necessary so that the Planner can access their course, assignment, and planner information _as the student themselves_.
+
+#### A note on version tags
+
+As this was built from our [slim-lti-gae-skeleton](https://github.com/groton-school/slim-lti-gae-skeleton), which is a fork of [slim-skeleton](https://github.com/slimphp/Slim-Skeleton), there are overlaid version tags. I have opted to track versions for _this app_ with the prefix `planner-lti`. Un-prefixed version numbers refer to the Slim Skeleton.
