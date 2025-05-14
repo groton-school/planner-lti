@@ -48,11 +48,10 @@ export class CalendarEvent {
 
   public toEvent(): EventInput {
     const course = Course.fromContextCode(this.calendarEvent.context_code);
-    return {
+
+    const event: EventInput = {
       id: `calendar_event_${this.calendarEvent.id}`,
       title: this.calendarEvent.title,
-      start: new Date(this.calendarEvent.start_at),
-      end: new Date(this.calendarEvent.end_at),
       allDay: isAllDay(this.calendarEvent.start_at, this.calendarEvent.end_at),
       classNames: [
         course.context_code,
@@ -60,6 +59,14 @@ export class CalendarEvent {
         'assignment' in this.calendarEvent ? 'assignment' : 'planner_item'
       ]
     };
+    if (this.calendarEvent.all_day) {
+      event.allDay = true;
+      event.start = new Date(this.calendarEvent.all_day_date);
+    } else {
+      event.start = new Date(this.calendarEvent.start_at);
+      event.end = new Date(this.calendarEvent.end_at);
+    }
+    return event;
   }
 
   public get assignment() {
