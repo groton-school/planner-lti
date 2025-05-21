@@ -82,7 +82,7 @@ export class Course {
 
   public static fromName(name: string) {
     for (const id in this.cache) {
-      if (this.cache[id].course.name == name) {
+      if (this.cache[id].course.course_code == name) {
         return this.cache[id];
       }
     }
