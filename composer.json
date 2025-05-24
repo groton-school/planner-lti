@@ -1,7 +1,6 @@
 {
   "name": "groton-school/planner-lti",
   "description": "A more planner-oriented Canvas calendar view for students and teachers",
-  "version": "0.0.0",
   "keywords": [
     "canvas",
     "google",
