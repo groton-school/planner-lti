@@ -41,7 +41,7 @@ import './styles.scss';
             Canvas.CalendarEvent.list({
               params: {
                 context_codes: courses
-                  .slice(i, i + 10)
+                  .slice(i, i + 10).filter(course => course.isTeacher())
                   .map((course) => course.context_code),
                 type: 'assignment',
                 start_date: info.view.activeStart.toISOString(),
@@ -65,6 +65,8 @@ import './styles.scss';
               .querySelector('#incomplete')
               ?.appendChild(await item.toTodo());
           }
+        } else {
+          FullCalendar.addEvent(item.toEvent())
         }
       }
     });

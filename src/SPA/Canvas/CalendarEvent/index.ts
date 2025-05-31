@@ -3,7 +3,7 @@ import { stringify } from '@groton/canvas-cli.utilities';
 import { isAllDay } from '../../Utilities';
 import { Options, paginatedCallback } from '../../Utilities/paginatedCallback';
 import { Assignment } from '../Assignment';
-import * as Canvas from '../Canvas';
+import * as Canvas from '@groton/canvas-cli.api';
 import { Course } from '../Course';
 
 export class CalendarEvent {

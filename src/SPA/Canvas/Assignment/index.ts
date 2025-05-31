@@ -4,7 +4,7 @@ import * as FullCalendar from '../../FullCalendar';
 import { isAllDay } from '../../Utilities';
 import { render } from '../../Utilities/Views';
 import { AssignmentGroup } from '../AssignmentGroup';
-import * as Canvas from '../Canvas';
+import * as Canvas from '@groton/canvas-cli.api';
 import * as Client from '../Client';
 import * as Colors from '../Colors';
 import { Course } from '../Course';

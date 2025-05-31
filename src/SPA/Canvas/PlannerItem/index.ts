@@ -1,7 +1,7 @@
 import { EventInput } from '@fullcalendar/core';
 import * as Utilities from '../../Utilities';
 import { render } from '../../Utilities/Views';
-import * as Canvas from '../Canvas';
+import * as Canvas from '@groton/canvas-cli.api';
 import * as Client from '../Client';
 import * as Colors from '../Colors';
 import { Course } from '../Course';
@@ -17,7 +17,8 @@ export class PlannerItem {
 
   public static list = Utilities.paginatedCallback<
     Canvas.Planner.PlannerItem,
-    PlannerItem
+    PlannerItem,
+    Canvas.v1.Users.Planner.Items.listSearchParameters
   >(
     '/canvas/api/v1/planner/items',
     (item: Canvas.Planner.PlannerItem) => new PlannerItem(item)
