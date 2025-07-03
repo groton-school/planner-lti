@@ -13,14 +13,14 @@ class LaunchData implements JsonSerializable
     private array $data;
 
     /**
-     * @param LtiMessageLaunch|array $launch 
+     * @param LtiMessageLaunch|array $launch
      */
     public function __construct(mixed $launch)
     {
-        if (is_array($launch)) {
-            $this->data = $launch;
-        } else if ($launch instanceof LtiMessageLaunch) {
+        if ($launch instanceof LtiMessageLaunch) {
             $this->data = $launch->getLaunchData();
+        } elseif (is_array($launch)) {
+            $this->data = $launch;
         }
     }
 
