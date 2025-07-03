@@ -4,11 +4,13 @@ import { Core } from '@battis/qui-cli.core';
 import { Log } from '@battis/qui-cli.log';
 import { Root } from '@battis/qui-cli.root';
 import { Shell } from '@battis/qui-cli.shell';
+import { Env } from '@battis/qui-cli.env';
 import input from '@inquirer/input';
 import path from 'node:path';
 
 (async () => {
   Root.configure({ root: path.dirname(import.meta.dirname) });
+  Env.configure();
   const {
     values: { force }
   } = await Core.init({
@@ -86,8 +88,8 @@ Install your LTI by going adding an LTI Registration in Developer Keys for ${Col
       
 If you haven't done that before, follow these directions:
 ${Colors.url(
-  'https://community.canvaslms.com/t5/Admin-Guide/How-do-I-add-a-developer-LTI-Registration-key-for-an-account/ta-p/601370'
-)}
+        'https://community.canvaslms.com/t5/Admin-Guide/How-do-I-add-a-developer-LTI-Registration-key-for-an-account/ta-p/601370'
+      )}
       
 You will then need to enable the app following these directions:\n${Colors.url(
         'https://community.canvaslms.com/t5/Admin-Guide/How-do-I-configure-an-external-app-for-an-account-using-a-client/ta-p/202'
