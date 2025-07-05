@@ -1082,16 +1082,16 @@
         },
         {
             "name": "groton-school/slim-lti-shim",
-            "version": "2.0.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/lti.slim-lti-shim.git",
-                "reference": "b9cc0a420ea37096d07934e6801bb7dc2f468b60"
+                "reference": "f9c2be2fb96728219ac241a3756cd8cfd2ec740f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/lti.slim-lti-shim/zipball/b9cc0a420ea37096d07934e6801bb7dc2f468b60",
-                "reference": "b9cc0a420ea37096d07934e6801bb7dc2f468b60",
+                "url": "https://api.github.com/repos/groton-school/lti.slim-lti-shim/zipball/f9c2be2fb96728219ac241a3756cd8cfd2ec740f",
+                "reference": "f9c2be2fb96728219ac241a3756cd8cfd2ec740f",
                 "shasum": ""
             },
             "require": {
@@ -1127,9 +1127,9 @@
             "description": "Shim to use packbackbooks/lti-1p3-tool in a Slim Skeleton app",
             "support": {
                 "issues": "https://github.com/groton-school/lti.slim-lti-shim/issues",
-                "source": "https://github.com/groton-school/lti.slim-lti-shim/tree/v2.0.0"
+                "source": "https://github.com/groton-school/lti.slim-lti-shim/tree/v2.0.2"
             },
-            "time": "2025-07-05T01:55:35+00:00"
+            "time": "2025-07-05T02:24:26+00:00"
         },
         {
             "name": "grpc/grpc",
