@@ -10,7 +10,6 @@ use App\Domain\OAuth2\AppCredentialsRepositoryInterface;
 use App\Domain\User\UserRepositoryInterface;
 use Google\Client;
 use Google\Service\Calendar;
-use Google\Service\Calendar\CalendarListEntry;
 use Psr\Http\Message\ResponseInterface;
 
 class Events extends AbstractAuthenticatedViewAction
@@ -18,7 +17,7 @@ class Events extends AbstractAuthenticatedViewAction
     private Calendar $calendar;
     private AppCredentialsRepositoryInterface $credentials;
 
-    public function  __construct(
+    public function __construct(
         LaunchDataRepositoryInterface $launchData,
         UserRepositoryInterface $users,
         Client $client,
@@ -38,7 +37,7 @@ class Events extends AbstractAuthenticatedViewAction
         } else {
             $params['q'] = $this->getLaunchData()->getUserEmail();
         }
-        $events =  $this->calendar->events->listEvents(
+        $events = $this->calendar->events->listEvents(
             $this->credentials->getCalendarId(),
             $params
         );

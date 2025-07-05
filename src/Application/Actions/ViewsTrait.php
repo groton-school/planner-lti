@@ -9,15 +9,15 @@ use Slim\Views\PhpRenderer;
 
 trait ViewsTrait
 {
-    protected PhpRenderer $renderer;
+    protected PhpRenderer $views;
 
     protected function initViews()
     {
-        $this->renderer = new PhpRenderer(__DIR__ . '/../../../views/slim');
+        $this->views = new PhpRenderer(__DIR__ . '/../../../views/slim');
     }
 
     protected function renderView(ResponseInterface $response, string $templateFileName, array $data = [])
     {
-        return $this->renderer->render($response, $templateFileName, $data);
+        return $this->views->render($response, $templateFileName, $data);
     }
 }

@@ -7,11 +7,13 @@ namespace App\Application\Actions;
 use App\Domain\LTI\LaunchDataRepositoryInterface;
 use App\Domain\User\UserRepositoryInterface;
 use App\Domain\User\UsersTrait;
+use GrotonSchool\Slim\Actions\AbstractAction;
 use Psr\Http\Message\ResponseInterface;
 
 abstract class AbstractAuthenticatedViewAction extends AbstractAction
 {
-    use UsersTrait, ViewsTrait;
+    use UsersTrait;
+    use ViewsTrait;
 
     public function __construct(
         LaunchDataRepositoryInterface $launchData,
@@ -31,5 +33,5 @@ abstract class AbstractAuthenticatedViewAction extends AbstractAction
         return $this->response->withAddedHeader('Location', '/login/oauth2');
     }
 
-    protected abstract function authenticatedAction(): ResponseInterface;
+    abstract protected function authenticatedAction(): ResponseInterface;
 }

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\Google\Calendar;
 
-use App\Application\Actions\AbstractAction;
 use App\Application\Actions\ViewsTrait;
 use App\Domain\OAuth2\AppCredentialsRepositoryInterface;
 use Google\Client;
 use Google\Service\Calendar;
 use Google\Service\Calendar\CalendarListEntry;
+use GrotonSchool\Slim\Actions\AbstractAction;
 use Psr\Http\Message\ResponseInterface;
 
 class Accept extends AbstractAction
@@ -19,7 +19,7 @@ class Accept extends AbstractAction
     private Calendar $calendar;
     private AppCredentialsRepositoryInterface $credentials;
 
-    public function  __construct(
+    public function __construct(
         Client $client,
         AppCredentialsRepositoryInterface $credentials
     ) {

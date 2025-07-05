@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1859595965a9b865cf39d0057ed535cf",
+    "content-hash": "67d1131294c7209bf289b7cf600cbe16",
     "packages": [
         {
             "name": "battis/lazy-secrets",
@@ -939,16 +939,16 @@
         },
         {
             "name": "groton-school/slim-action",
-            "version": "1.0.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/lti.slim-action.git",
-                "reference": "b2b3e060ed6fbb89bf994d501319ebe8cd7aa221"
+                "reference": "590f3a7844f6bbefd74df33e1e0874f7998f850d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/lti.slim-action/zipball/b2b3e060ed6fbb89bf994d501319ebe8cd7aa221",
-                "reference": "b2b3e060ed6fbb89bf994d501319ebe8cd7aa221",
+                "url": "https://api.github.com/repos/groton-school/lti.slim-action/zipball/590f3a7844f6bbefd74df33e1e0874f7998f850d",
+                "reference": "590f3a7844f6bbefd74df33e1e0874f7998f850d",
                 "shasum": ""
             },
             "require": {
@@ -960,6 +960,7 @@
             },
             "require-dev": {
                 "franzl/studio": "^0.16.0",
+                "friendsofphp/php-cs-fixer": "^3.76",
                 "marcocesarato/php-conventional-changelog": "^1.17"
             },
             "type": "library",
@@ -981,9 +982,9 @@
             "description": "Convenience wrapper for Slim framework actions",
             "support": {
                 "issues": "https://github.com/groton-school/lti.slim-action/issues",
-                "source": "https://github.com/groton-school/lti.slim-action/tree/v1.0.0"
+                "source": "https://github.com/groton-school/lti.slim-action/tree/v2.0.0"
             },
-            "time": "2025-04-19T22:04:03+00:00"
+            "time": "2025-07-04T17:44:04+00:00"
         },
         {
             "name": "groton-school/slim-gae-shim",
@@ -1034,25 +1035,26 @@
         },
         {
             "name": "groton-school/slim-lti-infrastructure-gae",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/lti.slim-lti-infrastructure-gae.git",
-                "reference": "058b5b6401dd479f08d1daee7632e56ce03c607a"
+                "reference": "102d19b4893e3576abb198f886a14049eb5223fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/lti.slim-lti-infrastructure-gae/zipball/058b5b6401dd479f08d1daee7632e56ce03c607a",
-                "reference": "058b5b6401dd479f08d1daee7632e56ce03c607a",
+                "url": "https://api.github.com/repos/groton-school/lti.slim-lti-infrastructure-gae/zipball/102d19b4893e3576abb198f886a14049eb5223fa",
+                "reference": "102d19b4893e3576abb198f886a14049eb5223fa",
                 "shasum": ""
             },
             "require": {
                 "google/cloud-firestore": "^1.48",
-                "groton-school/slim-lti-shim": "^1.0",
-                "packbackbooks/lti-1p3-tool": "^6.2"
+                "groton-school/slim-lti-shim": "^2.0",
+                "packbackbooks/lti-1p3-tool": "^6.3"
             },
             "require-dev": {
                 "franzl/studio": "^0.16.0",
+                "friendsofphp/php-cs-fixer": "^3.76",
                 "marcocesarato/php-conventional-changelog": "^1.17"
             },
             "type": "library",
@@ -1074,28 +1076,28 @@
             "description": "Shim to implement packbackbooks/lti-1p3-tool storage interfaces in Firestore",
             "support": {
                 "issues": "https://github.com/groton-school/lti.slim-lti-infrastructure-gae/issues",
-                "source": "https://github.com/groton-school/lti.slim-lti-infrastructure-gae/tree/v1.0.1"
+                "source": "https://github.com/groton-school/lti.slim-lti-infrastructure-gae/tree/v1.0.2"
             },
-            "time": "2025-04-19T23:55:42+00:00"
+            "time": "2025-07-05T02:00:24+00:00"
         },
         {
             "name": "groton-school/slim-lti-shim",
-            "version": "1.2.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/lti.slim-lti-shim.git",
-                "reference": "80ff1cbdbfb1c4e90a3b36063f9ca9752816d4f1"
+                "reference": "b9cc0a420ea37096d07934e6801bb7dc2f468b60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/lti.slim-lti-shim/zipball/80ff1cbdbfb1c4e90a3b36063f9ca9752816d4f1",
-                "reference": "80ff1cbdbfb1c4e90a3b36063f9ca9752816d4f1",
+                "url": "https://api.github.com/repos/groton-school/lti.slim-lti-shim/zipball/b9cc0a420ea37096d07934e6801bb7dc2f468b60",
+                "reference": "b9cc0a420ea37096d07934e6801bb7dc2f468b60",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-openssl": "*",
-                "groton-school/slim-action": "^1.0",
+                "groton-school/slim-action": "^2.0",
                 "packbackbooks/lti-1p3-tool": "^6.3",
                 "php-di/php-di": "^6.0",
                 "slim/http": "^1.4",
@@ -1125,9 +1127,9 @@
             "description": "Shim to use packbackbooks/lti-1p3-tool in a Slim Skeleton app",
             "support": {
                 "issues": "https://github.com/groton-school/lti.slim-lti-shim/issues",
-                "source": "https://github.com/groton-school/lti.slim-lti-shim/tree/v1.2.0"
+                "source": "https://github.com/groton-school/lti.slim-lti-shim/tree/v2.0.0"
             },
-            "time": "2025-07-03T14:30:04+00:00"
+            "time": "2025-07-05T01:55:35+00:00"
         },
         {
             "name": "grpc/grpc",
@@ -4183,16 +4185,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.13.1",
+            "version": "1.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "1720ddd719e16cf0db4eb1c6eca108031636d46c"
+                "reference": "d25e62e636b0a9b01e3bdebb7823b474876dd829"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/1720ddd719e16cf0db4eb1c6eca108031636d46c",
-                "reference": "1720ddd719e16cf0db4eb1c6eca108031636d46c",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/d25e62e636b0a9b01e3bdebb7823b474876dd829",
+                "reference": "d25e62e636b0a9b01e3bdebb7823b474876dd829",
                 "shasum": ""
             },
             "require": {
@@ -4231,7 +4233,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.1"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.2"
             },
             "funding": [
                 {
@@ -4239,7 +4241,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-04-29T12:36:36+00:00"
+            "time": "2025-07-04T14:07:32+00:00"
         },
         {
             "name": "nikic/php-parser",

@@ -13,12 +13,16 @@ use App\Domain\LTI\LaunchDataRepositoryInterface;
 use App\Domain\User\UserRepositoryInterface;
 use App\Domain\User\UsersTrait;
 use App\Infrastructure\Session\SessionTrait;
+use GrotonSchool\Slim\Actions\AbstractAction as ActionsAbstractAction;
 use Odan\Session\SessionInterface;
 use Psr\Log\LoggerInterface;
 
-abstract class AbstractOAuth2Action extends AbstractAction
+abstract class AbstractOAuth2Action extends ActionsAbstractAction
 {
-    use OAuth2Trait, SessionTrait, UsersTrait, LoggerTrait;
+    use OAuth2Trait;
+    use SessionTrait;
+    use UsersTrait;
+    use LoggerTrait;
 
     protected const STATE = self::class . '::state';
 

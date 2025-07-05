@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\Canvas;
 
-use App\Application\Actions\AbstractAction;
 use App\Application\Actions\OAuth2\SettingsInterface;
 use App\Application\LoggerTrait;
 use App\Domain\LTI\LaunchDataRepositoryInterface;
@@ -14,6 +13,7 @@ use App\Domain\OAuth2\OAuth2Trait;
 use App\Domain\User\UnauthorizedException;
 use App\Domain\User\UserRepositoryInterface;
 use App\Domain\User\UsersTrait;
+use GrotonSchool\Slim\Actions\AbstractAction;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
@@ -22,7 +22,10 @@ use Psr\Log\LoggerInterface;
 
 class Proxy extends AbstractAction
 {
-    use LoggerTrait, UsersTrait, OAuth2Trait, LaunchDataTrait;
+    use LoggerTrait;
+    use UsersTrait;
+    use OAuth2Trait;
+    use LaunchDataTrait;
 
     protected Client $client;
 
