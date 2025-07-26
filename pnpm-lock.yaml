@@ -74,7 +74,7 @@ importers:
         version: 0.7.4
       '@battis/webpack':
         specifier: ^2.0.5
-        version: 2.0.5(gp7iuwemyakpyejkrmx2ylloti)
+        version: 2.0.5(64283a3255a585c92e584348b1672327)
       '@inquirer/input':
         specifier: ^4.2.1
         version: 4.2.1(@types/node@24.1.0)
@@ -624,6 +624,7 @@ packages:
 
   '@groton/canvas-cli.client@0.0.3':
     resolution: {integrity: sha512-SoyJa9DmSgE841i9PeT4l03Oi3CLk1QNyx154R9k6Pjs+f5f8T4o5BHoP3opDu0T43abMgm5ibuOUwWYEufkAQ==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   '@groton/canvas-cli.utilities@0.1.0':
     resolution: {integrity: sha512-ha2vXLsJVwiDkbs/v+3nT/rz4HWmoCZn9mBMhULQFK7Xt8UfpMnqffaluW9fhW0lXKJ/YJQWFr2hJ9SIjtqNKQ==}
@@ -6065,7 +6066,7 @@ snapshots:
 
   '@battis/typescript-tricks@0.7.4': {}
 
-  '@battis/webpack@2.0.5(gp7iuwemyakpyejkrmx2ylloti)':
+  '@battis/webpack@2.0.5(64283a3255a585c92e584348b1672327)':
     dependencies:
       '@tsconfig/recommended': 1.0.10
       app-root-path: 3.1.0
