@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Application\Actions\Canvas;
 
 use App\Application\Actions\OAuth2\SettingsInterface;
-use App\Application\LoggerTrait;
 use App\Domain\LTI\LaunchDataRepositoryInterface;
 use App\Domain\LTI\LaunchDataTrait;
 use App\Domain\OAuth2\AppCredentialsRepositoryInterface;
@@ -22,7 +21,6 @@ use Psr\Log\LoggerInterface;
 
 class Proxy extends AbstractAction
 {
-    use LoggerTrait;
     use UsersTrait;
     use OAuth2Trait;
     use LaunchDataTrait;
@@ -34,9 +32,8 @@ class Proxy extends AbstractAction
         UserRepositoryInterface $users,
         AppCredentialsRepositoryInterface $credentials,
         SettingsInterface $settings,
-        LoggerInterface $logger
+        private LoggerInterface $logger
     ) {
-        $this->initLogger($logger);
         $this->initLaunchData($launchData);
         $this->initUsers($launchData, $users);
         $this->initOAuth2($settings, $credentials, $launchData);
