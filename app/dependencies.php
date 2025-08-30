@@ -5,9 +5,12 @@ declare(strict_types=1);
 use App\Application\Actions\OAuth2;
 use App\Application\Handlers\LaunchHandler;
 use App\Application\Settings\SettingsInterface;
+use App\Domain\LTI\LaunchDataRepositoryInterface;
+use App\Domain\OAuth2\AppCredentialsRepositoryInterface;
 use DI\ContainerBuilder;
 use Google\Client;
 use Google\Cloud\Logging\LoggingClient;
+use GrotonSchool\OAuth2\Client\Provider\CanvasLMS;
 use GrotonSchool\Slim\GAE;
 use GrotonSchool\Slim\LTI;
 use GrotonSchool\Slim\LTI\Actions\RegistrationConfigureActionInterface;
@@ -91,6 +94,25 @@ return function (ContainerBuilder $containerBuilder) {
 
         PhpRenderer::class => function () {
             return new PhpRenderer(__DIR__ . '/../views/slim');
+        },
+
+        CanvasLMS::class => function (ContainerInterface $container) {
+            /** @var SettingsInterface $settings */
+            $settings = $container->get(SettingsInterface::class);
+
+            /** @var AppCredentialsRepositoryInterface $credentials */
+            $credentials = $container->get(AppCredentialsRepositoryInterface::class);
+
+            /** @var LaunchDataRepositoryInterface $launchData */
+            $launchData = $container->get(LaunchDataRepositoryInterface::class);
+
+            return new CanvasLMS(([
+                'clientId' => $credentials->getClientID(),
+                'clientSecret' => $credentials->getClientSecret(),
+                'purpose' => "The planner needs access to Canvas so that it can see and update your assignments and to-do items.",
+                'redirectUri' => $settings->getOAuth2RedirectUri(),
+                'canvasInstanceUrl' =>  $launchData->getLaunchData()->getConsumerInstanceUrl()
+            ]));
         }
     ]);
 };

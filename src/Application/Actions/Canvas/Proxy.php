@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\Canvas;
 
-use App\Application\Actions\OAuth2\SettingsInterface;
+use App\Application\Settings\SettingsInterface;
 use App\Domain\LTI\LaunchDataRepositoryInterface;
 use App\Domain\LTI\LaunchDataTrait;
-use App\Domain\OAuth2\AppCredentialsRepositoryInterface;
-use App\Domain\OAuth2\OAuth2Trait;
 use App\Domain\User\UnauthorizedException;
 use App\Domain\User\UserRepositoryInterface;
 use App\Domain\User\UsersTrait;
+use GrotonSchool\OAuth2\Client\Provider\CanvasLMS;
 use GrotonSchool\Slim\Actions\AbstractAction;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -22,7 +21,6 @@ use Psr\Log\LoggerInterface;
 class Proxy extends AbstractAction
 {
     use UsersTrait;
-    use OAuth2Trait;
     use LaunchDataTrait;
 
     protected Client $client;
@@ -30,13 +28,12 @@ class Proxy extends AbstractAction
     public function __construct(
         LaunchDataRepositoryInterface $launchData,
         UserRepositoryInterface $users,
-        AppCredentialsRepositoryInterface $credentials,
-        SettingsInterface $settings,
-        private LoggerInterface $logger
+        private SettingsInterface $settings,
+        private LoggerInterface $logger,
+        private CanvasLMS $canvas
     ) {
         $this->initLaunchData($launchData);
         $this->initUsers($launchData, $users);
-        $this->initOAuth2($settings, $credentials, $launchData);
         $this->client = new Client();
     }
 
