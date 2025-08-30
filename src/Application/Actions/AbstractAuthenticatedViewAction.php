@@ -9,18 +9,18 @@ use App\Domain\User\UserRepositoryInterface;
 use App\Domain\User\UsersTrait;
 use GrotonSchool\Slim\Actions\AbstractAction;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Views\PhpRenderer;
 
 abstract class AbstractAuthenticatedViewAction extends AbstractAction
 {
     use UsersTrait;
-    use ViewsTrait;
 
     public function __construct(
         LaunchDataRepositoryInterface $launchData,
-        UserRepositoryInterface $users
+        UserRepositoryInterface $users,
+        private PhpRenderer $views
     ) {
         $this->initUsers($launchData, $users);
-        $this->initViews();
     }
 
     protected function action(): ResponseInterface

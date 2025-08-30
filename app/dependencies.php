@@ -30,6 +30,7 @@ use Packback\Lti1p3\Interfaces\ILtiServiceConnector;
 use Packback\Lti1p3\LtiServiceConnector;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Slim\Views\PhpRenderer;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -63,7 +64,7 @@ return function (ContainerBuilder $containerBuilder) {
         /*
         * autowire registration configuration passthru (no interactive
         * configuration)
-        * 
+        *
         * to set up interactive configurattion of the registration, implement
         * (and autowire) GrotonSchool\Slim\LTI\Actions\RegistrationConfigureActionInterface
         *
@@ -86,6 +87,10 @@ return function (ContainerBuilder $containerBuilder) {
             $client = new Client();
             $client->useApplicationDefaultCredentials();
             return $client;
+        },
+
+        PhpRenderer::class => function () {
+            return new PhpRenderer(__DIR__ . '/../views/slim');
         }
     ]);
 };
