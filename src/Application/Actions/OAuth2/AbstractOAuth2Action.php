@@ -10,7 +10,6 @@ use App\Domain\OAuth2\OAuth2Trait;
 use App\Domain\LTI\LaunchDataRepositoryInterface;
 use App\Domain\User\UserRepositoryInterface;
 use App\Domain\User\UsersTrait;
-use App\Infrastructure\Session\SessionTrait;
 use GrotonSchool\Slim\Actions\AbstractAction;
 use Odan\Session\SessionInterface;
 use Psr\Log\LoggerInterface;
@@ -18,7 +17,6 @@ use Psr\Log\LoggerInterface;
 abstract class AbstractOAuth2Action extends AbstractAction
 {
     use OAuth2Trait;
-    use SessionTrait;
     use UsersTrait;
     use LoggerTrait;
 
@@ -28,12 +26,11 @@ abstract class AbstractOAuth2Action extends AbstractAction
         SettingsInterface $settings,
         AppCredentialsRepositoryInterface $credentials,
         LaunchDataRepositoryInterface $launchData,
-        SessionInterface $session,
+        protected SessionInterface $session,
         UserRepositoryInterface $users,
         LoggerInterface $logger
     ) {
         $this->initOAuth2($settings, $credentials, $launchData);
-        $this->initSession($session);
         $this->initUsers($launchData, $users);
         $this->initLogger($logger);
     }
