@@ -17,6 +17,9 @@ export default bundle.fromTS.toSPA({
       }
     ]
   },
+  resolve: {
+    symlinks: true
+  },
   externals: {
     bootstrap: 'bootstrap',
     ejs: 'ejs',

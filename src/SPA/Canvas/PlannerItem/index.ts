@@ -1,8 +1,7 @@
+import { ArrayElement } from '@battis/typescript-tricks';
 import { EventInput } from '@fullcalendar/core';
-import * as Utilities from '../../Utilities';
+import { Canvas } from '@groton/canvas-api.client.web';
 import { render } from '../../Utilities/Views';
-import * as Canvas from '@groton/canvas-cli.api';
-import * as Client from '../Client';
 import * as Colors from '../Colors';
 import { Course } from '../Course';
 import './styles.scss';
@@ -11,18 +10,23 @@ import todo from './todo.ejs';
 export class PlannerItem {
   private static cache: PlannerItem[] = [];
 
-  private constructor(private item: Canvas.Planner.PlannerItem) {
+  private constructor(
+    private item: ArrayElement<
+      Awaited<ReturnType<typeof Canvas.v1.Planner.Items.list>>
+    >
+  ) {
     PlannerItem.cache.push(this);
   }
 
-  public static list = Utilities.paginatedCallback<
-    Canvas.Planner.PlannerItem,
-    PlannerItem,
-    Canvas.v1.Users.Planner.Items.listSearchParameters
-  >(
-    '/canvas/api/v1/planner/items',
-    (item: Canvas.Planner.PlannerItem) => new PlannerItem(item)
-  );
+  public static async list(
+    params: Canvas.v1.Planner.Items.listSearchParameters = {}
+  ) {
+    return (
+      await Canvas.v1.Planner.Items.list({
+        searchParams: params
+      })
+    ).map((i) => new PlannerItem(i));
+  }
 
   public get plannable_type() {
     return this.item.plannable_type;
@@ -58,36 +62,17 @@ export class PlannerItem {
 
   public async markComplete() {
     if (this.item.planner_override) {
-      this.item.planner_override = await Client.Put<
-        Canvas.Planner.PlannerOverride,
-        Canvas.v1.Planner.Overrides.updatePathParameters,
-        never,
-        Canvas.v1.Planner.Overrides.updateFormParameters
-      >({
-        endpoint: '/canvas/api/v1/planner/overrides/:id',
-        params: {
-          path: { id: this.item.planner_override.id.toString() },
-          form: {
-            marked_complete: true.toString(),
-            dismissed: true.toString()
-          }
-        }
+      this.item.planner_override = await Canvas.v1.Planner.Overrides.update({
+        pathParams: { id: this.item.planner_override.id },
+        params: { marked_complete: true.toString(), dismissed: true.toString() }
       });
     } else {
-      this.item.planner_override = await Client.Post<
-        Canvas.Planner.PlannerOverride,
-        never,
-        never,
-        Canvas.v1.Planner.Overrides.createFormParameters
-      >({
-        endpoint: '/canvas/api/v1/planner/overrides',
+      this.item.planner_override = await Canvas.v1.Planner.Overrides.create({
         params: {
-          form: {
-            plannable_type: this.item.plannable_type,
-            plannable_id: this.item.plannable_id,
-            marked_complete: true,
-            dismissed: true
-          }
+          plannable_type: this.item.plannable_type,
+          plannable_id: this.item.plannable_id,
+          marked_complete: true.toString(),
+          dismissed: true.toString()
         }
       });
     }
@@ -95,19 +80,11 @@ export class PlannerItem {
 
   public async markIncomplete() {
     if (this.item.planner_override) {
-      this.item.planner_override = await Client.Put<
-        Canvas.Planner.PlannerOverride,
-        Canvas.v1.Planner.Overrides.updatePathParameters,
-        never,
-        Canvas.v1.Planner.Overrides.updateFormParameters
-      >({
-        endpoint: '/canvas/api/v1/planner/overrides/:id',
+      this.item.planner_override = await Canvas.v1.Planner.Overrides.update({
+        pathParams: { id: this.item.planner_override.id },
         params: {
-          path: { id: this.item.planner_override.id.toString() },
-          form: {
-            marked_complete: false.toString(),
-            dismissed: false.toString()
-          }
+          marked_complete: false.toString(),
+          dismissed: false.toString()
         }
       });
     }

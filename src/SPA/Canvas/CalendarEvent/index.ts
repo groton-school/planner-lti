@@ -1,9 +1,7 @@
 import { EventClickArg, EventInput } from '@fullcalendar/core';
-import { stringify } from '@groton/canvas-cli.utilities';
+import { Canvas } from '@groton/canvas-api.client.web';
 import { isAllDay } from '../../Utilities';
-import { Options, paginatedCallback } from '../../Utilities/paginatedCallback';
 import { Assignment } from '../Assignment';
-import * as Canvas from '@groton/canvas-cli.api';
 import { Course } from '../Course';
 
 export class CalendarEvent {
@@ -19,26 +17,17 @@ export class CalendarEvent {
     CalendarEvent.cache[calendarEvent.id] = this;
   }
 
-  public static async list({
-    callback,
-    params
-  }: Options<CalendarEvent, Canvas.v1.CalendarEvents.listSearchParameters>) {
-    const key = stringify(params || {});
+  public static async list(
+    searchParams: Canvas.v1.CalendarEvents.listSearchParameters,
+    callback?: (e: CalendarEvent) => unknown
+  ) {
+    const key = JSON.stringify(searchParams || {});
     if (!(key in this.lists)) {
-      this.lists[key] = await paginatedCallback<
-        | Canvas.CalendarEvents.CalendarEvent
-        | Canvas.CalendarEvents.AssignmentEvent,
-        CalendarEvent,
-        Canvas.v1.CalendarEvents.listSearchParameters
-      >(
-        '/canvas/api/v1/calendar_events',
-        (
-          calendarEvent:
-            | Canvas.CalendarEvents.CalendarEvent
-            | Canvas.CalendarEvents.AssignmentEvent
-        ) => new CalendarEvent(calendarEvent)
-      )({ callback, params });
-    } else if (callback) {
+      this.lists[key] = (
+        await Canvas.v1.CalendarEvents.list({ searchParams })
+      ).map((c) => new CalendarEvent(c));
+    }
+    if (callback) {
       for (const calendarEvent of this.lists[key]) {
         callback(calendarEvent);
       }

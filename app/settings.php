@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 use App\Application\Settings\Settings;
 use App\Application\Settings\SettingsInterface;
+use Battis\LazySecrets;
 use DI\ContainerBuilder;
 use Odan\Session\SessionInterface;
 
 return function (ContainerBuilder $containerBuilder) {
+
 
     // Global Settings Object
     $containerBuilder->addDefinitions([
@@ -15,6 +17,9 @@ return function (ContainerBuilder $containerBuilder) {
             $TOOL_NAME = 'Planner LTI';
             $PROJECT_URL = 'https://' . getenv('HTTP_HOST');
             $SCOPES = ['https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly'];
+
+            $secrets = new LazySecrets\Cache();
+
             return new Settings([
                 'displayErrorDetails'   => false,
                 'logError'              => true,
@@ -25,8 +30,10 @@ return function (ContainerBuilder $containerBuilder) {
                 Settings::PROJECT_ID => getenv('GOOGLE_CLOUD_PROJECT'),
                 Settings::PROJECT_URL => $PROJECT_URL,
                 Settings::TOOL_NAME => $TOOL_NAME,
+                Settings::LOGGER_NAME => preg_replace('/[^a-z0-9]+/', '-', $TOOL_NAME),
                 Settings::SCOPES => $SCOPES,
                 Settings::CACHE_DURATION => 3600, // seconds
+                Settings::CALENDAR_ID => $secrets->get('CALENDAR_ID'),
                 Settings::REDIRECT_URI => "{$PROJECT_URL}/login/oauth2/redirect",
                 Settings::TOOL_REGISTRATION => [
                     'application_type' => 'web',

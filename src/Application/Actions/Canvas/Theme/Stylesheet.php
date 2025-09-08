@@ -4,16 +4,30 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\Canvas\Theme;
 
-use App\Application\Actions\Canvas\Proxy;
+use App\Application\Middleware\RequireAuthenticationMiddleware;
+use App\Domain\LTI\LaunchData;
 use Exception;
+use GrotonSchool\Slim\Norms\AbstractAction;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Http\ServerRequest;
+use Slim\Http\Response;
 
-class Stylesheet extends Proxy
+class Stylesheet extends AbstractAction
 {
-    protected function action(): ResponseInterface
-    {
+    protected function invokeHook(
+        ServerRequest $request,
+        Response $response,
+        array $args = []
+    ): ResponseInterface {
         try {
-            $brand = json_decode(file_get_contents($this->getLaunchData()->getBrandConfigJSONUrl()), true);
+            /** @var LaunchData $launch */
+            $launch = $request->getAttribute(RequireAuthenticationMiddleware::LAUNCH_MESSAGE);
+            $brand = json_decode(
+                file_get_contents(
+                    $launch->getBrandConfigJSONUrl()
+                ),
+                true
+            );
             $css = ':root {';
             foreach ($brand as $key => $value) {
                 if ($value !== 'none' && !is_numeric($value) && !preg_match("/#[a-f0-9]{3,6}/i", $value)) {
@@ -22,10 +36,10 @@ class Stylesheet extends Proxy
                 $css .= "--$key: $value;";
             }
             $css .= "}";
-            $this->response->getBody()->write($css);
-            return $this->response->withAddedHeader('Content-Type', 'text/css');
+            $response->getBody()->write($css);
+            return $response->withAddedHeader('Content-Type', 'text/css');
         } catch (Exception $e) {
-            return $this->response->withStatus(401);
+            return $response->withStatus(401);
         }
     }
 }

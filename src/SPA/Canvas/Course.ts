@@ -1,7 +1,4 @@
-import { stringify } from '@groton/canvas-cli.utilities';
-import { Options, paginatedCallback } from '../Utilities/paginatedCallback';
-import * as Canvas from '@groton/canvas-cli.api';
-import * as Client from './Client';
+import { Canvas } from '@groton/canvas-api.client.web';
 
 const minimalCourse = {
   id: undefined,
@@ -18,21 +15,19 @@ export class Course {
     Course.cache[course.id] = this;
   }
 
-  public static async list({
-    callback,
-    params = {}
-  }: Options<Course, Canvas.v1.Users.Courses.listSearchParameters> = {}) {
-    const key = stringify(params);
+  public static async list(
+    searchParams: Canvas.v1.Courses.listSearchParameters = {},
+    callback?: (c: Course) => unknown
+  ) {
+    const key = JSON.stringify(searchParams);
     if (!(key in Course.lists)) {
-      Course.lists[key] = await paginatedCallback<
-        Canvas.Courses.Course,
-        Course,
-        Canvas.v1.Users.Courses.listSearchParameters
-      >(
-        '/canvas/api/v1/users/self/favorites/courses',
-        (course: Canvas.Courses.Course) => new Course(course)
-      )({ callback, params });
-    } else if (callback) {
+      Course.lists[key] = (
+        await Canvas.v1.Courses.list({
+          searchParams
+        })
+      ).map((c) => new Course(c));
+    }
+    if (callback) {
       for (const course of Course.lists[key]) {
         callback(course);
       }
@@ -42,17 +37,7 @@ export class Course {
 
   public static async get(id: string | number) {
     if (!(id in this.cache)) {
-      const course = await Client.Get<
-        Canvas.Courses.Course,
-        Canvas.v1.Courses.getPathParameters,
-        Canvas.v1.Courses.getSearchParameters,
-        never
-      >({
-        endpoint: '/canvas/api/v1/courses/:id',
-        params: {
-          path: { id: id.toString() }
-        }
-      });
+      const course = await Canvas.v1.Courses.get({ pathParams: { id } });
       if (course) {
         this.cache[id] = new Course(course);
       }

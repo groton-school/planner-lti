@@ -10,7 +10,6 @@ import './styles.scss';
       throw new Error(`Missing #todo element`);
     }
     Canvas.Colors.get();
-    await Canvas.Course.list();
     FullCalendar.replaceContent('#calendar', {
       eventClick: async (info) => {
         if (Canvas.CalendarEvent.isAssociated(info)) {
@@ -36,38 +35,37 @@ import './styles.scss';
             FullCalendar.addEvent(classMeeting.toEvent());
           }
         });
-        Canvas.Course.list().then((courses) => {
+        Canvas.Course.list({ state: ['available'] }).then((courses) => {
           for (let i = 0; i < courses.length; i += 10) {
-            Canvas.CalendarEvent.list({
-              params: {
+            Canvas.CalendarEvent.list(
+              {
                 context_codes: courses
-                  .slice(i, i + 10).filter(course => course.isTeacher())
+                  .slice(i, i + 10)
+                  .filter((course) => course.isTeacher())
                   .map((course) => course.context_code),
                 type: 'assignment',
                 start_date: info.view.activeStart.toISOString(),
                 end_date: info.view.activeEnd.toISOString()
               },
-              callback: (calendarEvent) => {
+              (calendarEvent) => {
                 FullCalendar.addEvent(calendarEvent.toEvent());
               }
-            });
+            );
           }
         });
       }
     });
-    Canvas.PlannerItem.list({
-      callback: async (item) => {
-        if (!item.isEvent()) {
-          if (item.done) {
-            todoElt.querySelector('#done')?.appendChild(await item.toTodo());
-          } else {
-            todoElt
-              .querySelector('#incomplete')
-              ?.appendChild(await item.toTodo());
-          }
+    (await Canvas.PlannerItem.list()).map(async (item) => {
+      if (!item.isEvent()) {
+        if (item.done) {
+          todoElt.querySelector('#done')?.appendChild(await item.toTodo());
         } else {
-          FullCalendar.addEvent(item.toEvent())
+          todoElt
+            .querySelector('#incomplete')
+            ?.appendChild(await item.toTodo());
         }
+      } else {
+        FullCalendar.addEvent(item.toEvent());
       }
     });
   });

@@ -1,12 +1,4 @@
-import { Options, paginatedCallback } from '../Utilities/paginatedCallback';
-import * as Canvas from '@groton/canvas-cli.api';
-
-type ListOptions = Options<
-  AssignmentGroup,
-  Canvas.v1.Courses.AssignmentGroups.listSearchParameters
-> & {
-  course_id: string;
-};
+import { Canvas } from '@groton/canvas-api.client.web';
 
 export class AssignmentGroup {
   private static cache: Record<string | number, AssignmentGroup[]> = {};
@@ -15,15 +7,19 @@ export class AssignmentGroup {
     private assignmentGroup: Canvas.AssignmentGroups.AssignmentGroup
   ) {}
 
-  public static async list({ course_id, callback }: ListOptions) {
+  public static async list(
+    course_id: Canvas.v1.Courses.AssignmentGroups.listPathParameters['course_id'],
+    callback?: (g: AssignmentGroup) => unknown
+  ) {
     if (!(course_id in this.cache)) {
-      const assignmentGroups = await paginatedCallback(
-        `/canvas/api/v1/courses/${course_id}/assignment_groups`,
-        (assignmentGroup: Canvas.AssignmentGroups.AssignmentGroup) =>
-          new AssignmentGroup(assignmentGroup)
-      )({ callback });
+      const assignmentGroups = (
+        await Canvas.v1.Courses.AssignmentGroups.list({
+          pathParams: { course_id }
+        })
+      ).map((a) => new AssignmentGroup(a));
       this.cache[course_id] = assignmentGroups;
-    } else if (callback) {
+    }
+    if (callback) {
       for (const assigmentGroup of this.cache[course_id]) {
         callback(assigmentGroup);
       }

@@ -1,11 +1,10 @@
 import { EventClickArg, EventInput } from '@fullcalendar/core';
+import { Canvas } from '@groton/canvas-api.client.web';
 import bootstrap from 'bootstrap';
 import * as FullCalendar from '../../FullCalendar';
 import { isAllDay } from '../../Utilities';
 import { render } from '../../Utilities/Views';
 import { AssignmentGroup } from '../AssignmentGroup';
-import * as Canvas from '@groton/canvas-cli.api';
-import * as Client from '../Client';
 import * as Colors from '../Colors';
 import { Course } from '../Course';
 import { PlannerItem } from '../PlannerItem';
@@ -26,12 +25,9 @@ export class Assignment {
     id
   }: Canvas.v1.Courses.Assignments.getPathParameters) {
     if (!(id in this.cache)) {
-      const assignment = await Client.Get<Canvas.Assignments.Assignment>({
-        endpoint: '/canvas/api/v1/courses/:course_id/assignments/:id',
-        params: {
-          path: { course_id, id },
-          query: { include: ['submission'] }
-        }
+      const assignment = await Canvas.v1.Courses.Assignments.get({
+        pathParams: { course_id, id },
+        searchParams: { include: ['submission'] }
       });
       if (assignment) {
         this.cache[id] = new Assignment(assignment);
@@ -45,17 +41,9 @@ export class Assignment {
     ...form
   }: Canvas.v1.Courses.Assignments.createPathParameters &
     Canvas.v1.Courses.Assignments.createFormParameters) {
-    const assignment = await Client.Post<
-      Canvas.Assignments.Assignment,
-      Canvas.v1.Courses.Assignments.createPathParameters,
-      never,
-      Canvas.v1.Courses.Assignments.createFormParameters
-    >({
-      endpoint: '/canvas/api/v1/courses/:course_id/assignments',
-      params: {
-        path: { course_id },
-        form
-      }
+    const assignment = await Canvas.v1.Courses.Assignments.create({
+      pathParams: { course_id },
+      params: form
     });
     if (assignment) {
       const result = new Assignment(assignment);
@@ -118,22 +106,20 @@ export class Assignment {
         consumer_instance_url,
         course,
         event,
-        assignment_groups: await AssignmentGroup.list({
-          course_id: course.id.toString()
-        })
+        assignment_groups: await AssignmentGroup.list(course.id)
       }
     })) as HTMLFormElement;
-    form.addEventListener('submit', (e: SubmitEvent) => {
+    form.addEventListener('submit', async (e: SubmitEvent) => {
       if (e.submitter?.id === 'save') {
         e.stopImmediatePropagation();
         e.preventDefault();
-        Assignment.post({
-          course_id: course.id.toString(),
-          ...Client.asParams<Canvas.v1.Courses.Assignments.createFormParameters>(
-            { form, container: 'assignment' }
-          ),
-          'assignment[grading_type]': 'not_graded',
-          'assignment[submission_types]': ['none']
+        await Canvas.v1.Courses.Assignments.create({
+          pathParams: { course_id: course.id },
+          params: {
+            ...form,
+            'assignment[grading_type]': 'not_graded',
+            'assignment[submission_types]': ['none']
+          }
         });
         form.dispatchEvent(new Event(Assignment.CreatedEvent));
       }

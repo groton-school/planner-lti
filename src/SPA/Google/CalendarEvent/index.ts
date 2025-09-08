@@ -1,7 +1,6 @@
 import { DateTimeString } from '@battis/descriptive-types';
 import GoogleCalendar from '@battis/google.calendar';
 import { EventClickArg, EventInput } from '@fullcalendar/core';
-import { stringify } from '@groton/canvas-cli.utilities';
 import bootstrap from 'bootstrap';
 import * as Canvas from '../../Canvas';
 import { render } from '../../Utilities/Views';
@@ -25,11 +24,17 @@ export class CalendarEvent {
 
   public static async list({ params }: { params: Params } = { params: {} }) {
     params.singleEvents = 'true';
-    const paramString = stringify(params);
+    const paramString = JSON.stringify(params);
     if (!this.fetched[paramString]) {
       this.fetched[paramString] = true;
       const response = (await (
-        await fetch(`/google/calendar/events?${paramString}`)
+        await fetch(
+          `/google/calendar/events?${(
+            Object.keys(params) as (keyof typeof params)[]
+          )
+            .map((key) => `${key}=${encodeURIComponent(params[key] || '')}`)
+            .join('&')}`
+        )
       ).json()) as {
         items: GoogleCalendar.v3.Event[];
       };

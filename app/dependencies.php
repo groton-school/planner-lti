@@ -2,81 +2,45 @@
 
 declare(strict_types=1);
 
-use App\Application\Actions\OAuth2;
-use App\Application\Handlers\LaunchHandler;
 use App\Application\Settings\SettingsInterface;
-use App\Domain\LTI\LaunchDataRepositoryInterface;
-use App\Domain\OAuth2\AppCredentialsRepositoryInterface;
+use App\Application\Actions\Google\Calendar;
+use Battis\LazySecrets;
 use DI\ContainerBuilder;
 use Google\Client;
-use Google\Cloud\Logging\LoggingClient;
-use GrotonSchool\OAuth2\Client\Provider\CanvasLMS;
+use GrotonSchool\Slim\CanvasLMS;
 use GrotonSchool\Slim\GAE;
 use GrotonSchool\Slim\LTI;
 use GrotonSchool\Slim\LTI\Actions\RegistrationConfigureActionInterface;
 use GrotonSchool\Slim\LTI\Actions\RegistrationConfigurePassthruAction;
 use GrotonSchool\Slim\LTI\Handlers\LaunchHandlerInterface;
 use GrotonSchool\Slim\LTI\Infrastructure;
-use GrotonSchool\Slim\LTI\Infrastructure\CacheInterface;
-use GrotonSchool\Slim\LTI\Infrastructure\Cookie;
-use GrotonSchool\Slim\LTI\Infrastructure\CookieInterface;
-use GrotonSchool\Slim\LTI\Infrastructure\DatabaseInterface;
-use GrotonSchool\Slim\LTI\Infrastructure\GAE\Cache;
-use GrotonSchool\Slim\LTI\Infrastructure\GAE\Database;
+use GrotonSchool\Slim\LTI\PartitionedSession;
+use GrotonSchool\Slim\LTI\PartitionedSession\Handlers\LaunchHandler;
+use GrotonSchool\Slim\OAuth2\APIProxy\Domain\Provider\ProviderInterface;
 use Odan\Session\PhpSession;
 use Odan\Session\SessionInterface;
 use Odan\Session\SessionManagerInterface;
-use Packback\Lti1p3\Interfaces\ICache;
-use Packback\Lti1p3\Interfaces\ICookie;
-use Packback\Lti1p3\Interfaces\IDatabase;
-use Packback\Lti1p3\Interfaces\ILtiServiceConnector;
-use Packback\Lti1p3\LtiServiceConnector;
 use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
 use Slim\Views\PhpRenderer;
 
 return function (ContainerBuilder $containerBuilder) {
+    GAE\Dependencies::inject($containerBuilder);
+    LTI\Dependencies::inject($containerBuilder);
+    PartitionedSession\Dependencies::inject($containerBuilder);
+    Infrastructure\GAE\Dependencies::inject($containerBuilder);
+
     $containerBuilder->addDefinitions([
-        LoggerInterface::class => function (ContainerInterface $c) {
-            /** @var SettingsInterface $settings */
-            $settings = $c->get(SettingsInterface::class);
-            $client = new LoggingClient([
-                'projectId' => $settings->getProjectId()
-            ]);
-            $logger = $client->psrBatchLogger('slim-gae-skeleton');
-            return $logger;
-        },
+        // use default partitioned session settings
+        PartitionedSession\SettingsInterface::class => DI\get(PartitionedSession\DefaultSettings::class),
+
         // all settings interfaces map to the App Settings
         GAE\SettingsInterface::class => DI\get(SettingsInterface::class),
         LTI\SettingsInterface::class => DI\get(SettingsInterface::class),
         Infrastructure\GAE\SettingsInterface::class => DI\get(SettingsInterface::class),
-        OAuth2\SettingsInterface::class => DI\get(SettingsInterface::class),
+        Calendar\SettingsInterface::class => DI\get(SettingsInterface::class),
 
-        // autowire packbackbooks/lti-1p3-tool implementations
-        ILtiServiceConnector::class => DI\autowire(LtiServiceConnector::class),
-        ICookie::class => DI\autowire(Cookie::class),
-        ICache::class => DI\autowire(Cache::class),
-        IDatabase::class => DI\autowire(Database::class),
+        LaunchHandlerInterface::class => DI\get(LaunchHandler::class),
 
-        // autowire groton-school/slim-lti-shim implementations
-        CookieInterface::class => DI\autowire(Cookie::class),
-        CacheInterface::class => DI\autowire(Cache::class),
-        DatabaseInterface::class => DI\autowire(Database::class),
-        LaunchHandlerInterface::class => DI\autowire(LaunchHandler::class),
-
-        /*
-        * autowire registration configuration passthru (no interactive
-        * configuration)
-        *
-        * to set up interactive configurattion of the registration, implement
-        * (and autowire) GrotonSchool\Slim\LTI\Actions\RegistrationConfigureActionInterface
-        *
-        * Interactive configuration ends either by invoking
-        * GrotonSchool\Slim\LTI\Action\RegistrationCompleteAction::complete()
-        * or by POSTing the complete registration (with the parameter name
-        * registration) to an endpoint handled by
-        * GrotonSchool\Slim\LTI\Action\RegistrationCompleteAction
-        */
         RegistrationConfigureActionInterface::class => DI\autowire(RegistrationConfigurePassthruAction::class),
 
         SessionManagerInterface::class => DI\get(SessionInterface::class),
@@ -92,27 +56,25 @@ return function (ContainerBuilder $containerBuilder) {
             return $client;
         },
 
-        PhpRenderer::class => function () {
-            return new PhpRenderer(__DIR__ . '/../views/slim');
-        },
-
-        CanvasLMS::class => function (ContainerInterface $container) {
+        PhpRenderer::class => function (ContainerInterface $container) {
             /** @var SettingsInterface $settings */
             $settings = $container->get(SettingsInterface::class);
+            $views = new PhpRenderer(__DIR__ . '/../views/slim', [
+                'tool_name' => $settings->getToolName(),
+                'title' => $settings->getToolName()
+            ]);
+            $views->setLayout('layout.php');
+            return $views;
+        },
 
-            /** @var AppCredentialsRepositoryInterface $credentials */
-            $credentials = $container->get(AppCredentialsRepositoryInterface::class);
-
-            /** @var LaunchDataRepositoryInterface $launchData */
-            $launchData = $container->get(LaunchDataRepositoryInterface::class);
-
-            return new CanvasLMS(([
-                'clientId' => $credentials->getClientID(),
-                'clientSecret' => $credentials->getClientSecret(),
-                'purpose' => "The planner needs access to Canvas so that it can see and update your assignments and to-do items.",
-                'redirectUri' => $settings->getOAuth2RedirectUri(),
-                'canvasInstanceUrl' =>  $launchData->getLaunchData()->getConsumerInstanceUrl()
-            ]));
+        ProviderInterface::class => function (ContainerInterface $container) {
+            /** @var SettingsInterface $settings */
+            $settings = $container->get(SettingsInterface::class);
+            $secrets = new LazySecrets\Cache();
+            return new CanvasLMS\APIProxy([
+                ...$secrets->get('CANVAS_CREDENTIALS'),
+                'purpose' => $settings->getToolName()
+            ]);
         }
     ]);
 };
