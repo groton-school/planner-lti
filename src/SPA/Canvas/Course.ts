@@ -74,6 +74,17 @@ export class Course {
     return minimalCourse;
   }
 
+  public static fromSisId(sis_course_id?: string) {
+    if (sis_course_id) {
+      for (const id in this.cache) {
+        if (this.cache[id].course.sis_course_id == sis_course_id) {
+          return this.cache[id];
+        }
+      }
+    }
+    return minimalCourse;
+  }
+
   public static fromContextCode(context_code: string) {
     for (const id in this.cache) {
       if (context_code === `course_${id}`) {

@@ -99,7 +99,17 @@ export class CalendarEvent {
   }
 
   public get course() {
-    return Canvas.Course.fromName(this.title);
+    let sis_course_id: string | undefined = undefined;
+    try {
+      const data = JSON.parse(
+        this.event.description?.replace(/^.*(\{(.|\n)*\}).*$/, '$1') || '{}'
+      );
+      sis_course_id = data.sis_course_id;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_) {
+      // ignore error
+    }
+    return Canvas.Course.fromSisId(sis_course_id);
   }
 
   public static fromEventId(id: string) {
