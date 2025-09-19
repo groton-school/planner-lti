@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Application\Settings\SettingsInterface;
 use App\Application\Actions\Google\Calendar;
+use App\Domain\Google;
 use Battis\LazySecrets;
 use DI\ContainerBuilder;
 use Google\Client;
@@ -16,7 +17,8 @@ use GrotonSchool\Slim\LTI\Handlers\LaunchHandlerInterface;
 use GrotonSchool\Slim\LTI\Infrastructure;
 use GrotonSchool\Slim\LTI\PartitionedSession;
 use GrotonSchool\Slim\LTI\PartitionedSession\Handlers\LaunchHandler;
-use GrotonSchool\Slim\OAuth2\APIProxy\Domain\Provider\ProviderInterface;
+use GrotonSchool\Slim\OAuth2\APIProxy;
+use GrotonSchool\Slim\OAuth2\APIProxy\GAE\Firestore\AccessTokenRepository;
 use Odan\Session\PhpSession;
 use Odan\Session\SessionInterface;
 use Odan\Session\SessionManagerInterface;
@@ -24,10 +26,10 @@ use Psr\Container\ContainerInterface;
 use Slim\Views\PhpRenderer;
 
 return function (ContainerBuilder $containerBuilder) {
-    GAE\Dependencies::inject($containerBuilder);
-    LTI\Dependencies::inject($containerBuilder);
-    PartitionedSession\Dependencies::inject($containerBuilder);
-    Infrastructure\GAE\Dependencies::inject($containerBuilder);
+    (new GAE\Dependencies())->inject($containerBuilder);
+    (new LTI\Dependencies())->inject($containerBuilder);
+    (new PartitionedSession\Dependencies())->inject($containerBuilder);
+    (new Infrastructure\GAE\Dependencies())->inject($containerBuilder);
 
     $containerBuilder->addDefinitions([
         // use default partitioned session settings
@@ -67,14 +69,39 @@ return function (ContainerBuilder $containerBuilder) {
             return $views;
         },
 
-        ProviderInterface::class => function (ContainerInterface $container) {
+        CanvasLMS\APIProxy::class => function (ContainerInterface $container) {
             /** @var SettingsInterface $settings */
             $settings = $container->get(SettingsInterface::class);
             $secrets = new LazySecrets\Cache();
-            return new CanvasLMS\APIProxy([
+            $proxy = new CanvasLMS\APIProxy([
                 ...$secrets->get('CANVAS_CREDENTIALS'),
                 'purpose' => $settings->getToolName()
             ]);
+            $proxy->setAccessTokenRepostory(new AccessTokenRepository($proxy));
+            return $proxy;
+        },
+
+        'routes.canvas' => function (ContainerInterface $container) {
+            return new APIProxy\RouteBuilder(
+                $container->get(CanvasLMS\APIProxy::class),
+                $container->get(SessionInterface::class)
+            );
+        },
+
+        Google\APIProxy::class => function (ContainerInterface $container) {
+            $secrets = new LazySecrets\Cache();
+            $proxy = new Google\APIProxy([
+                ...$secrets->get('GOOGLE_CREDENTIALS')
+            ]);
+            $proxy->setAccessTokenRepostory(new AccessTokenRepository($proxy));
+            return $proxy;
+        },
+
+        'routes.google' => function (ContainerInterface $container) {
+            return new APIProxy\RouteBuilder(
+                $container->get(Google\APIProxy::class),
+                $container->get(SessionInterface::class)
+            );
         }
     ]);
 };

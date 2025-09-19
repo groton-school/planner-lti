@@ -29,6 +29,9 @@ importers:
       ejs:
         specifier: ^3.1.10
         version: 3.1.10
+      path-browserify:
+        specifier: ^1.0.1
+        version: 1.0.1
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
@@ -81,6 +84,9 @@ importers:
       '@types/ejs':
         specifier: ^3.1.5
         version: 3.1.5
+      '@types/path-browserify':
+        specifier: ^1.0.3
+        version: 1.0.3
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
@@ -1198,6 +1204,9 @@ packages:
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
+
+  '@types/path-browserify@1.0.3':
+    resolution: {integrity: sha512-ZmHivEbNCBtAfcrFeBCiTjdIc2dey0l7oCGNGpSuRTy8jP6UVND7oUowlvDujBy8r2Hoa8bfFUOCiPWfmtkfxw==}
 
   '@types/pegjs@0.10.6':
     resolution: {integrity: sha512-eLYXDbZWXh2uxf+w8sXS8d6KSoXTswfps6fvCUuVAGN8eRpfe7h9eSRydxiSJvo9Bf+GzifsDOr9TMQlmJdmkw==}
@@ -6952,6 +6961,8 @@ snapshots:
       undici-types: 7.10.0
 
   '@types/normalize-package-data@2.4.4': {}
+
+  '@types/path-browserify@1.0.3': {}
 
   '@types/pegjs@0.10.6': {}
 

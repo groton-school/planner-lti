@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
 use Slim\Psr7\Response;
 use Slim\Views\PhpRenderer;
 
-class RequireAuthenticationMiddleware implements MiddlewareInterface
+class Authenticated implements MiddlewareInterface
 {
     public const USER = self::class . '::user';
     public const LAUNCH_MESSAGE = self::class . '::launchMessage';

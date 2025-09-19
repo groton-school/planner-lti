@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\Google\Calendar;
 
-use App\Application\Middleware\RequireAuthenticationMiddleware;
+use App\Application\Middleware\Authenticated;
 use App\Domain\LTI\LaunchData;
 use Google\Client;
 use Google\Service\Calendar;
@@ -32,7 +32,7 @@ class Events extends AbstractAction
     ): ResponseInterface {
         $params = $request->getQueryParams();
         /** @var Launchdata $launch */
-        $launch = $request->getAttribute(RequireAuthenticationMiddleware::LAUNCH_MESSAGE);
+        $launch = $request->getAttribute(Authenticated::LAUNCH_MESSAGE);
         if (isset($params['q'])) {
             $params['q'] = $launch->getUserEmail() . ' ' . $params['q'];
         } else {

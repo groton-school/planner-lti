@@ -18,6 +18,7 @@
     "@groton/canvas-api.client.web": "^0.0.4",
     "bootstrap": "^5.3.8",
     "ejs": "^3.1.10",
+    "path-browserify": "^1.0.1",
     "tinycolor2": "^1.6.0"
   },
   "devDependencies": {
@@ -37,6 +38,7 @@
     "@qui-cli/shell": "^3.0.1",
     "@types/bootstrap": "^5.2.10",
     "@types/ejs": "^3.1.5",
+    "@types/path-browserify": "^1.0.3",
     "@types/tinycolor2": "^1.4.6",
     "commit-and-tag-version": "^12.6.0",
     "html-loader": "^5.1.0",

@@ -9,7 +9,7 @@
                 <div id="incomplete"></div>
                 <div id="done"></div>
             </div>
-        </div>
+        </div>  
     </div>
     <div id="footer" class="container">
         <div class="text-center">

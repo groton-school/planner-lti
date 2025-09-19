@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ee5162a4a57a79774c4e9e25e04b553",
+    "content-hash": "45ebd955f6b6cfb67e09997b10e41e69",
     "packages": [
         {
             "name": "battis/lazy-secrets",
@@ -250,16 +250,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.8.11",
+            "version": "2.8.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "00e1a3396eea67033775c4a49c772376f45acd73"
+                "reference": "3e38919bc9a2c3c026f2151b5e56d04084ce8f0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/00e1a3396eea67033775c4a49c772376f45acd73",
-                "reference": "00e1a3396eea67033775c4a49c772376f45acd73",
+                "url": "https://api.github.com/repos/composer/composer/zipball/3e38919bc9a2c3c026f2151b5e56d04084ce8f0b",
+                "reference": "3e38919bc9a2c3c026f2151b5e56d04084ce8f0b",
                 "shasum": ""
             },
             "require": {
@@ -270,20 +270,20 @@
                 "composer/semver": "^3.3",
                 "composer/spdx-licenses": "^1.5.7",
                 "composer/xdebug-handler": "^2.0.2 || ^3.0.3",
-                "justinrainbow/json-schema": "^6.3.1",
+                "justinrainbow/json-schema": "^6.5.1",
                 "php": "^7.2.5 || ^8.0",
                 "psr/log": "^1.0 || ^2.0 || ^3.0",
-                "react/promise": "^2.11 || ^3.3",
+                "react/promise": "^3.3",
                 "seld/jsonlint": "^1.4",
                 "seld/phar-utils": "^1.2",
                 "seld/signal-handler": "^2.0",
-                "symfony/console": "^5.4.35 || ^6.3.12 || ^7.0.3",
-                "symfony/filesystem": "^5.4.35 || ^6.3.12 || ^7.0.3",
-                "symfony/finder": "^5.4.35 || ^6.3.12 || ^7.0.3",
+                "symfony/console": "^5.4.47 || ^6.4.25 || ^7.1.10",
+                "symfony/filesystem": "^5.4.45 || ^6.4.24 || ^7.1.10",
+                "symfony/finder": "^5.4.45 || ^6.4.24 || ^7.1.10",
                 "symfony/polyfill-php73": "^1.24",
                 "symfony/polyfill-php80": "^1.24",
                 "symfony/polyfill-php81": "^1.24",
-                "symfony/process": "^5.4.35 || ^6.3.12 || ^7.0.3"
+                "symfony/process": "^5.4.47 || ^6.4.25 || ^7.1.10"
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.11.8",
@@ -291,7 +291,7 @@
                 "phpstan/phpstan-phpunit": "^1.4.0",
                 "phpstan/phpstan-strict-rules": "^1.6.0",
                 "phpstan/phpstan-symfony": "^1.4.0",
-                "symfony/phpunit-bridge": "^6.4.3 || ^7.0.1"
+                "symfony/phpunit-bridge": "^6.4.25 || ^7.3.3"
             },
             "suggest": {
                 "ext-openssl": "Enabling the openssl extension allows you to access https URLs for repositories and packages",
@@ -344,7 +344,7 @@
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
                 "security": "https://github.com/composer/composer/security/policy",
-                "source": "https://github.com/composer/composer/tree/2.8.11"
+                "source": "https://github.com/composer/composer/tree/2.8.12"
             },
             "funding": [
                 {
@@ -356,7 +356,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-21T09:29:39+00:00"
+            "time": "2025-09-19T11:41:59+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -981,20 +981,20 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.411.0",
+            "version": "v0.412.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "3d616fcefdb8e6c598b2d007d4155fe516b91abd"
+                "reference": "212b51a11caa98e71c97f08041cc58e3425b2e15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/3d616fcefdb8e6c598b2d007d4155fe516b91abd",
-                "reference": "3d616fcefdb8e6c598b2d007d4155fe516b91abd",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/212b51a11caa98e71c97f08041cc58e3425b2e15",
+                "reference": "212b51a11caa98e71c97f08041cc58e3425b2e15",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.0"
+                "php": "^8.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.6"
@@ -1019,29 +1019,29 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.411.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.412.0"
             },
-            "time": "2025-09-05T20:24:02+00:00"
+            "time": "2025-09-15T00:56:22+00:00"
         },
         {
             "name": "google/auth",
-            "version": "v1.47.1",
+            "version": "v1.48.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-auth-library-php.git",
-                "reference": "d7a0a215ec42ca0c8cb40e9ae0c5960aa9a024b7"
+                "reference": "3053a5bfe284538419d4fee8c9df148488db6d30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/d7a0a215ec42ca0c8cb40e9ae0c5960aa9a024b7",
-                "reference": "d7a0a215ec42ca0c8cb40e9ae0c5960aa9a024b7",
+                "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/3053a5bfe284538419d4fee8c9df148488db6d30",
+                "reference": "3053a5bfe284538419d4fee8c9df148488db6d30",
                 "shasum": ""
             },
             "require": {
                 "firebase/php-jwt": "^6.0",
                 "guzzlehttp/guzzle": "^7.4.5",
                 "guzzlehttp/psr7": "^2.4.5",
-                "php": "^8.0",
+                "php": "^8.1",
                 "psr/cache": "^2.0||^3.0",
                 "psr/http-message": "^1.1||^2.0",
                 "psr/log": "^3.0"
@@ -1053,7 +1053,7 @@
                 "phpspec/prophecy-phpunit": "^2.1",
                 "phpunit/phpunit": "^9.6",
                 "sebastian/comparator": ">=1.2.3",
-                "squizlabs/php_codesniffer": "^3.5",
+                "squizlabs/php_codesniffer": "^4.0",
                 "symfony/process": "^6.0||^7.0",
                 "webmozart/assert": "^1.11"
             },
@@ -1080,9 +1080,9 @@
             "support": {
                 "docs": "https://cloud.google.com/php/docs/reference/auth/latest",
                 "issues": "https://github.com/googleapis/google-auth-library-php/issues",
-                "source": "https://github.com/googleapis/google-auth-library-php/tree/v1.47.1"
+                "source": "https://github.com/googleapis/google-auth-library-php/tree/v1.48.0"
             },
-            "time": "2025-07-09T15:26:02+00:00"
+            "time": "2025-09-16T22:09:18+00:00"
         },
         {
             "name": "google/cloud-core",
@@ -1385,16 +1385,16 @@
         },
         {
             "name": "google/gax",
-            "version": "v1.36.1",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/gax-php.git",
-                "reference": "afdac3bc38a3b17d70668115d7b1a97289ac4d72"
+                "reference": "05719d8a6a5a7233fc9aa41d9d6e5a873930c8ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/afdac3bc38a3b17d70668115d7b1a97289ac4d72",
-                "reference": "afdac3bc38a3b17d70668115d7b1a97289ac4d72",
+                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/05719d8a6a5a7233fc9aa41d9d6e5a873930c8ae",
+                "reference": "05719d8a6a5a7233fc9aa41d9d6e5a873930c8ae",
                 "shasum": ""
             },
             "require": {
@@ -1402,15 +1402,15 @@
                 "google/common-protos": "^4.4",
                 "google/grpc-gcp": "^0.4",
                 "google/longrunning": "~0.4",
-                "google/protobuf": "^v3.25.3||^4.26.1",
+                "google/protobuf": "^4.26.1",
                 "grpc/grpc": "^1.13",
                 "guzzlehttp/promises": "^2.0",
                 "guzzlehttp/psr7": "^2.0",
-                "php": "^8.0",
+                "php": "^8.1",
                 "ramsey/uuid": "^4.0"
             },
             "conflict": {
-                "ext-protobuf": "<3.7.0"
+                "ext-protobuf": "<4.7.0"
             },
             "require-dev": {
                 "phpspec/prophecy-phpunit": "^2.1",
@@ -1436,9 +1436,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/gax-php/issues",
-                "source": "https://github.com/googleapis/gax-php/tree/v1.36.1"
+                "source": "https://github.com/googleapis/gax-php/tree/v1.37.0"
             },
-            "time": "2025-05-20T19:50:43+00:00"
+            "time": "2025-09-13T16:22:17+00:00"
         },
         {
             "name": "google/grpc-gcp",
@@ -1531,23 +1531,23 @@
         },
         {
             "name": "google/protobuf",
-            "version": "v4.31.1",
+            "version": "v4.32.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/protocolbuffers/protobuf-php.git",
-                "reference": "2b028ce8876254e2acbeceea7d9b573faad41864"
+                "reference": "c4ed1c1f9bbc1e91766e2cd6c0af749324fe87cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/2b028ce8876254e2acbeceea7d9b573faad41864",
-                "reference": "2b028ce8876254e2acbeceea7d9b573faad41864",
+                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/c4ed1c1f9bbc1e91766e2cd6c0af749324fe87cb",
+                "reference": "c4ed1c1f9bbc1e91766e2cd6c0af749324fe87cb",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0.0"
+                "php": ">=8.1.0"
             },
             "require-dev": {
-                "phpunit/phpunit": ">=5.0.0"
+                "phpunit/phpunit": ">=5.0.0 <8.5.27"
             },
             "suggest": {
                 "ext-bcmath": "Need to support JSON deserialization"
@@ -1569,9 +1569,9 @@
                 "proto"
             ],
             "support": {
-                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v4.31.1"
+                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v4.32.1"
             },
-            "time": "2025-05-28T18:52:35+00:00"
+            "time": "2025-09-14T05:14:52+00:00"
         },
         {
             "name": "groton-school/oauth2-canvaslms",
@@ -1623,21 +1623,21 @@
         },
         {
             "name": "groton-school/slim-canvas-api-proxy",
-            "version": "1.0.2",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/slim-canvas-api-proxy.git",
-                "reference": "2e7175e8aa5d7b1f8a9fb23b03d9cbe57bfb02e4"
+                "reference": "0f8df4860aec71357aa7cf0aa6d10cfb6a6499e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/slim-canvas-api-proxy/zipball/2e7175e8aa5d7b1f8a9fb23b03d9cbe57bfb02e4",
-                "reference": "2e7175e8aa5d7b1f8a9fb23b03d9cbe57bfb02e4",
+                "url": "https://api.github.com/repos/groton-school/slim-canvas-api-proxy/zipball/0f8df4860aec71357aa7cf0aa6d10cfb6a6499e1",
+                "reference": "0f8df4860aec71357aa7cf0aa6d10cfb6a6499e1",
                 "shasum": ""
             },
             "require": {
                 "groton-school/oauth2-canvaslms": "^1.1",
-                "groton-school/slim-oauth2-api-proxy": "^1.0"
+                "groton-school/slim-oauth2-api-proxy": "^3.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "*",
@@ -1661,37 +1661,37 @@
             ],
             "support": {
                 "issues": "https://github.com/groton-school/slim-canvas-api-proxy/issues",
-                "source": "https://github.com/groton-school/slim-canvas-api-proxy/tree/v1.0.2"
+                "source": "https://github.com/groton-school/slim-canvas-api-proxy/tree/v2.1.0"
             },
-            "time": "2025-09-08T13:02:17+00:00"
+            "time": "2025-09-18T19:25:53+00:00"
         },
         {
             "name": "groton-school/slim-gae-shim",
-            "version": "1.3.1",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/slim-gae-shim.git",
-                "reference": "5af448726b8fe2b12fa4b6954168020418d56917"
+                "reference": "87dae63e078887edd9cc49dedda7d4ace9f70e34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/slim-gae-shim/zipball/5af448726b8fe2b12fa4b6954168020418d56917",
-                "reference": "5af448726b8fe2b12fa4b6954168020418d56917",
+                "url": "https://api.github.com/repos/groton-school/slim-gae-shim/zipball/87dae63e078887edd9cc49dedda7d4ace9f70e34",
+                "reference": "87dae63e078887edd9cc49dedda7d4ace9f70e34",
                 "shasum": ""
             },
             "require": {
                 "composer/composer": "^2.8",
                 "google/cloud-logging": "^1.32",
-                "groton-school/slim-norms": "^1.0",
-                "php-di/php-di": ">=6.0",
-                "psr/container": ">=1.0",
+                "groton-school/slim-norms": "^2.1",
+                "php-di/php-di": "^7.0",
+                "psr/container": "^2.0",
                 "psr/http-message": "^2.0",
                 "psr/log": "^3.0",
-                "slim/slim": "^4.14",
+                "slim/slim": "^4.12",
                 "symfony/filesystem": "^7.3"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.85",
+                "friendsofphp/php-cs-fixer": "^3.76",
                 "marcocesarato/php-conventional-changelog": "^1.17"
             },
             "type": "library",
@@ -1713,28 +1713,28 @@
             "description": "Shim for Slim Skelton to run on Google App Engine",
             "support": {
                 "issues": "https://github.com/groton-school/slim-gae-shim/issues",
-                "source": "https://github.com/groton-school/slim-gae-shim/tree/v1.3.1"
+                "source": "https://github.com/groton-school/slim-gae-shim/tree/v2.1.1"
             },
-            "time": "2025-08-09T00:05:07+00:00"
+            "time": "2025-09-19T01:25:54+00:00"
         },
         {
             "name": "groton-school/slim-lti-infrastructure-gae",
-            "version": "2.0.1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/slim-lti-infrastructure-gae.git",
-                "reference": "36fab1959a2570412c4d901f02c3c0281fc66981"
+                "reference": "b996e5121a3c4db3f2f2e740fd6c2ae2ea6297e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/slim-lti-infrastructure-gae/zipball/36fab1959a2570412c4d901f02c3c0281fc66981",
-                "reference": "36fab1959a2570412c4d901f02c3c0281fc66981",
+                "url": "https://api.github.com/repos/groton-school/slim-lti-infrastructure-gae/zipball/b996e5121a3c4db3f2f2e740fd6c2ae2ea6297e4",
+                "reference": "b996e5121a3c4db3f2f2e740fd6c2ae2ea6297e4",
                 "shasum": ""
             },
             "require": {
                 "google/cloud-firestore": "^1.48",
-                "groton-school/slim-lti-shim": "^3.0",
-                "groton-school/slim-norms": "^1.0",
+                "groton-school/slim-lti-shim": "^4.0",
+                "groton-school/slim-norms": "^2.0",
                 "packbackbooks/lti-1p3-tool": "^6.3",
                 "php-di/php-di": "^7.0"
             },
@@ -1761,28 +1761,28 @@
             "description": "Shim to implement packbackbooks/lti-1p3-tool storage interfaces in Firestore",
             "support": {
                 "issues": "https://github.com/groton-school/slim-lti-infrastructure-gae/issues",
-                "source": "https://github.com/groton-school/slim-lti-infrastructure-gae/tree/v2.0.1"
+                "source": "https://github.com/groton-school/slim-lti-infrastructure-gae/tree/v3.0.0"
             },
-            "time": "2025-08-13T16:34:07+00:00"
+            "time": "2025-09-09T22:06:25+00:00"
         },
         {
             "name": "groton-school/slim-lti-partitioned-session",
-            "version": "1.3.5",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/slim-lti-partitioned-session.git",
-                "reference": "40a4d2b7d5fc1a8b535ca7b86f14abf3412fcc0e"
+                "reference": "6d70290f4fd8103d3b000a0f764b0e0bd972d3a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/slim-lti-partitioned-session/zipball/40a4d2b7d5fc1a8b535ca7b86f14abf3412fcc0e",
-                "reference": "40a4d2b7d5fc1a8b535ca7b86f14abf3412fcc0e",
+                "url": "https://api.github.com/repos/groton-school/slim-lti-partitioned-session/zipball/6d70290f4fd8103d3b000a0f764b0e0bd972d3a0",
+                "reference": "6d70290f4fd8103d3b000a0f764b0e0bd972d3a0",
                 "shasum": ""
             },
             "require": {
                 "dflydev/fig-cookies": "^3.2",
-                "groton-school/slim-lti-shim": "^3.0",
-                "groton-school/slim-norms": "^1.0",
+                "groton-school/slim-lti-shim": "^4.0",
+                "groton-school/slim-norms": "^2.1",
                 "odan/session": "^6.4",
                 "php-di/php-di": "^7.0",
                 "psr/container": "^2.0",
@@ -1814,29 +1814,29 @@
             "description": "Negotiate CHIPS partitioned third party session cookies from an embedded LTI Tool",
             "support": {
                 "issues": "https://github.com/groton-school/slim-lti-partitioned-session/issues",
-                "source": "https://github.com/groton-school/slim-lti-partitioned-session/tree/v1.3.5"
+                "source": "https://github.com/groton-school/slim-lti-partitioned-session/tree/v2.1.1"
             },
-            "time": "2025-09-04T11:32:49+00:00"
+            "time": "2025-09-19T01:27:08+00:00"
         },
         {
             "name": "groton-school/slim-lti-shim",
-            "version": "3.0.4",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/slim-lti-shim.git",
-                "reference": "104284c08ef704e487efc6fb8ee5f23e3b66fdb5"
+                "reference": "b53e9d8ab7a95ba93684b30bae5cdf43b3adae87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/slim-lti-shim/zipball/104284c08ef704e487efc6fb8ee5f23e3b66fdb5",
-                "reference": "104284c08ef704e487efc6fb8ee5f23e3b66fdb5",
+                "url": "https://api.github.com/repos/groton-school/slim-lti-shim/zipball/b53e9d8ab7a95ba93684b30bae5cdf43b3adae87",
+                "reference": "b53e9d8ab7a95ba93684b30bae5cdf43b3adae87",
                 "shasum": ""
             },
             "require": {
                 "dflydev/fig-cookies": "^3.2",
                 "ext-json": "*",
                 "ext-openssl": "*",
-                "groton-school/slim-norms": "^1.0",
+                "groton-school/slim-norms": "^2.1",
                 "odan/session": "^6.4",
                 "packbackbooks/lti-1p3-tool": "^6.3",
                 "php-di/php-di": "^7.0",
@@ -1869,32 +1869,32 @@
             "description": "Shim to use packbackbooks/lti-1p3-tool in a Slim Skeleton app",
             "support": {
                 "issues": "https://github.com/groton-school/slim-lti-shim/issues",
-                "source": "https://github.com/groton-school/slim-lti-shim/tree/v3.0.4"
+                "source": "https://github.com/groton-school/slim-lti-shim/tree/v4.1.1"
             },
-            "time": "2025-09-04T11:30:14+00:00"
+            "time": "2025-09-19T01:28:54+00:00"
         },
         {
             "name": "groton-school/slim-norms",
-            "version": "1.0.1",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/slim-norms.git",
-                "reference": "c0e3f763bb23c08b8d2ad387e97adfd0b098c731"
+                "reference": "b5afd522f3c3d1aa764219e9b09db334f62c6988"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/slim-norms/zipball/c0e3f763bb23c08b8d2ad387e97adfd0b098c731",
-                "reference": "c0e3f763bb23c08b8d2ad387e97adfd0b098c731",
+                "url": "https://api.github.com/repos/groton-school/slim-norms/zipball/b5afd522f3c3d1aa764219e9b09db334f62c6988",
+                "reference": "b5afd522f3c3d1aa764219e9b09db334f62c6988",
                 "shasum": ""
             },
             "require": {
-                "php-di/php-di": ">=6.0",
+                "php-di/php-di": "^7.0",
                 "psr/http-message": "^2.0",
                 "slim/http": "^1.4",
-                "slim/slim": "^4.14"
+                "slim/slim": "^4.12"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.85",
+                "friendsofphp/php-cs-fixer": "^3.76",
                 "marcocesarato/php-conventional-changelog": "^1.17"
             },
             "type": "library",
@@ -1916,28 +1916,28 @@
             "description": "Define some normal interfaces and abstract classes for working with the Slim Framework",
             "support": {
                 "issues": "https://github.com/groton-school/slim-norms/issues",
-                "source": "https://github.com/groton-school/slim-norms/tree/v1.0.1"
+                "source": "https://github.com/groton-school/slim-norms/tree/v2.1.1"
             },
-            "time": "2025-08-08T23:37:41+00:00"
+            "time": "2025-09-19T01:23:33+00:00"
         },
         {
             "name": "groton-school/slim-oauth2-api-proxy",
-            "version": "1.0.2",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/slim-oauth2-api-proxy.git",
-                "reference": "1d76cbff2dd60d262ea1a44dbe79e045b459867e"
+                "reference": "13ed1f7a044847aeccb3eb809c99d4feca1346b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/slim-oauth2-api-proxy/zipball/1d76cbff2dd60d262ea1a44dbe79e045b459867e",
-                "reference": "1d76cbff2dd60d262ea1a44dbe79e045b459867e",
+                "url": "https://api.github.com/repos/groton-school/slim-oauth2-api-proxy/zipball/13ed1f7a044847aeccb3eb809c99d4feca1346b7",
+                "reference": "13ed1f7a044847aeccb3eb809c99d4feca1346b7",
                 "shasum": ""
             },
             "require": {
                 "dflydev/fig-cookies": "^3.2",
                 "groton-school/oauth2-canvaslms": "^1.1",
-                "groton-school/slim-norms": "^1.0",
+                "groton-school/slim-norms": "^2.1",
                 "league/oauth2-client": "^2.8",
                 "league/uri": "^7.5",
                 "odan/session": "^6.4",
@@ -1970,9 +1970,55 @@
             "description": "Server-side actions and routes for authenticating to and accessing an REST API from a web client",
             "support": {
                 "issues": "https://github.com/groton-school/slim-oauth2-api-proxy/issues",
-                "source": "https://github.com/groton-school/slim-oauth2-api-proxy/tree/v1.0.2"
+                "source": "https://github.com/groton-school/slim-oauth2-api-proxy/tree/v3.1.2"
             },
-            "time": "2025-09-08T12:56:34+00:00"
+            "time": "2025-09-19T12:23:36+00:00"
+        },
+        {
+            "name": "groton-school/slim-oauth2-api-proxy-gae-repository",
+            "version": "dev-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/groton-school/slim-oauth2-api-proxy-gae-repository.git",
+                "reference": "221dd23e5645f4dfb8ea6ef35804c649c68713e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/groton-school/slim-oauth2-api-proxy-gae-repository/zipball/221dd23e5645f4dfb8ea6ef35804c649c68713e0",
+                "reference": "221dd23e5645f4dfb8ea6ef35804c649c68713e0",
+                "shasum": ""
+            },
+            "require": {
+                "google/cloud-firestore": "^1.53",
+                "groton-school/slim-oauth2-api-proxy": "^3.0.1",
+                "psr/http-message": "^2.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.87",
+                "marcocesarato/php-conventional-changelog": "^1.17"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GrotonSchool\\Slim\\OAuth2\\APIProxy\\GAE\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Seth Battis",
+                    "email": "sbattis@groton.org"
+                }
+            ],
+            "description": "Firestore access token repository for Slim OAuth2 API proxy running on Google App Engine",
+            "support": {
+                "issues": "https://github.com/groton-school/slim-oauth2-api-proxy-gae-repository/issues",
+                "source": "https://github.com/groton-school/slim-oauth2-api-proxy-gae-repository/tree/dev"
+            },
+            "time": "2025-09-19T12:30:33+00:00"
         },
         {
             "name": "grpc/grpc",
@@ -2345,16 +2391,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "6.5.1",
+            "version": "6.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "b5ab21e431594897e5bb86343c01f140ba862c26"
+                "reference": "ac0d369c09653cf7af561f6d91a705bc617a87b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/b5ab21e431594897e5bb86343c01f140ba862c26",
-                "reference": "b5ab21e431594897e5bb86343c01f140ba862c26",
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/ac0d369c09653cf7af561f6d91a705bc617a87b8",
+                "reference": "ac0d369c09653cf7af561f6d91a705bc617a87b8",
                 "shasum": ""
             },
             "require": {
@@ -2414,9 +2460,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jsonrainbow/json-schema/issues",
-                "source": "https://github.com/jsonrainbow/json-schema/tree/6.5.1"
+                "source": "https://github.com/jsonrainbow/json-schema/tree/6.5.2"
             },
-            "time": "2025-08-29T10:58:11+00:00"
+            "time": "2025-09-09T09:42:27+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -2543,6 +2589,61 @@
                 "source": "https://github.com/thephpleague/oauth2-client/tree/2.8.1"
             },
             "time": "2025-02-26T04:37:30+00:00"
+        },
+        {
+            "name": "league/oauth2-google",
+            "version": "4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/oauth2-google.git",
+                "reference": "1b01ba18ba31b29e88771e3e0979e5c91d4afe76"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-google/zipball/1b01ba18ba31b29e88771e3e0979e5c91d4afe76",
+                "reference": "1b01ba18ba31b29e88771e3e0979e5c91d4afe76",
+                "shasum": ""
+            },
+            "require": {
+                "league/oauth2-client": "^2.0",
+                "php": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "eloquent/phony-phpunit": "^6.0 || ^7.1",
+                "phpunit/phpunit": "^8.0 || ^9.0",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\OAuth2\\Client\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Woody Gilk",
+                    "email": "hello@shadowhand.com",
+                    "homepage": "https://shadowhand.com"
+                }
+            ],
+            "description": "Google OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+            "keywords": [
+                "Authentication",
+                "authorization",
+                "client",
+                "google",
+                "oauth",
+                "oauth2"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/oauth2-google/issues",
+                "source": "https://github.com/thephpleague/oauth2-google/tree/4.0.1"
+            },
+            "time": "2023-03-17T15:20:52+00:00"
         },
         {
             "name": "league/uri",
@@ -2720,16 +2821,16 @@
         },
         {
             "name": "marc-mabe/php-enum",
-            "version": "v4.7.1",
+            "version": "v4.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marc-mabe/php-enum.git",
-                "reference": "7159809e5cfa041dca28e61f7f7ae58063aae8ed"
+                "reference": "bb426fcdd65c60fb3638ef741e8782508fda7eef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marc-mabe/php-enum/zipball/7159809e5cfa041dca28e61f7f7ae58063aae8ed",
-                "reference": "7159809e5cfa041dca28e61f7f7ae58063aae8ed",
+                "url": "https://api.github.com/repos/marc-mabe/php-enum/zipball/bb426fcdd65c60fb3638ef741e8782508fda7eef",
+                "reference": "bb426fcdd65c60fb3638ef741e8782508fda7eef",
                 "shasum": ""
             },
             "require": {
@@ -2787,9 +2888,9 @@
             ],
             "support": {
                 "issues": "https://github.com/marc-mabe/php-enum/issues",
-                "source": "https://github.com/marc-mabe/php-enum/tree/v4.7.1"
+                "source": "https://github.com/marc-mabe/php-enum/tree/v4.7.2"
             },
-            "time": "2024-11-28T04:54:44+00:00"
+            "time": "2025-09-14T11:18:39+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6140,16 +6241,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.87.1",
+            "version": "v3.87.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "2f5170365e2a422d0c5421f9c8818b2c078105f6"
+                "reference": "da5f0a7858c79b56fc0b8c36d3efcfe5f37f0992"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/2f5170365e2a422d0c5421f9c8818b2c078105f6",
-                "reference": "2f5170365e2a422d0c5421f9c8818b2c078105f6",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/da5f0a7858c79b56fc0b8c36d3efcfe5f37f0992",
+                "reference": "da5f0a7858c79b56fc0b8c36d3efcfe5f37f0992",
                 "shasum": ""
             },
             "require": {
@@ -6232,7 +6333,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.87.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.87.2"
             },
             "funding": [
                 {
@@ -6240,7 +6341,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-02T15:27:36+00:00"
+            "time": "2025-09-10T09:51:40+00:00"
         },
         {
             "name": "jangregor/phpstan-prophecy",
@@ -6934,16 +7035,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.28",
+            "version": "1.12.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "fcf8b71aeab4e1a1131d1783cef97b23a51b87a9"
+                "reference": "0835c625a38ac6484f050077116b6668bc3ab57d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/fcf8b71aeab4e1a1131d1783cef97b23a51b87a9",
-                "reference": "fcf8b71aeab4e1a1131d1783cef97b23a51b87a9",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0835c625a38ac6484f050077116b6668bc3ab57d",
+                "reference": "0835c625a38ac6484f050077116b6668bc3ab57d",
                 "shasum": ""
             },
             "require": {
@@ -6988,7 +7089,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-17T17:15:39+00:00"
+            "time": "2025-09-16T08:46:57+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -7311,16 +7412,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.6.25",
+            "version": "9.6.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "049c011e01be805202d8eebedef49f769a8ec7b7"
+                "reference": "0a9aa4440b6a9528cf360071502628d717af3e0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/049c011e01be805202d8eebedef49f769a8ec7b7",
-                "reference": "049c011e01be805202d8eebedef49f769a8ec7b7",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0a9aa4440b6a9528cf360071502628d717af3e0a",
+                "reference": "0a9aa4440b6a9528cf360071502628d717af3e0a",
                 "shasum": ""
             },
             "require": {
@@ -7394,7 +7495,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.25"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.27"
             },
             "funding": [
                 {
@@ -7418,7 +7519,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-20T14:38:31+00:00"
+            "time": "2025-09-14T06:18:03+00:00"
         },
         {
             "name": "psr/event-dispatcher",
@@ -9410,7 +9511,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {},
+    "stability-flags": {
+        "groton-school/slim-oauth2-api-proxy-gae-repository": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

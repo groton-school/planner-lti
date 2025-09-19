@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\Canvas\Theme;
 
-use App\Application\Middleware\RequireAuthenticationMiddleware;
+use App\Application\Middleware\Authenticated;
 use App\Domain\LTI\LaunchData;
 use Exception;
 use GrotonSchool\Slim\Norms\AbstractAction;
@@ -21,7 +21,7 @@ class Stylesheet extends AbstractAction
     ): ResponseInterface {
         try {
             /** @var LaunchData $launch */
-            $launch = $request->getAttribute(RequireAuthenticationMiddleware::LAUNCH_MESSAGE);
+            $launch = $request->getAttribute(Authenticated::LAUNCH_MESSAGE);
             $brand = json_decode(
                 file_get_contents(
                     $launch->getBrandConfigJSONUrl()

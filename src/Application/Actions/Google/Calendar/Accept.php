@@ -35,6 +35,6 @@ class Accept extends AbstractAction
         $entry = new CalendarListEntry();
         $entry->setId($this->settings->getCalendarId());
         $this->calendar->calendarList->insert($entry);
-        return $this->views->render($response, 'calendarInserted.php');
+        return $this->views->render($response, 'google/calendar/inserted.php');
     }
 }

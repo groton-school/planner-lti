@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Actions;
 
-use App\Application\Middleware\RequireAuthenticationMiddleware;
+use App\Application\Middleware\Authenticated;
 use App\Domain\LTI\LaunchData;
 use GrotonSchool\Slim\Norms\AbstractAction;
 use Psr\Http\Message\ResponseInterface;
@@ -22,13 +24,14 @@ class SPA extends AbstractAction
         array $args = []
     ): ResponseInterface {
         /** @var LaunchData $launch */
-        $launch = $request->getAttribute(RequireAuthenticationMiddleware::LAUNCH_MESSAGE);
+        $launch = $request->getAttribute(Authenticated::LAUNCH_MESSAGE);
         $this->views->setLayout('SPA.php');
         return $this->views->render(
             $response,
             'planner.php',
             [
-                "consumer_instance_url" => $launch->getConsumerInstanceUrl()
+                "consumer_instance_url" => $launch->getConsumerInstanceUrl(),
+                'user_email' => $launch->getUserEmail()
             ]
         );
     }

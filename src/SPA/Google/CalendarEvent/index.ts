@@ -4,6 +4,7 @@ import { EventClickArg, EventInput } from '@fullcalendar/core';
 import bootstrap from 'bootstrap';
 import * as Canvas from '../../Canvas';
 import { render } from '../../Utilities/Views';
+import { client } from '../Client';
 import detailModal from './detail.modal.ejs';
 
 type Params = {
@@ -27,17 +28,13 @@ export class CalendarEvent {
     const paramString = JSON.stringify(params);
     if (!this.fetched[paramString]) {
       this.fetched[paramString] = true;
-      const response = (await (
-        await fetch(
-          `/google/calendar/events?${(
-            Object.keys(params) as (keyof typeof params)[]
-          )
-            .map((key) => `${key}=${encodeURIComponent(params[key] || '')}`)
-            .join('&')}`
+      const response = await client.fetch<{ items: GoogleCalendar.v3.Event[] }>(
+        `calendar/v3/calendars/${user_email}/events?${(
+          Object.keys(params) as (keyof typeof params)[]
         )
-      ).json()) as {
-        items: GoogleCalendar.v3.Event[];
-      };
+          .map((key) => `${key}=${encodeURIComponent(params[key] || '')}`)
+          .join('&')}`
+      );
       return response.items
         .reduce((items, item) => {
           if (items.find((added) => added.id === item.id)) {
@@ -97,9 +94,8 @@ export class CalendarEvent {
   }
 
   public get title() {
-    // trimming off the first 2 characters because of the custom formatting
-    // for SchoolCal events in Google Calendar
-    return this.event.summary.slice(2);
+    // trimming off the the custom formatting for SchoolCal events in Google Calendar
+    return this.event.summary.replace(/^\* /, '');
   }
 
   public get course() {
