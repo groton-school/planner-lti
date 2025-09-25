@@ -1,6 +1,7 @@
 import { ArrayElement } from '@battis/typescript-tricks';
 import { EventInput } from '@fullcalendar/core';
 import { Canvas } from '@groton/canvas-api.client.web';
+import * as Activity from '../../Activity';
 import { render } from '../../Utilities/Views';
 import * as Colors from '../Colors';
 import { Course } from '../Course';
@@ -21,11 +22,14 @@ export class PlannerItem {
   public static async list(
     params: Canvas.v1.Planner.Items.listSearchParameters = {}
   ) {
-    return (
+    Activity.show();
+    const result = (
       await Canvas.v1.Planner.Items.list({
         searchParams: params
       })
     ).map((i) => new PlannerItem(i));
+    Activity.hide();
+    return result;
   }
 
   public get plannable_type() {
@@ -61,6 +65,7 @@ export class PlannerItem {
   }
 
   public async markComplete() {
+    Activity.show();
     if (this.item.planner_override) {
       this.item.planner_override = await Canvas.v1.Planner.Overrides.update({
         pathParams: { id: this.item.planner_override.id },
@@ -76,6 +81,7 @@ export class PlannerItem {
         }
       });
     }
+    Activity.hide();
   }
 
   public async markIncomplete() {

@@ -1,4 +1,5 @@
 import bootstrap from 'bootstrap';
+import * as cookie from 'cookie';
 import path from 'path-browserify';
 import { render } from '../Utilities/Views';
 import authorizeModal from './authorize.modal.ejs';
@@ -40,10 +41,8 @@ class Client {
   }
 
   public async authorize() {
-    const session = document.cookie
-      .split(';')
-      .map((cookie) => cookie.split('='))
-      .filter(([name]) => name === 'planner-session')[0][1]; // TODO don't hard code session name
+    // TODO don't hard code session name
+    const { 'planner-session': session } = cookie.parse(document.cookie);
     const modal = await render({
       template: authorizeModal,
       parent: document.body,

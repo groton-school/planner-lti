@@ -1,9 +1,11 @@
 import { Canvas } from '@groton/canvas-api.client.web';
+import * as Activity from '../../Activity';
 import { render } from '../../Utilities/Views';
 import { ColorSet } from './ColorSet';
 import stylesheet from './stylesheet.ejs';
 
 export async function get() {
+  Activity.show();
   const colors = (await Canvas.v1.Users.Colors.list({
     pathParams: { id: 'self' }
   })) as unknown as { custom_colors: { [context: string]: string } };
@@ -17,6 +19,7 @@ export async function get() {
       })
     );
   }
+  Activity.hide();
   document.head.appendChild(
     await render({ template: stylesheet, data: { assets } })
   );

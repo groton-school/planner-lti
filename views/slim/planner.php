@@ -1,7 +1,16 @@
 <div id="content" class="container">
     <div class="row">
-        <div id="calendar" class="col-md-9">
-            <progress class="m-5 p-3" style="width: 100%"></progress>
+        <div class="col-md-9">
+            <div id="activity" data-processes="0" class="position-absolute top-50 start-50 translate-middle z-3">
+                <div class="spinner-border" role="status" style="width: 15vw; height: 15vw;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div id="calendar" class="col-md-9">
+                <div class="progress position-absolute top-50 start-50 translate-middle" role="progressbar" aria-label="Loading&hellip;" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+                </div>
+            </div>
         </div>
         <div class="col-md-3">
             <h2>To Do</h2>
@@ -9,7 +18,7 @@
                 <div id="incomplete"></div>
                 <div id="done"></div>
             </div>
-        </div>  
+        </div>
     </div>
     <div id="footer" class="container">
         <div class="text-center">

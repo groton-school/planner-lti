@@ -1,0 +1,9 @@
+#activity[data-processes='0'] {
+  display: none;
+}
+
+#activity {
+  .spinner-border {
+    color: hsla(0, 0%, 50%, 0.75);
+  }
+}

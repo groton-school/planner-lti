@@ -1,6 +1,7 @@
 import { EventClickArg, EventInput } from '@fullcalendar/core';
 import { Canvas } from '@groton/canvas-api.client.web';
 import bootstrap from 'bootstrap';
+import * as Activity from '../../Activity';
 import * as FullCalendar from '../../FullCalendar';
 import { isAllDay } from '../../Utilities';
 import { render } from '../../Utilities/Views';
@@ -25,6 +26,7 @@ export class Assignment {
     id
   }: Canvas.v1.Courses.Assignments.getPathParameters) {
     if (!(id in this.cache)) {
+      Activity.show();
       const assignment = await Canvas.v1.Courses.Assignments.get({
         pathParams: { course_id, id },
         searchParams: { include: ['submission'] }
@@ -33,6 +35,7 @@ export class Assignment {
         this.cache[id] = new Assignment(assignment);
       }
     }
+    Activity.hide();
     return this.cache[id];
   }
 
@@ -41,6 +44,7 @@ export class Assignment {
     ...form
   }: Canvas.v1.Courses.Assignments.createPathParameters &
     Canvas.v1.Courses.Assignments.createFormParameters) {
+    Activity.show();
     const assignment = await Canvas.v1.Courses.Assignments.create({
       pathParams: { course_id },
       params: form
@@ -49,6 +53,7 @@ export class Assignment {
       const result = new Assignment(assignment);
       FullCalendar.addEvent(result.toEvent());
     }
+    Activity.hide();
   }
 
   public async detail(info: EventClickArg) {
@@ -113,6 +118,7 @@ export class Assignment {
       if (e.submitter?.id === 'save') {
         e.stopImmediatePropagation();
         e.preventDefault();
+        Activity.show();
         await Canvas.v1.Courses.Assignments.create({
           pathParams: { course_id: course.id },
           params: {
@@ -122,6 +128,7 @@ export class Assignment {
           }
         });
         form.dispatchEvent(new Event(Assignment.CreatedEvent));
+        Activity.hide();
       }
     });
     return form;

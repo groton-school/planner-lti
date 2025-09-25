@@ -17,7 +17,9 @@
     "@fullcalendar/timegrid": "^6.1.19",
     "@groton/canvas-api.client.web": "^0.0.4",
     "bootstrap": "^5.3.8",
+    "cookie": "^1.0.2",
     "ejs": "^3.1.10",
+    "p-queue": "^8.1.1",
     "path-browserify": "^1.0.1",
     "tinycolor2": "^1.6.0"
   },

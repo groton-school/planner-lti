@@ -1,4 +1,5 @@
 import { Canvas } from '@groton/canvas-api.client.web';
+import * as Activity from '../Activity';
 
 const minimalCourse = {
   id: undefined,
@@ -21,11 +22,13 @@ export class Course {
   ) {
     const key = JSON.stringify(searchParams);
     if (!(key in Course.lists)) {
+      Activity.show();
       Course.lists[key] = (
         await Canvas.v1.Courses.list({
           searchParams
         })
       ).map((c) => new Course(c));
+      Activity.hide();
     }
     if (callback) {
       for (const course of Course.lists[key]) {

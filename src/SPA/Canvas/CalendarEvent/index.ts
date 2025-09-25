@@ -1,5 +1,6 @@
 import { EventClickArg, EventInput } from '@fullcalendar/core';
 import { Canvas } from '@groton/canvas-api.client.web';
+import * as Activity from '../../Activity';
 import { isAllDay } from '../../Utilities';
 import { Assignment } from '../Assignment';
 import { Course } from '../Course';
@@ -23,9 +24,11 @@ export class CalendarEvent {
   ) {
     const key = JSON.stringify(searchParams || {});
     if (!(key in this.lists)) {
+      Activity.show();
       this.lists[key] = (
         await Canvas.v1.CalendarEvents.list({ searchParams })
       ).map((c) => new CalendarEvent(c));
+      Activity.hide();
     }
     if (callback) {
       for (const calendarEvent of this.lists[key]) {
