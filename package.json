@@ -3,11 +3,11 @@
   "description": "Provide Node-based deployment wizard to Google App Engine",
   "type": "module",
   "scripts": {
-    "build": "op run --env-file ./.env -- webpack",
+    "build": "op run --no-masking --env-file ./.env -- webpack",
     "deploy": "run-s deploy:*",
     "deploy:build": "run-s build",
     "deploy:spa-template": "move-file ./public/index.html ./views/slim/SPA.php",
-    "deploy:gae": "op run --env-file ./.env -- node ./scripts/deploy.js -v",
+    "deploy:gae": "op run --no-masking --env-file ./.env -- node ./scripts/deploy.js -v",
     "release": "commit-and-tag-version"
   },
   "dependencies": {
@@ -40,6 +40,7 @@
     "@types/ejs": "^3.1.5",
     "@types/path-browserify": "^1.0.3",
     "@types/tinycolor2": "^1.4.6",
+    "chalk": "^5.6.2",
     "commit-and-tag-version": "^12.6.0",
     "html-loader": "^5.1.0",
     "move-file-cli": "^3.0.0",

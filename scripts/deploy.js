@@ -6,6 +6,7 @@ import { Env } from '@qui-cli/env';
 import { Log } from '@qui-cli/log';
 import { Root } from '@qui-cli/root';
 import { Shell } from '@qui-cli/shell';
+import chalk from 'chalk';
 import path from 'node:path';
 
 (async () => {
@@ -22,6 +23,12 @@ import path from 'node:path';
     }
   });
   const configure = force || !process.env.PROJECT;
+
+  Log.info(
+    chalk.bgYellow.bold.black(
+      ` Deploying to ${process.env.TARGET || 'unknown'} instance `
+    )
+  );
 
   const { project, appEngine } = await gcloud.batch.appEngineDeployAndCleanup({
     retainVersions: 2
