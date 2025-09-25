@@ -16,7 +16,6 @@ class Settings implements SettingsInterface
     public const CACHE_DURATION = self::class . '::cache_duration';
     public const REDIRECT_URI = self::class . '::redirect_uri';
     public const LOG_REQUESTS = self::class . '::log_requests';
-    public const CALENDAR_ID = self::class . '::calendar_id';
 
     private array $settings;
 
@@ -28,11 +27,6 @@ class Settings implements SettingsInterface
     public function getCacheDuration(): int
     {
         return $this->settings[self::CACHE_DURATION];
-    }
-
-    public function getCalendarId(): string
-    {
-        return $this->settings[self::CALENDAR_ID];
     }
 
     /**

@@ -33,7 +33,6 @@ return function (ContainerBuilder $containerBuilder) {
                 Settings::LOGGER_NAME => preg_replace('/[^a-z0-9]+/', '-', $TOOL_NAME),
                 Settings::SCOPES => $SCOPES,
                 Settings::CACHE_DURATION => 3600, // seconds
-                Settings::CALENDAR_ID => $secrets->get('CALENDAR_ID'),
                 Settings::REDIRECT_URI => "{$PROJECT_URL}/login/oauth2/redirect",
                 Settings::TOOL_REGISTRATION => [
                     'application_type' => 'web',
