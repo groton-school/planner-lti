@@ -35,7 +35,10 @@ import './styles.scss';
             FullCalendar.addEvent(classMeeting.toEvent());
           }
         });
-        Canvas.Course.list({ state: ['available'] }).then((courses) => {
+        Canvas.Course.list({
+          state: ['available'],
+          include: ['sections']
+        }).then((courses) => {
           for (let i = 0; i < courses.length; i += 10) {
             Canvas.CalendarEvent.list(
               {
