@@ -1820,16 +1820,16 @@
         },
         {
             "name": "groton-school/slim-lti-shim",
-            "version": "4.1.1",
+            "version": "4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/slim-lti-shim.git",
-                "reference": "b53e9d8ab7a95ba93684b30bae5cdf43b3adae87"
+                "reference": "98c039b4886a5c6c3ff24de0f5b728c791012423"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/slim-lti-shim/zipball/b53e9d8ab7a95ba93684b30bae5cdf43b3adae87",
-                "reference": "b53e9d8ab7a95ba93684b30bae5cdf43b3adae87",
+                "url": "https://api.github.com/repos/groton-school/slim-lti-shim/zipball/98c039b4886a5c6c3ff24de0f5b728c791012423",
+                "reference": "98c039b4886a5c6c3ff24de0f5b728c791012423",
                 "shasum": ""
             },
             "require": {
@@ -1869,9 +1869,9 @@
             "description": "Shim to use packbackbooks/lti-1p3-tool in a Slim Skeleton app",
             "support": {
                 "issues": "https://github.com/groton-school/slim-lti-shim/issues",
-                "source": "https://github.com/groton-school/slim-lti-shim/tree/v4.1.1"
+                "source": "https://github.com/groton-school/slim-lti-shim/tree/v4.1.2"
             },
-            "time": "2025-09-19T01:28:54+00:00"
+            "time": "2025-09-25T21:48:52+00:00"
         },
         {
             "name": "groton-school/slim-norms",
