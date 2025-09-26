@@ -23,3 +23,9 @@ export function hide() {
     }
   });
 }
+
+export function reset() {
+  if (activity) {
+    activity.dataset.processes = '0';
+  }
+}

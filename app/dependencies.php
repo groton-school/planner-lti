@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Application\Settings\SettingsInterface;
-use App\Application\Actions\Google\Calendar;
+use App\Domain\Canvas;
 use App\Domain\Google;
 use Battis\LazySecrets;
 use DI\ContainerBuilder;
@@ -39,7 +39,6 @@ return function (ContainerBuilder $containerBuilder) {
         GAE\SettingsInterface::class => DI\get(SettingsInterface::class),
         LTI\SettingsInterface::class => DI\get(SettingsInterface::class),
         Infrastructure\GAE\SettingsInterface::class => DI\get(SettingsInterface::class),
-        Calendar\SettingsInterface::class => DI\get(SettingsInterface::class),
 
         LaunchHandlerInterface::class => DI\get(LaunchHandler::class),
 
@@ -73,7 +72,7 @@ return function (ContainerBuilder $containerBuilder) {
             /** @var SettingsInterface $settings */
             $settings = $container->get(SettingsInterface::class);
             $secrets = new LazySecrets\Cache();
-            $proxy = new CanvasLMS\APIProxy([
+            $proxy = new Canvas\APIProxy([
                 ...$secrets->get('CANVAS_CREDENTIALS'),
                 'purpose' => $settings->getToolName()
             ]);

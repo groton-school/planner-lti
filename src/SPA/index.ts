@@ -1,4 +1,4 @@
-import { Client } from '@groton/canvas-api.client.web';
+import { RequestComplete, RequestStarted } from '@groton/canvas-api.client.web';
 import * as Activity from './Activity';
 import * as Canvas from './Canvas';
 import * as FullCalendar from './FullCalendar';
@@ -6,8 +6,8 @@ import * as Google from './Google';
 import './styles.scss';
 
 (async () => {
-  document.addEventListener(Client.RequestStarted, () => Activity.show());
-  document.addEventListener(Client.RequestComplete, () => Activity.hide());
+  document.addEventListener(RequestStarted, () => Activity.show());
+  document.addEventListener(RequestComplete, () => Activity.hide());
   document.addEventListener('DOMContentLoaded', async () => {
     const todoElt = document.querySelector('#todo');
     if (!todoElt) {

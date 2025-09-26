@@ -21,8 +21,8 @@ importers:
         specifier: ^6.1.19
         version: 6.1.19(@fullcalendar/core@6.1.19)
       '@groton/canvas-api.client.web':
-        specifier: ^0.0.5
-        version: 0.0.5
+        specifier: ^0.1.4
+        version: 0.1.4
       bootstrap:
         specifier: ^5.3.8
         version: 5.3.8(@popperjs/core@2.11.8)
@@ -591,8 +591,8 @@ packages:
   '@groton/canvas-api.client.base@0.2.2':
     resolution: {integrity: sha512-VfXT142Ed5T5x/YE7AFBjZxyXbqm0ih1gJYnxutIhxsodZBZhwLF09a21i1UPE0KQM8bJFr6uc6sT9pMTgHSbA==}
 
-  '@groton/canvas-api.client.web@0.0.5':
-    resolution: {integrity: sha512-QsmXP172wzEscVCzc0he3rtRqSPzSLAEnSneOs/JcXsWhG7kmBt+H0JsJafNM7NWpm+IcEhX+AELvT7JQiXbeg==}
+  '@groton/canvas-api.client.web@0.1.4':
+    resolution: {integrity: sha512-1oO+0i2cJ0JBwiLAM8FGw9AQNFLgTZf7Cxm+F5nNT2DFfRx2V5o/chm3kKadvji/TqIo0vkbEHFkCIZdVBto4A==}
 
   '@groton/canvas-api.utilities@0.2.0':
     resolution: {integrity: sha512-uAaUMqKxJGs185HeNdJ5lNrZjeh6ln3b3Rq1OygBBCE/38pqPtWZzsFAGcAm6dMhedn/FHPSsNZDoDHR6CrZPw==}
@@ -6402,7 +6402,7 @@ snapshots:
     dependencies:
       '@groton/canvas-api.utilities': 0.2.0
 
-  '@groton/canvas-api.client.web@0.0.5':
+  '@groton/canvas-api.client.web@0.1.4':
     dependencies:
       '@groton/canvas-api': 0.3.4
       '@groton/canvas-api.client.base': 0.2.2

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Application\Actions\Authorized;
 use App\Application\Actions\Canvas;
 use App\Application\Actions\Google;
 use App\Application\Actions\SPA;
@@ -27,6 +28,7 @@ return function (App $app) {
         Authenticated::class
     )
         ->add(PartitionedSessionMiddleware::class);
+    $app->get('/canvas/login/complete', Authorized::class);
     $app->get('/canvas/theme/stylesheet', Canvas\Theme\Stylesheet::class)
         ->add(Authenticated::class)
         ->add(SessionStartMiddleware::class)
@@ -42,7 +44,7 @@ return function (App $app) {
         ->add(Authenticated::class)
         ->add(SessionStartMiddleware::class)
         ->add(PartitionedSessionMiddleware::class);
-    $app->get('/google/login/complete', Google\Authorized::class);
+    $app->get('/google/login/complete', Authorized::class);
 
     // app
     $app->get('/', SPA::class)

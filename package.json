@@ -15,7 +15,7 @@
     "@fullcalendar/daygrid": "^6.1.19",
     "@fullcalendar/list": "^6.1.19",
     "@fullcalendar/timegrid": "^6.1.19",
-    "@groton/canvas-api.client.web": "^0.0.5",
+    "@groton/canvas-api.client.web": "^0.1.4",
     "bootstrap": "^5.3.8",
     "cookie": "^1.0.2",
     "ejs": "^3.1.10",

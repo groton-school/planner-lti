@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Actions\Google;
+namespace App\Application\Actions;
 
 use App\Domain\Google\APIProxy;
 use GrotonSchool\Slim\Norms\AbstractAction;
@@ -22,6 +22,6 @@ class Authorized extends AbstractAction
         Response $response,
         array $args = []
     ): ResponseInterface {
-        return $this->views->render($response, 'google/authorized.php');
+        return $this->views->render($response, 'authorized.php');
     }
 }
