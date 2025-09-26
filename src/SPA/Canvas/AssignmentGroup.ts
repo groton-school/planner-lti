@@ -1,5 +1,4 @@
 import { Canvas } from '@groton/canvas-api.client.web';
-import * as Activity from '../Activity';
 
 export class AssignmentGroup {
   private static cache: Record<string | number, AssignmentGroup[]> = {};
@@ -13,14 +12,12 @@ export class AssignmentGroup {
     callback?: (g: AssignmentGroup) => unknown
   ) {
     if (!(course_id in this.cache)) {
-      Activity.show();
       const assignmentGroups = (
         await Canvas.v1.Courses.AssignmentGroups.list({
           pathParams: { course_id }
         })
       ).map((a) => new AssignmentGroup(a));
       this.cache[course_id] = assignmentGroups;
-      Activity.hide();
     }
     if (callback) {
       for (const assigmentGroup of this.cache[course_id]) {

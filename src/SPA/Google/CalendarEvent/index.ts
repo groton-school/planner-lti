@@ -2,7 +2,6 @@ import { DateTimeString } from '@battis/descriptive-types';
 import GoogleCalendar from '@battis/google.calendar';
 import { EventClickArg, EventInput } from '@fullcalendar/core';
 import bootstrap from 'bootstrap';
-import * as Activity from '../../Activity';
 import * as Canvas from '../../Canvas';
 import { render } from '../../Utilities/Views';
 import { client } from '../Client';
@@ -29,7 +28,6 @@ export class CalendarEvent {
     const paramString = JSON.stringify(params);
     if (!this.fetched[paramString]) {
       this.fetched[paramString] = true;
-      Activity.show();
       const response = await client.fetch<{ items: GoogleCalendar.v3.Event[] }>(
         `calendar/v3/calendars/${user_email}/events?${(
           Object.keys(params) as (keyof typeof params)[]
@@ -37,7 +35,6 @@ export class CalendarEvent {
           .map((key) => `${key}=${encodeURIComponent(params[key] || '')}`)
           .join('&')}`
       );
-      Activity.hide();
       return response.items
         .reduce((items, item) => {
           if (items.find((added) => added.id === item.id)) {

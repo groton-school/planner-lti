@@ -1,3 +1,4 @@
+import { Client as CanvasClient } from '@groton/canvas-api.client.web';
 import bootstrap from 'bootstrap';
 import * as cookie from 'cookie';
 import path from 'path-browserify';
@@ -29,7 +30,10 @@ class Client {
     if (!(endpoint instanceof Request)) {
       endpoint = path.join(this.instance_url, endpoint.toString());
     }
+
+    document.dispatchEvent(new Event(CanvasClient.RequestStarted));
     const result = await fetch(endpoint, init);
+    document.dispatchEvent(new Event(CanvasClient.RequestComplete));
 
     if (result) {
       if (result.status >= 400 && result.status < 500) {
