@@ -75,6 +75,7 @@ import path from 'node:path';
       })
     });
 
+    // FIXME replace with GOOGLE_CREDENTIALS with Calendar API access
     await gcloud.secrets.set({
       name: 'CALENDAR_ID',
       value: await input({
