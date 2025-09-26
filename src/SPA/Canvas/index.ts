@@ -26,7 +26,7 @@ document.addEventListener(AuthorizationRequired, async (event) => {
     template: authorizeModal,
     parent: document.body,
     data: {
-      authorize_url: authorize_url + `?session=${session}` // TODO should be consistent with session name (cf. https://github.com/groton-school/slim-lti-partitioned-session/issues/3)
+      authorize_url: authorize_url + `?session=${session}`
     }
   });
   const bsModal = new bootstrap.Modal(modal);

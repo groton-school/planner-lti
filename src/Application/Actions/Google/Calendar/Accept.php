@@ -31,7 +31,6 @@ class Accept extends AbstractAction
         Response $response,
         array $args = []
     ): ResponseInterface {
-        // FIXME this is a one-time configuration step
         $entry = new CalendarListEntry();
         $entry->setId($this->settings->getCalendarId());
         $this->calendar->calendarList->insert($entry);

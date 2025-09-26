@@ -45,7 +45,6 @@ class Client {
   }
 
   public async authorize() {
-    // TODO don't hard code session name
     const { 'planner-session': session } = cookie.parse(document.cookie);
     const modal = await render({
       template: authorizeModal,
@@ -53,7 +52,7 @@ class Client {
       data: {
         authorize_url:
           path.join(this.instance_url, '../login/authorize') +
-          `?session=${session}` // TODO should be consistent with session name (cf. https://github.com/groton-school/slim-lti-partitioned-session/issues/3)
+          `?session=${session}`
       }
     });
     const bsModal = new bootstrap.Modal(modal);
