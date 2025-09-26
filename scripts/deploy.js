@@ -74,7 +74,7 @@ import path from 'node:path';
         validate: (value) => value && /^[a-z0-9]{64}$/i.test(value)
       })
     });
-    // FiXME replace with GOOGLE_CREDENTIALS with Calendar API access
+
     await gcloud.secrets.set({
       name: 'CALENDAR_ID',
       value: await input({
