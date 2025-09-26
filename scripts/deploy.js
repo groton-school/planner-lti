@@ -85,12 +85,7 @@ import path from 'node:path';
     });
 
     Log.info(
-      `${Colors.error('IMPORTANT:')} Make sure that the service account ${Colors.value(
-        appEngine.serviceAccount
-      )} has ${Colors.value('See all event details')} access to the calendar of class meetings. When you have shared the calendar, follow this link to "accept" the calendar-sharing invitation for the app:
-${Colors.url(`https://${appEngine.defaultHostname}/google/calendar/accept`)}
-      
-Install your LTI by going adding an LTI Registration in Developer Keys for ${Colors.url(
+      `Install your LTI by going adding an LTI Registration in Developer Keys for ${Colors.url(
         `https://${appEngine.defaultHostname}/lti/register`
       )}
       

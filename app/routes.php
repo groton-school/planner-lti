@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Application\Actions\Authorized;
 use App\Application\Actions\Canvas;
-use App\Application\Actions\Google;
 use App\Application\Actions\SPA;
 use App\Application\Middleware\ApiProxyUserIdentifier;
 use App\Application\Middleware\Authenticated;
@@ -39,10 +38,6 @@ return function (App $app) {
         ApiProxyUserIdentifier::class,
         Authenticated::class,
     )
-        ->add(PartitionedSessionMiddleware::class);
-    $app->get('/google/calendar/accept', Google\Calendar\Accept::class)
-        ->add(Authenticated::class)
-        ->add(SessionStartMiddleware::class)
         ->add(PartitionedSessionMiddleware::class);
     $app->get('/google/login/complete', Authorized::class);
 
