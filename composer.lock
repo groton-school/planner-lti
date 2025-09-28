@@ -1719,22 +1719,22 @@
         },
         {
             "name": "groton-school/slim-lti-infrastructure-gae",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/slim-lti-infrastructure-gae.git",
-                "reference": "b996e5121a3c4db3f2f2e740fd6c2ae2ea6297e4"
+                "reference": "92c35cd6b6fccbb4ed495eefc64a2471a6227941"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/slim-lti-infrastructure-gae/zipball/b996e5121a3c4db3f2f2e740fd6c2ae2ea6297e4",
-                "reference": "b996e5121a3c4db3f2f2e740fd6c2ae2ea6297e4",
+                "url": "https://api.github.com/repos/groton-school/slim-lti-infrastructure-gae/zipball/92c35cd6b6fccbb4ed495eefc64a2471a6227941",
+                "reference": "92c35cd6b6fccbb4ed495eefc64a2471a6227941",
                 "shasum": ""
             },
             "require": {
                 "google/cloud-firestore": "^1.48",
-                "groton-school/slim-lti-shim": "^4.0",
-                "groton-school/slim-norms": "^2.0",
+                "groton-school/slim-lti-shim": "^4.1.4",
+                "groton-school/slim-norms": "^2.1.1",
                 "packbackbooks/lti-1p3-tool": "^6.3",
                 "php-di/php-di": "^7.0"
             },
@@ -1761,9 +1761,9 @@
             "description": "Shim to implement packbackbooks/lti-1p3-tool storage interfaces in Firestore",
             "support": {
                 "issues": "https://github.com/groton-school/slim-lti-infrastructure-gae/issues",
-                "source": "https://github.com/groton-school/slim-lti-infrastructure-gae/tree/v3.0.0"
+                "source": "https://github.com/groton-school/slim-lti-infrastructure-gae/tree/v3.0.1"
             },
-            "time": "2025-09-09T22:06:25+00:00"
+            "time": "2025-09-28T16:11:14+00:00"
         },
         {
             "name": "groton-school/slim-lti-partitioned-session",
@@ -1820,16 +1820,16 @@
         },
         {
             "name": "groton-school/slim-lti-shim",
-            "version": "4.1.3",
+            "version": "4.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/slim-lti-shim.git",
-                "reference": "cc8667649b47daed254e576183b6a0a7602c88a8"
+                "reference": "5653c836f8e375a484f4a2496aa02585257826d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/slim-lti-shim/zipball/cc8667649b47daed254e576183b6a0a7602c88a8",
-                "reference": "cc8667649b47daed254e576183b6a0a7602c88a8",
+                "url": "https://api.github.com/repos/groton-school/slim-lti-shim/zipball/5653c836f8e375a484f4a2496aa02585257826d1",
+                "reference": "5653c836f8e375a484f4a2496aa02585257826d1",
                 "shasum": ""
             },
             "require": {
@@ -1869,9 +1869,9 @@
             "description": "Shim to use packbackbooks/lti-1p3-tool in a Slim Skeleton app",
             "support": {
                 "issues": "https://github.com/groton-school/slim-lti-shim/issues",
-                "source": "https://github.com/groton-school/slim-lti-shim/tree/v4.1.3"
+                "source": "https://github.com/groton-school/slim-lti-shim/tree/v4.1.4"
             },
-            "time": "2025-09-26T19:27:34+00:00"
+            "time": "2025-09-28T16:09:04+00:00"
         },
         {
             "name": "groton-school/slim-norms",
@@ -4830,16 +4830,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v7.3.3",
+            "version": "v7.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "cb0102a1c5ac3807cf3fdf8bea96007df7fdbea7"
+                "reference": "2b9c5fafbac0399a20a2e82429e2bd735dcfb7db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/cb0102a1c5ac3807cf3fdf8bea96007df7fdbea7",
-                "reference": "cb0102a1c5ac3807cf3fdf8bea96007df7fdbea7",
+                "url": "https://api.github.com/repos/symfony/console/zipball/2b9c5fafbac0399a20a2e82429e2bd735dcfb7db",
+                "reference": "2b9c5fafbac0399a20a2e82429e2bd735dcfb7db",
                 "shasum": ""
             },
             "require": {
@@ -4904,7 +4904,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v7.3.3"
+                "source": "https://github.com/symfony/console/tree/v7.3.4"
             },
             "funding": [
                 {
@@ -4924,7 +4924,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-25T06:35:40+00:00"
+            "time": "2025-09-22T15:31:00+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -5712,16 +5712,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v7.3.3",
+            "version": "v7.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "32241012d521e2e8a9d713adb0812bb773b907f1"
+                "reference": "f24f8f316367b30810810d4eb30c543d7003ff3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/32241012d521e2e8a9d713adb0812bb773b907f1",
-                "reference": "32241012d521e2e8a9d713adb0812bb773b907f1",
+                "url": "https://api.github.com/repos/symfony/process/zipball/f24f8f316367b30810810d4eb30c543d7003ff3b",
+                "reference": "f24f8f316367b30810810d4eb30c543d7003ff3b",
                 "shasum": ""
             },
             "require": {
@@ -5753,7 +5753,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v7.3.3"
+                "source": "https://github.com/symfony/process/tree/v7.3.4"
             },
             "funding": [
                 {
@@ -5773,7 +5773,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-18T09:42:54+00:00"
+            "time": "2025-09-11T10:12:26+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -5860,16 +5860,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v7.3.3",
+            "version": "v7.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "17a426cce5fd1f0901fefa9b2a490d0038fd3c9c"
+                "reference": "f96476035142921000338bad71e5247fbc138872"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/17a426cce5fd1f0901fefa9b2a490d0038fd3c9c",
-                "reference": "17a426cce5fd1f0901fefa9b2a490d0038fd3c9c",
+                "url": "https://api.github.com/repos/symfony/string/zipball/f96476035142921000338bad71e5247fbc138872",
+                "reference": "f96476035142921000338bad71e5247fbc138872",
                 "shasum": ""
             },
             "require": {
@@ -5884,7 +5884,6 @@
             },
             "require-dev": {
                 "symfony/emoji": "^7.1",
-                "symfony/error-handler": "^6.4|^7.0",
                 "symfony/http-client": "^6.4|^7.0",
                 "symfony/intl": "^6.4|^7.0",
                 "symfony/translation-contracts": "^2.5|^3.0",
@@ -5927,7 +5926,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v7.3.3"
+                "source": "https://github.com/symfony/string/tree/v7.3.4"
             },
             "funding": [
                 {
@@ -5947,7 +5946,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-25T06:35:40+00:00"
+            "time": "2025-09-11T14:36:48+00:00"
         }
     ],
     "packages-dev": [
@@ -6243,16 +6242,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.88.0",
+            "version": "v3.88.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "f23469674ae50d40e398bfff8018911a2a2b0dbe"
+                "reference": "a8d15584bafb0f0d9d938827840060fd4a3ebc99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/f23469674ae50d40e398bfff8018911a2a2b0dbe",
-                "reference": "f23469674ae50d40e398bfff8018911a2a2b0dbe",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/a8d15584bafb0f0d9d938827840060fd4a3ebc99",
+                "reference": "a8d15584bafb0f0d9d938827840060fd4a3ebc99",
                 "shasum": ""
             },
             "require": {
@@ -6335,7 +6334,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.88.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.88.2"
             },
             "funding": [
                 {
@@ -6343,7 +6342,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-24T21:31:42+00:00"
+            "time": "2025-09-27T00:24:15+00:00"
         },
         {
             "name": "jangregor/phpstan-prophecy",
