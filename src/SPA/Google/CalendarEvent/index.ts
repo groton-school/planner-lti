@@ -38,7 +38,6 @@ export class CalendarEvent {
       return response.items
         .reduce((items, item) => {
           if (items.find((added) => added.id === item.id)) {
-            console.log({ ignored: true, item });
             return items;
           }
           items.push(item);
@@ -50,18 +49,19 @@ export class CalendarEvent {
   }
 
   public toEvent(): EventInput {
-    const allDay = 'all_day' in this.event && !!this.event.all_day;
+    const allDay = !!this.event.start.date && !this.event.start.dateTime;
+    const start = allDay
+      ? new Date(`${this.event.start.date}T00:00`)
+      : new Date(this.event.start.dateTime);
+    const end = allDay
+      ? new Date(`${this.event.end.date}T00:00`)
+      : new Date(this.event.end.dateTime);
     return {
       id: this.event.id,
       title: this.title,
       allDay,
-      start:
-        allDay &&
-        'all_day_date' in this.event &&
-        typeof this.event.all_day_date === 'string'
-          ? new Date(this.event.all_day_date)
-          : new Date(this.event.start.dateTime),
-      end: allDay ? undefined : new Date(this.event.end.dateTime),
+      start,
+      end,
       classNames: [
         Canvas.Colors.classNameFromCourseId(this.course?.id),
         ...CalendarEvent.classNames
