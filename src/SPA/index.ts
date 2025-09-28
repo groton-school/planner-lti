@@ -32,7 +32,8 @@ import './styles.scss';
         Google.CalendarEvent.list({
           params: {
             timeMin: info.view.activeStart.toISOString(),
-            timeMax: info.view.activeEnd.toISOString()
+            timeMax: info.view.activeEnd.toISOString(),
+            singleEvents: 'true'
           }
         }).then((classMeetings) => {
           for (const classMeeting of classMeetings) {

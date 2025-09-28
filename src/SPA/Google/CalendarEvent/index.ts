@@ -20,7 +20,7 @@ export class CalendarEvent {
   private static readonly classNames = ['google', 'calendar_event'];
 
   public constructor(private event: GoogleCalendar.v3.Event) {
-    CalendarEvent.cache[event.iCalUID] = this;
+    CalendarEvent.cache[event.id] = this;
   }
 
   public static async list({ params }: { params: Params } = { params: {} }) {
@@ -38,6 +38,7 @@ export class CalendarEvent {
       return response.items
         .reduce((items, item) => {
           if (items.find((added) => added.id === item.id)) {
+            console.log({ ignored: true, item });
             return items;
           }
           items.push(item);
@@ -51,7 +52,7 @@ export class CalendarEvent {
   public toEvent(): EventInput {
     const allDay = 'all_day' in this.event && !!this.event.all_day;
     return {
-      id: this.event.iCalUID,
+      id: this.event.id,
       title: this.title,
       allDay,
       start:
