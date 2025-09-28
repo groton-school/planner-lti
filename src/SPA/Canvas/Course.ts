@@ -1,6 +1,6 @@
 import { Canvas } from '@groton/canvas-api.client.web';
 
-const minimalCourse = {
+const undefinedCourse = {
   id: undefined,
   isTeacher: () => false,
   context_code: 'course_undefined'
@@ -21,11 +21,27 @@ export class Course {
   ) {
     const key = JSON.stringify(searchParams);
     if (!(key in Course.lists)) {
-      Course.lists[key] = (
-        await Canvas.v1.Courses.list({
-          searchParams
+      Course.lists[key] = await Promise.all(
+        (
+          await Canvas.v1.Courses.list({
+            searchParams
+          })
+        ).map(async (c) => {
+          // TODO sections is an (optional) property of a course
+          // @ts-expect-error 2339
+          if (c.sections?.length > 1) {
+            // @ts-expect-error 2339
+            c.sections = await Canvas.v1.Courses.Sections.list({
+              pathParams: { course_id: c.id }
+            });
+            // @ts-expect-error 2339
+          } else if (c.sections?.length == 1) {
+            // @ts-expect-error 2339
+            c.sections![0].sis_section_id = c.sis_course_id;
+          }
+          return new Course(c);
         })
-      ).map((c) => new Course(c));
+      );
     }
     if (callback) {
       for (const course of Course.lists[key]) {
@@ -71,18 +87,23 @@ export class Course {
         return this.cache[id];
       }
     }
-    return minimalCourse;
+    return undefinedCourse;
   }
 
-  public static fromSisId(sis_course_id?: string) {
-    if (sis_course_id) {
+  public static fromSisSectionId(sis_section_id?: string) {
+    if (sis_section_id) {
       for (const id in this.cache) {
-        if (this.cache[id].course.sis_course_id == sis_course_id) {
-          return this.cache[id];
+        let section: Canvas.Sections.Section;
+        // @ts-expect-error 2339
+        for (section of this.cache[id].course.sections || []) {
+          console.log({ sis_section_id, section });
+          if (section.sis_section_id == sis_section_id) {
+            return this.cache[id];
+          }
         }
       }
     }
-    return minimalCourse;
+    return undefinedCourse;
   }
 
   public static fromContextCode(context_code: string) {
@@ -91,6 +112,6 @@ export class Course {
         return this.cache[id];
       }
     }
-    return minimalCourse;
+    return undefinedCourse;
   }
 }

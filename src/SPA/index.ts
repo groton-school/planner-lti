@@ -29,21 +29,22 @@ import './styles.scss';
         }
       },
       datesSet: (info) => {
-        Google.CalendarEvent.list({
-          params: {
-            timeMin: info.view.activeStart.toISOString(),
-            timeMax: info.view.activeEnd.toISOString(),
-            singleEvents: 'true'
-          }
-        }).then((classMeetings) => {
-          for (const classMeeting of classMeetings) {
-            FullCalendar.addEvent(classMeeting.toEvent());
-          }
-        });
         Canvas.Course.list({
           state: ['available'],
           include: ['sections']
         }).then((courses) => {
+          Google.CalendarEvent.list({
+            params: {
+              timeMin: info.view.activeStart.toISOString(),
+              timeMax: info.view.activeEnd.toISOString(),
+              singleEvents: 'true'
+            }
+          }).then((classMeetings) => {
+            for (const classMeeting of classMeetings) {
+              FullCalendar.addEvent(classMeeting.toEvent());
+            }
+          });
+
           for (let i = 0; i < courses.length; i += 10) {
             Canvas.CalendarEvent.list(
               {

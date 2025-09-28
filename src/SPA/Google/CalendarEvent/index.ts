@@ -99,18 +99,24 @@ export class CalendarEvent {
     return this.event.summary.replace(/^\* /, '');
   }
 
-  public get course() {
-    let sis_course_id: string | undefined = undefined;
+  public get sis_course_id(): string | undefined {
     try {
       const data = JSON.parse(
         this.event.description?.replace(/^.*(\{(.|\n)*\}).*$/, '$1') || '{}'
       );
-      sis_course_id = data.sis_course_id;
+      return data.sis_course_id;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_) {
-      // ignore error
+      return undefined;
     }
-    return Canvas.Course.fromSisId(sis_course_id);
+  }
+
+  public get course() {
+    /* TODO it's not great that we're using sis_course_id and sis_section_id interchangeably
+     *
+     * In fairness, this is an artifact of how the Blackbaud to Canvas sync process, and that
+     * course sections are only optionally merged in Canvas */
+    return Canvas.Course.fromSisSectionId(this.sis_course_id);
   }
 
   public static fromEventId(id: string) {
