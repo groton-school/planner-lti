@@ -1,6 +1,7 @@
 import { DateTimeString } from '@battis/descriptive-types';
 import GoogleCalendar from '@battis/google.calendar';
 import { EventClickArg, EventInput } from '@fullcalendar/core';
+import { Canvas as Resources } from '@groton/canvas-api.client.web';
 import bootstrap from 'bootstrap';
 import * as Canvas from '../../Canvas';
 import { render } from '../../Utilities/Views';
@@ -64,6 +65,7 @@ export class CalendarEvent {
       end,
       classNames: [
         Canvas.Colors.classNameFromCourseId(this.course?.id),
+        Canvas.Colors.classNameFromSectionName(this.section?.name),
         ...CalendarEvent.classNames
       ]
     };
@@ -99,20 +101,44 @@ export class CalendarEvent {
     return this.event.summary.replace(/^\* /, '');
   }
 
+  private _sis_course_id?: string = undefined;
+
   public get sis_course_id(): string | undefined {
-    try {
-      const data = JSON.parse(
-        this.event.description?.replace(/^.*(\{(.|\n)*\}).*$/, '$1') || '{}'
-      );
-      return data.sis_course_id;
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (_) {
-      return undefined;
+    if (!this._sis_course_id) {
+      try {
+        const data = JSON.parse(
+          this.event.description?.replace(/^.*(\{(.|\n)*\}).*$/, '$1') || '{}'
+        );
+        this._sis_course_id = data.sis_course_id;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (_) {
+        // ignore error;
+      }
     }
+    return this._sis_course_id;
   }
 
+  private _course?: Canvas.Course = undefined;
+
   public get course() {
-    return Canvas.Course.fromGoogleCalendarEvent(this);
+    if (!this._course) {
+      this._course = Canvas.Course.fromGoogleCalendarEvent(
+        this
+      ) as Canvas.Course;
+    }
+    return this._course;
+  }
+
+  private _section?: Resources.Sections.Section = undefined;
+
+  public get section() {
+    if (!this._section && this.course.getSection) {
+      this._section = this.course.getSection({
+        sis_section_id: this.sis_course_id,
+        name: this.title
+      });
+    }
+    return this._section;
   }
 
   public static fromEventId(id: string) {

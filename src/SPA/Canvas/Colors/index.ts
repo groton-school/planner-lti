@@ -1,6 +1,7 @@
 import { Canvas } from '@groton/canvas-api.client.web';
 import { render } from '../../Utilities/Views';
 import { ColorSet } from './ColorSet';
+import './styles.scss';
 import stylesheet from './stylesheet.ejs';
 
 export async function get() {
@@ -24,4 +25,15 @@ export async function get() {
 
 export function classNameFromCourseId(id?: string | number) {
   return `course_${id || 'undefined'}`;
+}
+
+export function classNameFromSectionName(name?: string) {
+  if (name) {
+    const [, abbreviation] =
+      name.match(/^.*\((?:[^()]* )?(RD|OR|YL|GR|LB|DB|PR)(?: .*|\))$/) || [];
+    if (abbreviation) {
+      return `${abbreviation}_block`;
+    }
+  }
+  return 'undefined_block';
 }

@@ -108,6 +108,22 @@ export class Course {
     return undefinedCourse;
   }
 
+  public getSection({
+    sis_section_id,
+    name
+  }: {
+    sis_section_id?: string;
+    name?: string;
+  }) {
+    // @ts-expect-error 2339
+    for (const section of this.course.sections || []) {
+      if (section.sis_section_id == sis_section_id || section.name == name) {
+        return section;
+      }
+    }
+    return undefined;
+  }
+
   public static fromContextCode(context_code: string) {
     for (const id in this.cache) {
       if (context_code === `course_${id}`) {

@@ -1,0 +1,44 @@
+@use '../../../../node_modules/@groton/colors/colors';
+
+.RD_block {
+  .fc-event-main {
+    border-color: colors.$rd !important;
+    color: colors.$rd-on-white !important;
+  }
+}
+.OR_block {
+  .fc-event-main {
+    border-color: colors.$or !important;
+    color: colors.$or-on-white !important;
+  }
+}
+.YL_block {
+  .fc-event-main {
+    border-color: colors.$yl !important;
+    color: colors.$yl-on-white !important;
+  }
+}
+.GR_block {
+  .fc-event-main {
+    border-color: colors.$gr !important;
+    color: colors.$gr-on-white !important;
+  }
+}
+.LB_block {
+  .fc-event-main {
+    border-color: colors.$lb !important;
+    color: colors.$lb-on-white !important;
+  }
+}
+.DB_block {
+  .fc-event-main {
+    border-color: colors.$db !important;
+    color: colors.$db-on-white !important;
+  }
+}
+.PR_block {
+  .fc-event-main {
+    border-color: colors.$pr !important;
+    color: colors.$pr-on-white !important;
+  }
+}

@@ -23,6 +23,9 @@ importers:
       '@groton/canvas-api.client.web':
         specifier: ^0.1.4
         version: 0.1.4
+      '@groton/colors':
+        specifier: ^0.2.0
+        version: 0.2.0
       bootstrap:
         specifier: ^5.3.8
         version: 5.3.8(@popperjs/core@2.11.8)
@@ -599,6 +602,9 @@ packages:
 
   '@groton/canvas-api@0.3.4':
     resolution: {integrity: sha512-Uk7tn+kw/UGjIncVAEBRmUzW53QbLZpSqnfAZiTfZeTYh9nCgAbyDreb0bk+sIeP28Tc6pudxgTXdX4IlGSRmA==}
+
+  '@groton/colors@0.2.0':
+    resolution: {integrity: sha512-twKVnkSmEnvHHUPeQnw78e1aTU6tlJ//AJtjfT5fSzSZsHV1ma+mwvVqUF5eiQDPzznBHjVSAMGSuTDEp+V+fg==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -6416,6 +6422,8 @@ snapshots:
       '@groton/canvas-api.client.base': 0.2.0
       '@groton/canvas-api.utilities': 0.2.0
       node-fetch: 3.3.2
+
+  '@groton/colors@0.2.0': {}
 
   '@humanfs/core@0.19.1': {}
 
