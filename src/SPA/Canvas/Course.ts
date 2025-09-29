@@ -1,4 +1,5 @@
 import { Canvas } from '@groton/canvas-api.client.web';
+import * as Google from '../Google';
 
 const undefinedCourse = {
   id: undefined,
@@ -73,6 +74,10 @@ export class Course {
     return this.course.name;
   }
 
+  public get sis_course_id() {
+    return this.course.sis_course_id;
+  }
+
   public get context_code() {
     return `course_${this.course.id}`;
   }
@@ -81,25 +86,22 @@ export class Course {
     return !!this.course.enrollments.find((e) => e.type === 'teacher');
   }
 
-  public static fromName(name: string) {
+  public static fromGoogleCalendarEvent(event: Google.CalendarEvent) {
     for (const id in this.cache) {
-      if (this.cache[id].course.course_code == name) {
+      if (
+        this.cache[id].sis_course_id == event.sis_course_id ||
+        this.cache[id].course_code == event.title
+      ) {
         return this.cache[id];
       }
-    }
-    return undefinedCourse;
-  }
-
-  public static fromSisSectionId(sis_section_id?: string) {
-    if (sis_section_id) {
-      for (const id in this.cache) {
-        let section: Canvas.Sections.Section;
-        // @ts-expect-error 2339
-        for (section of this.cache[id].course.sections || []) {
-          console.log({ sis_section_id, section });
-          if (section.sis_section_id == sis_section_id) {
-            return this.cache[id];
-          }
+      let section: Canvas.Sections.Section;
+      // @ts-expect-error 2339
+      for (section of this.cache[id].course.sections || []) {
+        if (
+          section.sis_section_id == event.sis_course_id ||
+          section.name == event.title
+        ) {
+          return this.cache[id];
         }
       }
     }

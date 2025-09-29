@@ -112,11 +112,7 @@ export class CalendarEvent {
   }
 
   public get course() {
-    /* TODO it's not great that we're using sis_course_id and sis_section_id interchangeably
-     *
-     * In fairness, this is an artifact of how the Blackbaud to Canvas sync process, and that
-     * course sections are only optionally merged in Canvas */
-    return Canvas.Course.fromSisSectionId(this.sis_course_id);
+    return Canvas.Course.fromGoogleCalendarEvent(this);
   }
 
   public static fromEventId(id: string) {
