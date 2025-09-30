@@ -20,7 +20,7 @@ export class CalendarEvent {
 
   private static readonly classNames = ['google', 'calendar_event'];
 
-  public constructor(private event: GoogleCalendar.v3.Event) {
+  public constructor(public readonly event: GoogleCalendar.v3.Event) {
     CalendarEvent.cache[event.id] = this;
   }
 
@@ -64,7 +64,7 @@ export class CalendarEvent {
       start,
       end,
       classNames: [
-        Canvas.Colors.classNameFromCourseId(this.course?.id),
+        Canvas.Colors.classNameFromCourseId(this.course?.course.id),
         Canvas.Colors.classNameFromSectionName(this.section?.name),
         ...CalendarEvent.classNames
       ]

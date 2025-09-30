@@ -4,7 +4,7 @@ export class AssignmentGroup {
   private static cache: Record<string | number, AssignmentGroup[]> = {};
 
   private constructor(
-    private assignmentGroup: Canvas.AssignmentGroups.AssignmentGroup
+    public readonly assignmentGroup: Canvas.AssignmentGroups.AssignmentGroup
   ) {}
 
   public static async list(
@@ -25,13 +25,5 @@ export class AssignmentGroup {
       }
     }
     return this.cache[course_id];
-  }
-
-  public get id() {
-    return this.assignmentGroup.id;
-  }
-
-  public get name() {
-    return this.assignmentGroup.name;
   }
 }

@@ -12,7 +12,7 @@ export class Course {
 
   private static lists: Record<string, Course[]> = {};
 
-  private constructor(private course: Canvas.Courses.Course) {
+  private constructor(public readonly course: Canvas.Courses.Course) {
     Course.cache[course.id] = this;
   }
 
@@ -62,22 +62,6 @@ export class Course {
     return this.cache[id];
   }
 
-  public get id() {
-    return this.course.id;
-  }
-
-  public get course_code() {
-    return this.course.course_code;
-  }
-
-  public get name() {
-    return this.course.name;
-  }
-
-  public get sis_course_id() {
-    return this.course.sis_course_id;
-  }
-
   public get context_code() {
     return `course_${this.course.id}`;
   }
@@ -89,8 +73,8 @@ export class Course {
   public static fromGoogleCalendarEvent(event: Google.CalendarEvent) {
     for (const id in this.cache) {
       if (
-        this.cache[id].sis_course_id == event.sis_course_id ||
-        this.cache[id].course_code == event.title
+        this.cache[id].course.sis_course_id == event.sis_course_id ||
+        this.cache[id].course.course_code == event.title
       ) {
         return this.cache[id];
       }

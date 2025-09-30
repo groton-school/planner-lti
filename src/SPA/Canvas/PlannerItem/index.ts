@@ -11,7 +11,7 @@ export class PlannerItem {
   private static cache: PlannerItem[] = [];
 
   private constructor(
-    private item: ArrayElement<
+    public readonly item: ArrayElement<
       Awaited<ReturnType<typeof Canvas.v1.Planner.Items.list>>
     >
   ) {
@@ -29,23 +29,7 @@ export class PlannerItem {
     return result;
   }
 
-  public get plannable_type() {
-    return this.item.plannable_type;
-  }
-
-  public get plannable_id() {
-    return this.item.plannable_id;
-  }
-
-  public get plannable_date() {
-    return this.item.plannable_date;
-  }
-
-  public get course_id() {
-    return this.item.course_id;
-  }
-
-  public get done() {
+  public isDone() {
     return (
       this.item.submissions?.graded ||
       this.item.submissions?.submitted ||
@@ -103,7 +87,7 @@ export class PlannerItem {
         'canvas',
         'planner_item',
         this.item.plannable_type,
-        this.done ? 'done' : ''
+        this.isDone() ? 'done' : ''
       ]
     };
   }
@@ -113,7 +97,7 @@ export class PlannerItem {
       template: todo,
       data: {
         consumer_instance_url,
-        done: this.done,
+        done: this.isDone(),
         item: this.item,
         course: this.item.course_id
           ? await Course.get(this.item.course_id)
@@ -125,8 +109,8 @@ export class PlannerItem {
   public static fromAssignmentId(plannable_id: string | number) {
     return this.cache.find(
       (item) =>
-        item.plannable_type === 'assignment' &&
-        `${item.plannable_id}` === `${plannable_id}`
+        item.item.plannable_type === 'assignment' &&
+        `${item.item.plannable_id}` === `${plannable_id}`
     );
   }
 }

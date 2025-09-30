@@ -10,7 +10,7 @@ export class CalendarEvent {
   private static classNames = ['canvas', 'calendar_event'];
 
   private constructor(
-    private calendarEvent:
+    public readonly calendarEvent:
       | Canvas.CalendarEvents.CalendarEvent
       | Canvas.CalendarEvents.AssignmentEvent
   ) {

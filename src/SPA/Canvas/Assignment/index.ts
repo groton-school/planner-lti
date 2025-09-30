@@ -16,7 +16,9 @@ export class Assignment {
   private static readonly classNames = ['canvas', 'assignment'];
   private static cache: Record<string | number, Assignment> = {};
 
-  public constructor(private assignment: Canvas.Assignments.Assignment) {
+  public constructor(
+    public readonly assignment: Canvas.Assignments.Assignment
+  ) {
     Assignment.cache[assignment.id] = this;
   }
 
@@ -68,11 +70,11 @@ export class Assignment {
       modal
         .querySelector(`#mark-planner-item-complete`)
         ?.addEventListener('click', async () => {
-          if (planner_item.done) {
+          if (planner_item.isDone()) {
             modal.querySelector('.modal-header')?.classList.remove('done');
             info.el.classList.remove('done');
             await planner_item.markIncomplete();
-            if (planner_item.done) {
+            if (planner_item.isDone()) {
               info.el.classList.add('done');
               modal.querySelector('.modal-header')?.classList.add('done');
             }
@@ -80,7 +82,7 @@ export class Assignment {
             modal.querySelector('.modal-header')?.classList.add('done');
             info.el.classList.add('done');
             await planner_item.markComplete();
-            if (!planner_item.done) {
+            if (!planner_item.isDone()) {
               info.el.classList.remove('done');
               modal.querySelector('.modal_header')?.classList.remove('done');
             }
@@ -104,9 +106,11 @@ export class Assignment {
       template: createForm,
       data: {
         consumer_instance_url,
-        course,
+        course: course.course,
         event,
-        assignment_groups: await AssignmentGroup.list(course.id)
+        assignment_groups: (await AssignmentGroup.list(course.course.id)).map(
+          (g) => g.assignmentGroup
+        )
       }
     })) as HTMLFormElement;
     form.addEventListener('submit', async (e: SubmitEvent) => {
@@ -114,7 +118,7 @@ export class Assignment {
         e.stopImmediatePropagation();
         e.preventDefault();
         await Canvas.v1.Courses.Assignments.create({
-          pathParams: { course_id: course.id },
+          pathParams: { course_id: course.course.id },
           params: {
             ...form,
             'assignment[grading_type]': 'not_graded',

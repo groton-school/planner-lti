@@ -66,7 +66,7 @@ import './styles.scss';
     });
     (await Canvas.PlannerItem.list()).map(async (item) => {
       if (!item.isEvent()) {
-        if (item.done) {
+        if (item.isDone()) {
           todoElt.querySelector('#done')?.appendChild(await item.toTodo());
         } else {
           todoElt
