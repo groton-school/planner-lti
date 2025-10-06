@@ -1,0 +1,30 @@
+<style>
+  <% for (const asset of assets) { %>
+    :root {
+        --<%= asset.contextCode %>: <%= asset.base %>;
+    }
+
+    .<%= asset.contextCode %>.CalendarEvent,
+    .<%= asset.contextCode %>.CalendarEvent .fc-event-main {
+      background: white;
+      color: <%= asset.whiteText %>;
+      border: <%= asset.base %> solid 1pt;
+    }
+
+    .<%= asset.contextCode %>.PlannerEvent,
+    .<%= asset.contextCode %>.PlannerEvent .fc-event-main,
+    .<%= asset.contextCode %>.Assignment,
+    .<%= asset.contextCode %>.Assignment .fc-event-main,
+    .<%= asset.contextCode %>.modal-header {
+      background: <%= asset.base %>;
+      color: <%= asset.baseText %>;
+      border: <%= asset.base %> solid 1pt;
+    }
+
+    .<%= asset.contextCode %> .form-check-input:checked {
+      background-color: <%= asset.base %>;
+      border-color: <%= asset.base %>;
+      color: <%= asset.baseText %>;
+    }
+  <% } %>
+</style>

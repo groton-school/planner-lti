@@ -1,0 +1,44 @@
+.fc {
+  font-family:
+    'Lato Extended', 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  padding: 36px 48px 48px 48px;
+
+  .fc-button {
+    background: #f2f4f4;
+    color: #273540;
+    border: 1px solid;
+    border-color: #e8eaec;
+    border-radius: 3px;
+    transition: background-color 0.2s ease-in-out;
+    display: inline-block;
+    position: relative;
+    padding: 8px 14px;
+    margin-bottom: 0;
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 22px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    text-decoration: none;
+    overflow: hidden;
+    text-shadow: none;
+    -webkit-user-select: none;
+    user-select: none;
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  .fc-button.active {
+    background: #5e6f6f;
+    border-color: #475454;
+    color: #fff;
+  }
+
+  .fc-button[disabled] {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}

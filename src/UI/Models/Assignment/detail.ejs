@@ -1,0 +1,32 @@
+
+<div class="d-flex">
+<strong class="p-1">Due</strong>
+<span class="p-1">
+    <%= dueAt.toLocaleDateString('en-us', {month: 'short',day: 'numeric'}) %>
+    <% if (false === (dueAt.getHours() === 23 && dueAt.getMinutes() === 59)) { %>
+    at <%= dueAt.toLocaleTimeString('en-us',{hour: 'numeric',minute: '2-digit'}) %>
+    <% } %>
+</span>
+<% if (data.assignment.points_possible) { %>
+<strong class="ms-auto p-1">Points</strong>
+<span class="p-1">
+    <% if (data.assignment.submission?.entered_grade) { %>
+    <%= data.assignment.submission.entered_grade %> /
+    <% } %>
+    <%= data.assignment.points_possible %>
+    <% if (data.assignment.submission?.workflow_state) { %>
+    (<%= data.assignment.submission.workflow_state %>)
+    <% }%>
+</span>
+<% } %>
+</div>
+<% if (data.assignment.description) { %>
+<hr />
+<%- data.assignment.description %>
+<% } %>
+  <div class="d-flex justify-content-end gap-2">
+    <% if (data.assignment.can_edit) { %>
+      <a target="_top" href="<%= data.assignment.html_url %>/edit" class="btn btn-brand-secondary">Edit</a>
+    <% } %>
+    <a target="_top" href="<%= data.assignment.html_url %>" class="btn btn-brand-primary" id="save">Details</a>
+  </div>

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Application\Actions\Authorized;
 use App\Application\Actions\Canvas;
-use App\Application\Actions\SPA;
+use App\Application\Actions\UI;
 use App\Application\Middleware\ApiProxyUserIdentifier;
 use App\Application\Middleware\Authenticated;
 use GrotonSchool\Slim\GAE;
@@ -42,7 +42,7 @@ return function (App $app) {
     $app->get('/google/login/complete', Authorized::class);
 
     // app
-    $app->get('/', SPA::class)
+    $app->get('/', UI::class)
         ->add(Authenticated::class)
         ->add(SessionStartMiddleware::class)
         ->add(PartitionedSessionMiddleware::class);

@@ -1,0 +1,86 @@
+import { EventClickArg } from '@fullcalendar/core';
+import { Modal } from 'bootstrap';
+import { render } from 'ejs';
+import { Bootstrap, Canvas } from '../../../Services';
+import { Event } from '../../../Services/Google/Calendar';
+import { CalendarEvent } from '../../CalendarEvent';
+import detail from './detail.ejs';
+import toggleable from './toggleable.ejs';
+
+export class PlannerEvent extends CalendarEvent<{
+  item: Canvas.Planner.PlannerItem;
+}> {
+  public static fromAssignmentPlannerItem(item: Canvas.Planner.PlannerItem) {
+    return new PlannerEvent(
+      `${item.plannable_type}_${item.plannable.id}`,
+      item.plannable.title,
+      new Date(item.plannable.due_at),
+      new Date(item.plannable.due_at),
+      false,
+      { item }
+    );
+  }
+
+  /** @deprecated */
+  public static fromGoogleCalendarEvent(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    event: Event
+  ): CalendarEvent<{ event: Event }> {
+    throw new Error();
+  }
+
+  public async detail(info: EventClickArg): Promise<Modal> {
+    if (!this.data.item.course_id) {
+      throw new Error('Missing Course ID');
+    }
+    const modal = await Bootstrap.Modal.create({
+      title: render(toggleable, {
+        ...Bootstrap.Modal.stackTitle(
+          `<span class="title">${this.title}</span>`,
+          (await Canvas.Courses.get(this.data.item.course_id.toString())).name
+        ),
+        id: this.id
+      }),
+      titleClassNames: ['d-flex'],
+      body: render(detail, {
+        assignment: await Canvas.Assignments.get({
+          course_id: this.data.item.course_id,
+          id: this.data.item.plannable.id.toString()
+        })
+      }),
+      classNames: await this.classNames()
+    });
+
+    const elt = document.querySelector(
+      '.modal-content:has(.PlannerEvent) .modal-header'
+    );
+    const toggle = elt?.querySelector(`#toggle-${this.id}`) as HTMLInputElement;
+    toggle.checked = this.data.item.done;
+    toggle.addEventListener('click', async () => {
+      toggle.disabled = true;
+      toggle.checked = await this.data.item.toggle();
+      if (toggle.checked) {
+        info.el.classList.add('done');
+        elt?.classList.add('done');
+      } else {
+        info.el.classList.remove('done');
+        elt?.classList.remove('done');
+      }
+      toggle.disabled = false;
+    });
+
+    return modal;
+  }
+
+  protected async classNames(): Promise<string[]> {
+    const classNames = ['PlannerEvent'];
+    if (this.data.item.course_id) {
+      // TODO differentiate planner items by relevant section
+      classNames.push(`course_${this.data.item.course_id}`);
+    }
+    if (this.data.item.done) {
+      classNames.push('done');
+    }
+    return classNames;
+  }
+}

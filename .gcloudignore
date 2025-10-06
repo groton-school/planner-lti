@@ -7,6 +7,6 @@
 !/app
 !/public
 !/src
-/src/SPA
+/src/UI
 !/views
-/views/SPA
+/views/UI

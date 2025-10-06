@@ -3,8 +3,8 @@ import bundle from '@battis/webpack';
 export default bundle.fromTS.toSPA({
   root: import.meta.dirname,
   appName: 'Planner',
-  entry: './src/SPA/index.ts',
-  template: './views/SPA',
+  entry: './src/UI/index.ts',
+  template: './views/UI',
   module: {
     rules: [
       {
@@ -20,6 +20,7 @@ export default bundle.fromTS.toSPA({
   resolve: {
     symlinks: true
   },
+  // TODO review externals and bundle configuration
   externals: {
     bootstrap: 'bootstrap',
     ejs: 'ejs',

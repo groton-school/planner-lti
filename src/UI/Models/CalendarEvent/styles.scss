@@ -1,0 +1,14 @@
+@use '../../../../node_modules/@groton/colors/vars.css';
+
+.CalendarEvent,
+.CalendarEvent .fc-event-main {
+  color: var(--no-color-on-white);
+  background: white;
+  border: solid var(--planner-border-width) var(--no-color);
+}
+
+.CalendarEvent.modal-header {
+  color: var(--text-on-no-color);
+  background: var(--no-color);
+  border-color: var(--no-color);
+}

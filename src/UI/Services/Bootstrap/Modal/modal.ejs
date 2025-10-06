@@ -1,0 +1,22 @@
+<div class="modal" tabindex="-1" <% if (!closeable) { %>data-bs-keyboard="false" data-bs-backdrop="static"<%} %>>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header <%= classNames.join(' ') %>">
+        <div class="modal-title">
+          <div class="<%= titleClassNames.join(' ') %>"><%- title %></div>
+        </div>
+        <% if (closeable) { %>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <% } %>
+      </div>
+      <div class="modal-body">
+        <%- body %>
+      </div>
+    </div>
+  </div>
+</div>

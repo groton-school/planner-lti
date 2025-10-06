@@ -1,0 +1,41 @@
+@use 'sass:string';
+@use 'sass:math';
+@use '../../node_modules/@groton/colors/vars.css';
+
+$colors: 'RD', 'OR', 'YL', 'GR', 'LB', 'DB', 'PR', 'no-color';
+
+@mixin diagonal-stripe($a, $b, $angle: 135, $aWidth: 12, $bWidth: 12) {
+  $leg: math.sqrt(math.pow((($aWidth + $bWidth) * 2), 2) / 2);
+  background-image: linear-gradient(
+    #{$angle}deg,
+    #{$a} 25%,
+    #{$b} 25%,
+    #{$b} 50%,
+    #{$a} 50%,
+    #{$a} 75%,
+    #{$b} 75%,
+    #{$b} 100%
+  );
+  background-size: #{$leg}px #{$leg}px;
+}
+
+@each $color in $colors {
+  $c: string.to-lower-case($color);
+
+  .#{$color}.ClassMeeting,
+  .#{$color}.ClassMeeting .fc-event-main {
+    color: var(--#{$c}-on-white) !important;
+    background: white !important;
+    border: var(--#{$c}) solid var(--planner-border-width) !important;
+  }
+
+  .#{$color}.modal-header,
+  .#{$color}.PlannerEvent,
+  .#{$color}.PlannerEvent .fc-event-main,
+  .#{$color}.Assignment,
+  .#{$color}.Assignment .fc-event-main {
+    color: var(--#{text-on-#{$c}}) !important;
+    background: var(--#{$c}) !important;
+    border-color: var(--#{$c}) !important;
+  }
+}
