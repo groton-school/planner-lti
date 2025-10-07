@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use App\Application\Settings\Settings;
 use App\Application\Settings\SettingsInterface;
-use Battis\LazySecrets;
 use DI\ContainerBuilder;
+use Google\Service\Calendar\Setting;
 use Odan\Session\SessionInterface;
 
 return function (ContainerBuilder $containerBuilder) {
@@ -17,8 +17,6 @@ return function (ContainerBuilder $containerBuilder) {
             $TOOL_NAME = 'Planner LTI';
             $PROJECT_URL = 'https://' . getenv('HTTP_HOST');
             $SCOPES = ['https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly'];
-
-            $secrets = new LazySecrets\Cache();
 
             return new Settings([
                 'displayErrorDetails'   => false,
@@ -80,7 +78,7 @@ return function (ContainerBuilder $containerBuilder) {
 
                     ]
                 ],
-                SessionInterface::class => [
+                Settings::SESSION_CONFIG => [
                     'name' => "planner-session",
                     'lifetime' => 60 * 60 * 24,
                     'cookie_samesite' => 'None',

@@ -45,9 +45,8 @@ return function (ContainerBuilder $containerBuilder) {
         RegistrationConfigureActionInterface::class => DI\autowire(RegistrationConfigurePassthruAction::class),
 
         SessionManagerInterface::class => DI\get(SessionInterface::class),
-        SessionInterface::class => function (ContainerInterface $container) {
-            $options = $container->get(SettingsInterface::class)->get(SessionInterface::class);
-            return new PhpSession($options);
+        SessionInterface::class => function (SettingsInterface $settings) {
+            return new PhpSession($settings->getSessionConfig());
         },
 
         // Google API client
@@ -57,9 +56,8 @@ return function (ContainerBuilder $containerBuilder) {
             return $client;
         },
 
-        PhpRenderer::class => function (ContainerInterface $container) {
+        PhpRenderer::class => function (SettingsInterface $settings) {
             /** @var SettingsInterface $settings */
-            $settings = $container->get(SettingsInterface::class);
             $views = new PhpRenderer(__DIR__ . '/../views/slim', [
                 'tool_name' => $settings->getToolName(),
                 'title' => $settings->getToolName()
@@ -68,39 +66,44 @@ return function (ContainerBuilder $containerBuilder) {
             return $views;
         },
 
-        CanvasLMS\APIProxy::class => function (ContainerInterface $container) {
-            /** @var SettingsInterface $settings */
-            $settings = $container->get(SettingsInterface::class);
+        CanvasLMS\APIProxy::class => function (SettingsInterface $settings, SessionInterface $session, SessionManagerInterface $sessionManager) {
             $secrets = new LazySecrets\Cache();
+            $canvasInstanceUrl = $_SERVER['HTTP_ORIGIN'] ?? null;
+            if (!$sessionManager->isStarted()) {
+                $sessionManager->start();
+            }
+            if ($canvasInstanceUrl) {
+                $session->set('HTTP_ORIGIN', $canvasInstanceUrl);
+            } else {
+                $canvasInstanceUrl =  $session->get('HTTP_ORIGIN');
+            }
             $proxy = new Canvas\APIProxy([
                 ...$secrets->get('CANVAS_CREDENTIALS'),
+                'canvasInstanceUrl' => $canvasInstanceUrl ?? '',
+                'purpose' => $settings->getToolName()
+            ]);
+            $proxy->setAccessTokenRepostory(new AccessTokenRepository($proxy));
+            $sessionManager->save();
+            return $proxy;
+        },
+
+        'routes.canvas' => function (CanvasLMS\APIProxy $proxy, SessionInterface $session) {
+            return new APIProxy\RouteBuilder($proxy, $session);
+        },
+
+        Google\APIProxy::class => function (SettingsInterface $settings) {
+            $secrets = new LazySecrets\Cache();
+
+            $proxy = new Google\APIProxy([
+                ...$secrets->get('GOOGLE_CREDENTIALS'),
                 'purpose' => $settings->getToolName()
             ]);
             $proxy->setAccessTokenRepostory(new AccessTokenRepository($proxy));
             return $proxy;
         },
 
-        'routes.canvas' => function (ContainerInterface $container) {
-            return new APIProxy\RouteBuilder(
-                $container->get(CanvasLMS\APIProxy::class),
-                $container->get(SessionInterface::class)
-            );
-        },
-
-        Google\APIProxy::class => function (ContainerInterface $container) {
-            $secrets = new LazySecrets\Cache();
-            $proxy = new Google\APIProxy([
-                ...$secrets->get('GOOGLE_CREDENTIALS')
-            ]);
-            $proxy->setAccessTokenRepostory(new AccessTokenRepository($proxy));
-            return $proxy;
-        },
-
-        'routes.google' => function (ContainerInterface $container) {
-            return new APIProxy\RouteBuilder(
-                $container->get(Google\APIProxy::class),
-                $container->get(SessionInterface::class)
-            );
+        'routes.google' => function (Google\APIProxy $proxy, SessionInterface $session) {
+            return new APIProxy\RouteBuilder($proxy, $session);
         }
     ]);
 };

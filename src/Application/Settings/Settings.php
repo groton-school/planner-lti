@@ -16,12 +16,18 @@ class Settings implements SettingsInterface
     public const CACHE_DURATION = self::class . '::cache_duration';
     public const REDIRECT_URI = self::class . '::redirect_uri';
     public const LOG_REQUESTS = self::class . '::log_requests';
+    public const SESSION_CONFIG = self::class . '::session_config';
 
     private array $settings;
 
     public function __construct(array $settings)
     {
         $this->settings = $settings;
+    }
+
+    public function getSessionConfig(): array
+    {
+        return $this->settings[self::SESSION_CONFIG];
     }
 
     public function getCacheDuration(): int

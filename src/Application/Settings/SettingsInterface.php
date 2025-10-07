@@ -13,6 +13,8 @@ interface SettingsInterface extends
     LTI\SettingsInterface,
     Infrastructure\GAE\SettingsInterface
 {
+    public function getSessionConfig(): array;
+
     /**
      * @param string $key
      * @return mixed
