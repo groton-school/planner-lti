@@ -1,5 +1,4 @@
 import { EventClickArg } from '@fullcalendar/core';
-import { Modal } from 'bootstrap';
 import { render } from 'ejs';
 import { Bootstrap, Canvas } from '../../Services';
 import { Event } from '../../Services/Google/Calendar';
@@ -79,20 +78,22 @@ export class Assignment extends CalendarEvent<{
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async detail(info: EventClickArg): Promise<Modal> {
-    return Bootstrap.Modal.create({
-      ...Bootstrap.Modal.stackTitle(
-        this.title,
-        this.data.section
-          ? this.data.section.name
-          : (
-              await Canvas.Courses.get(
-                this.data.assignment.course_id.toString()
-              )
-            ).name
-      ),
-      body: render(detail, this),
-      classNames: await this.classNames()
-    });
+  public async detail(info: EventClickArg) {
+    return (
+      await Bootstrap.Modal.create({
+        ...Bootstrap.Modal.stackTitle(
+          this.title,
+          this.data.section
+            ? this.data.section.name
+            : (
+                await Canvas.Courses.get(
+                  this.data.assignment.course_id.toString()
+                )
+              ).name
+        ),
+        body: render(detail, this),
+        classNames: await this.classNames()
+      })
+    ).elt;
   }
 }

@@ -24,7 +24,7 @@ export async function create({
   const modal = new bootstrap.Modal(elt);
   elt.addEventListener('hidden.bs.modal', () => modal.dispose());
   modal.show();
-  return modal;
+  return { modal, elt };
 }
 
 export function stackTitle(title: string, caption: string) {

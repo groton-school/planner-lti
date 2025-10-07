@@ -64,10 +64,12 @@ export class CalendarEvent<
     ) {
       throw new Error('unexpected data');
     }
-    return await Bootstrap.Modal.create({
-      title: this.data.event.title,
-      body: ejs.render(detail, this),
-      classNames: await this.classNames()
-    });
+    return (
+      await Bootstrap.Modal.create({
+        title: this.data.event.title,
+        body: ejs.render(detail, this),
+        classNames: await this.classNames()
+      })
+    ).elt;
   }
 }

@@ -1,5 +1,4 @@
 import { EventClickArg } from '@fullcalendar/core';
-import { Modal } from 'bootstrap';
 import { render } from 'ejs';
 import { Bootstrap, Canvas } from '../../../Services';
 import { Event } from '../../../Services/Google/Calendar';
@@ -29,11 +28,11 @@ export class PlannerEvent extends CalendarEvent<{
     throw new Error();
   }
 
-  public async detail(info: EventClickArg): Promise<Modal> {
+  public async detail(info: EventClickArg) {
     if (!this.data.item.course_id) {
       throw new Error('Missing Course ID');
     }
-    const modal = await Bootstrap.Modal.create({
+    const { elt } = await Bootstrap.Modal.create({
       title: render(toggleable, {
         ...Bootstrap.Modal.stackTitle(
           `<span class="title">${this.title}</span>`,
@@ -51,9 +50,6 @@ export class PlannerEvent extends CalendarEvent<{
       classNames: await this.classNames()
     });
 
-    const elt = document.querySelector(
-      '.modal-content:has(.PlannerEvent) .modal-header'
-    );
     const toggle = elt?.querySelector(`#toggle-${this.id}`) as HTMLInputElement;
     toggle.checked = this.data.item.done;
     toggle.addEventListener('click', async () => {
@@ -69,7 +65,7 @@ export class PlannerEvent extends CalendarEvent<{
       toggle.disabled = false;
     });
 
-    return modal;
+    return elt;
   }
 
   protected async classNames(): Promise<string[]> {

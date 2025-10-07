@@ -44,7 +44,7 @@ export class ClassMeeting extends CalendarEvent<{
 
     if (course.isTeacher()) {
       // TODO figure out workflow for assigning to multiple sections
-      const modal = await Bootstrap.Modal.create({
+      const { modal, elt } = await Bootstrap.Modal.create({
         ...Bootstrap.Modal.stackTitle(
           'New Assignment',
           (await this.data.section.getCourse()).name
@@ -57,7 +57,6 @@ export class ClassMeeting extends CalendarEvent<{
         classNames: await this.classNames()
       });
 
-      const elt = document.querySelector('.modal-content:has(.ClassMeeting)');
       const form = elt?.querySelector('form');
       form?.addEventListener('submit', async (e: SubmitEvent) => {
         if (e.submitter?.id === 'save') {
@@ -83,7 +82,7 @@ export class ClassMeeting extends CalendarEvent<{
         }
       });
 
-      return modal;
+      return elt;
     }
     return super.detail(info);
   }
