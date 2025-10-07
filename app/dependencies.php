@@ -22,7 +22,6 @@ use GrotonSchool\Slim\OAuth2\APIProxy\GAE\Firestore\AccessTokenRepository;
 use Odan\Session\PhpSession;
 use Odan\Session\SessionInterface;
 use Odan\Session\SessionManagerInterface;
-use Psr\Container\ContainerInterface;
 use Slim\Views\PhpRenderer;
 
 return function (ContainerBuilder $containerBuilder) {
