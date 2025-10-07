@@ -60,7 +60,7 @@ return function (ContainerBuilder $containerBuilder) {
                                 ],
                                 "placements" => ["global_navigation"],
                                 "roles" => [],
-                                "target_link_uri" => "{$PROJECT_URL}/lti/launch?placement=global_navigation"
+                                "target_link_uri" => "{$PROJECT_URL}/lti/launch"
                             ]
                         ],
                         "claims" => [
