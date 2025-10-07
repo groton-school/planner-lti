@@ -1,9 +1,9 @@
 import { RequestComplete, RequestStarted } from '@groton/canvas-api.client.web';
-import bootstrap from 'bootstrap';
 import * as cookie from 'cookie';
+import { render } from 'ejs';
 import path from 'path-browserify';
-import { render } from '../../Utilities/render';
-import authorizeModal from './authorize.modal.ejs';
+import * as Bootstrap from '../Bootstrap';
+import authorize from './authorize.ejs';
 
 export type Options = {
   scope?: string;
@@ -47,21 +47,18 @@ class Client {
   public async authorize() {
     // TODO don't hard code session name
     const { 'planner-session': session } = cookie.parse(document.cookie);
-    const modal = await render({
-      template: authorizeModal,
-      parent: document.body,
-      data: {
+    const { modal, elt } = await Bootstrap.Modal.create({
+      title: 'Authorization',
+      body: render(authorize, {
         authorize_url:
           path.join(this.instance_url, '../login/authorize') +
-          `?session=${session}` // TODO should be consistent with session name (cf. https://github.com/groton-school/slim-lti-partitioned-session/issues/3)
-      }
+          `?session=${session}`
+      })
     });
-    // TODO use Bootstrap service for Google auth modal
-    const bsModal = new bootstrap.Modal(modal);
-    modal.querySelector('#authorize')?.addEventListener('click', () => {
-      bsModal.hide();
+
+    elt.querySelector('#authorize')?.addEventListener('click', () => {
+      modal.hide();
     });
-    bsModal.show();
   }
 
   public async deauthorize(redirect: string = '/') {
