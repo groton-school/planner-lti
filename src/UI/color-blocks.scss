@@ -1,8 +1,6 @@
-@use 'sass:string';
+@use 'sass:map';
 @use 'sass:math';
-@use '../../node_modules/@groton/colors/vars.css';
-
-$colors: 'RD', 'OR', 'YL', 'GR', 'LB', 'DB', 'PR', 'no-color';
+@use '@groton/colors';
 
 @mixin diagonal-stripe($a, $b, $angle: 135, $aWidth: 12, $bWidth: 12) {
   $leg: math.sqrt(math.pow((($aWidth + $bWidth) * 2), 2) / 2);
@@ -19,23 +17,23 @@ $colors: 'RD', 'OR', 'YL', 'GR', 'LB', 'DB', 'PR', 'no-color';
   background-size: #{$leg}px #{$leg}px;
 }
 
-@each $color in $colors {
-  $c: string.to-lower-case($color);
-
-  .#{$color}.ClassMeeting,
-  .#{$color}.ClassMeeting .fc-event-main {
-    color: var(--#{$c}-on-white) !important;
+@each $abbreviation, $color in colors.$abbreviations {
+  .#{$abbreviation}.ClassMeeting,
+  .#{$abbreviation}.ClassMeeting .fc-event-main {
+    color: map.get(colors.$variants, '#{$color}-on-white') !important;
     background: white !important;
-    border: var(--#{$c}) solid var(--planner-border-width) !important;
+    border: map.get(colors.$variants, $color)
+      solid
+      var(--planner-border-width) !important;
   }
 
-  .#{$color}.modal-header,
-  .#{$color}.PlannerEvent,
-  .#{$color}.PlannerEvent .fc-event-main,
-  .#{$color}.Assignment,
-  .#{$color}.Assignment .fc-event-main {
-    color: var(--#{text-on-#{$c}}) !important;
-    background: var(--#{$c}) !important;
-    border-color: var(--#{$c}) !important;
+  .#{$abbreviation}.modal-header,
+  .#{$abbreviation}.PlannerEvent,
+  .#{$abbreviation}.PlannerEvent .fc-event-main,
+  .#{$abbreviation}.Assignment,
+  .#{$abbreviation}.Assignment .fc-event-main {
+    color: map.get(colors.$variants, 'text-on-#{$color}') !important;
+    background: map.get(colors.$variants, $color) !important;
+    border-color: map.get(colors.$variants, $color) !important;
   }
 }

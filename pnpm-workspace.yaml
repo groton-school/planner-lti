@@ -1,0 +1,5 @@
+onlyBuiltDependencies:
+  - gifsicle
+  - jpegtran-bin
+  - optipng-bin
+  - sharp

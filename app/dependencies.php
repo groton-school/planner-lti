@@ -68,14 +68,13 @@ return function (ContainerBuilder $containerBuilder) {
         // TODO package this a default dependency in groton-school/slim-canvas-api-proxy
         CanvasLMS\APIProxy::class => function (SettingsInterface $settings, SessionInterface $session, SessionManagerInterface $sessionManager) {
             $secrets = new LazySecrets\Cache();
-            $canvasInstanceUrl = $_SERVER['HTTP_ORIGIN'] ?? null;
             if (!$sessionManager->isStarted()) {
                 $sessionManager->start();
             }
-            if ($canvasInstanceUrl) {
+            $sessionOrigin = $session->get('HTTP_ORIGIN');
+            $canvasInstanceUrl = $sessionOrigin ?? $_SERVER['HTTP_ORIGIN'] ?? null;
+            if (!$sessionOrigin && $canvasInstanceUrl) {
                 $session->set('HTTP_ORIGIN', $canvasInstanceUrl);
-            } else {
-                $canvasInstanceUrl =  $session->get('HTTP_ORIGIN');
             }
             $proxy = new Canvas\APIProxy([
                 ...$secrets->get('CANVAS_CREDENTIALS'),
@@ -87,9 +86,8 @@ return function (ContainerBuilder $containerBuilder) {
             return $proxy;
         },
 
-        'routes.canvas' => function (CanvasLMS\APIProxy $proxy, SessionInterface $session) {
-            return new APIProxy\RouteBuilder($proxy, $session);
-        },
+        'routes.canvas' => DI\autowire(APIProxy\RouteBuilder::class)
+            ->constructorParameter('provider', DI\get(CanvasLMS\APIProxy::class)),
 
         Google\APIProxy::class => function (SettingsInterface $settings) {
             $secrets = new LazySecrets\Cache();
@@ -102,8 +100,7 @@ return function (ContainerBuilder $containerBuilder) {
             return $proxy;
         },
 
-        'routes.google' => function (Google\APIProxy $proxy, SessionInterface $session) {
-            return new APIProxy\RouteBuilder($proxy, $session);
-        }
+        'routes.google' => DI\autowire(APIProxy\RouteBuilder::class)
+            ->constructorParameter('provider', DI\get(Google\APIProxy::class))
     ]);
 };
