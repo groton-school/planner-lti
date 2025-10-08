@@ -2,24 +2,10 @@
 @use 'sass:math';
 @use '@groton/colors';
 
-@mixin diagonal-stripe($a, $b, $angle: 135, $aWidth: 12, $bWidth: 12) {
-  $leg: math.sqrt(math.pow((($aWidth + $bWidth) * 2), 2) / 2);
-  background-image: linear-gradient(
-    #{$angle}deg,
-    #{$a} 25%,
-    #{$b} 25%,
-    #{$b} 50%,
-    #{$a} 50%,
-    #{$a} 75%,
-    #{$b} 75%,
-    #{$b} 100%
-  );
-  background-size: #{$leg}px #{$leg}px;
-}
-
 @each $abbreviation, $color in colors.$abbreviations {
+  .#{$abbreviation}.CalendarEvent,
   .#{$abbreviation}.ClassMeeting,
-  .#{$abbreviation}.ClassMeeting .fc-event-main {
+  .#{$abbreviation} .fc-event-main {
     color: map.get(colors.$variants, '#{$color}-on-white') !important;
     background: white !important;
     border: map.get(colors.$variants, $color)
@@ -28,6 +14,8 @@
   }
 
   .#{$abbreviation}.modal-header,
+  .#{$abbreviation}.CalendarEvent.modal-header,
+  .#{$abbreviation}.ClassMeeting.modal-header,
   .#{$abbreviation}.PlannerEvent,
   .#{$abbreviation}.PlannerEvent .fc-event-main,
   .#{$abbreviation}.Assignment,
@@ -35,5 +23,11 @@
     color: map.get(colors.$variants, 'text-on-#{$color}') !important;
     background: map.get(colors.$variants, $color) !important;
     border-color: map.get(colors.$variants, $color) !important;
+  }
+
+  .#{$abbreviation}.form-check-input:checked {
+    background-color: map.get(colors.$variants, $color) !important;
+    border-color: map.get(colors.$variants, $color) !important;
+    color: map.get(colors.$variants, 'text-on-#{$color}') !important;
   }
 }

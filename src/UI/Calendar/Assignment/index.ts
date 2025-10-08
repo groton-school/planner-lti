@@ -1,11 +1,10 @@
 import { EventClickArg } from '@fullcalendar/core';
 import { render } from 'ejs';
 import { Bootstrap, Canvas } from '../../Services';
-import { Event } from '../../Services/Google/Calendar';
-import { CalendarEvent } from '../CalendarEvent';
+import { BaseEvent } from '../BaseEvent';
 import detail from './detail.ejs';
 
-export class Assignment extends CalendarEvent<{
+export class Assignment extends BaseEvent<{
   assignment: Canvas.Assignments.Assignment;
   section?: Canvas.Sections.Section;
 }> {
@@ -56,14 +55,6 @@ export class Assignment extends CalendarEvent<{
       ];
     }
     return [];
-  }
-
-  /** @deprecated */
-  public static fromGoogleCalendarEvent(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    event: Event
-  ): CalendarEvent<{ event: Event }> {
-    throw new Error();
   }
 
   public async classNames(): Promise<string[]> {

@@ -1,12 +1,11 @@
 import { EventClickArg } from '@fullcalendar/core';
 import { render } from 'ejs';
-import { Bootstrap, Canvas } from '../../../Services';
-import { Event } from '../../../Services/Google/Calendar';
-import { CalendarEvent } from '../../CalendarEvent';
+import { Bootstrap, Canvas } from '../../Services';
+import { BaseEvent } from '../BaseEvent';
 import detail from './detail.ejs';
 import toggleable from './toggleable.ejs';
 
-export class PlannerEvent extends CalendarEvent<{
+export class PlannerEvent extends BaseEvent<{
   item: Canvas.Planner.PlannerItem;
 }> {
   public static fromAssignmentPlannerItem(item: Canvas.Planner.PlannerItem) {
@@ -18,14 +17,6 @@ export class PlannerEvent extends CalendarEvent<{
       false,
       { item }
     );
-  }
-
-  /** @deprecated */
-  public static fromGoogleCalendarEvent(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    event: Event
-  ): CalendarEvent<{ event: Event }> {
-    throw new Error();
   }
 
   public async detail(info: EventClickArg) {

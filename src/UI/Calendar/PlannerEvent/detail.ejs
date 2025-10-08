@@ -1,0 +1,30 @@
+<div class="d-flex">
+    <strong class="p-1">Due</strong>
+    <% const due_at = new Date(assignment.due_at); %>
+    <span class="p-1">
+        <%= due_at.toLocaleDateString('en-us', {month: 'short',day: 'numeric'}) %>
+        <% if (false === (due_at.getHours() === 23 && due_at.getMinutes() === 59)) { %>
+        at <%= due_at.toLocaleTimeString('en-us',{hour: 'numeric',minute: '2-digit'}) %>
+        <% } %>
+    </span>
+    <% if (assignment.points_possible) { %>
+    <strong class="ms-auto p-1">Points</strong>
+    <span class="p-1">
+        <% if (assignment.submission?.entered_grade) { %>
+        <%= assignment.submission.entered_grade %> /
+        <% } %>
+        <%= assignment.points_possible %>
+        <% if (assignment.submission?.workflow_state) { %>
+        (<%= assignment.submission.workflow_state %>)
+        <% }%>
+    </span>
+    <% } %>
+    </div>
+    <% if (assignment.description) { %>
+    <hr />
+    <%- assignment.description %>
+    <% } %>
+</div>
+<div class="d-flex justify-content-end gap-2">
+    <a target="_top" href="<%= assignment.html_url %>" class="btn btn-brand-primary" id="save">Details</a>
+</div>

@@ -4,18 +4,18 @@
         --<%= asset.contextCode %>: <%= asset.base %>;
     }
 
-    .<%= asset.contextCode %>.CalendarEvent,
-    .<%= asset.contextCode %>.CalendarEvent .fc-event-main {
+    .<%= asset.contextCode %>,
+    .<%= asset.contextCode %> .fc-event-main {
       background: white;
       color: <%= asset.whiteText %>;
       border: <%= asset.base %> solid 1pt;
     }
 
+    .<%= asset.contextCode %>.modal-header
     .<%= asset.contextCode %>.PlannerEvent,
     .<%= asset.contextCode %>.PlannerEvent .fc-event-main,
     .<%= asset.contextCode %>.Assignment,
-    .<%= asset.contextCode %>.Assignment .fc-event-main,
-    .<%= asset.contextCode %>.modal-header {
+    .<%= asset.contextCode %>.Assignment .fc-event-main {
       background: <%= asset.base %>;
       color: <%= asset.baseText %>;
       border: <%= asset.base %> solid 1pt;

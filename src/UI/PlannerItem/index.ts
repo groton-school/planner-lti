@@ -1,9 +1,7 @@
 import { Calendar } from '@fullcalendar/core';
-import { Canvas } from '../../Services';
-import { PlannerEvent } from './PlannerEvent';
+import { PlannerEvent } from '../Calendar';
+import { Canvas } from '../Services';
 import './styles.scss';
-
-export * from './PlannerEvent';
 
 export class PlannerItem {
   private event?: PlannerEvent;

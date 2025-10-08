@@ -1,18 +1,18 @@
-import { EventClickArg } from '@fullcalendar/core';
 import { render } from 'ejs';
 import { Bootstrap, Canvas, FullCalendar, Google } from '../../Services';
 import { Assignment } from '../Assignment';
-import { CalendarEvent } from '../CalendarEvent';
+import { BaseEvent } from '../BaseEvent';
+import detail from '../CalendarEvent/detail.ejs';
 import new_assignment from './new_assignment.ejs';
 
-export class ClassMeeting extends CalendarEvent<{
+export class ClassMeeting extends BaseEvent<{
   event: Google.Calendar.Event;
   section: Canvas.Sections.Section;
 }> {
   public static fromGoogleCalendarEventAndCanvasSection(
     event: Google.Calendar.Event,
     section: Canvas.Sections.Section
-  ): CalendarEvent {
+  ): ClassMeeting {
     return new ClassMeeting(
       event.id,
       event.title,
@@ -23,14 +23,6 @@ export class ClassMeeting extends CalendarEvent<{
     );
   }
 
-  /** @deprecated */
-  public static fromGoogleCalendarEvent(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    event: Google.Calendar.Event
-  ): CalendarEvent<{ event: Google.Calendar.Event }> {
-    throw new Error();
-  }
-
   protected async classNames(): Promise<string[]> {
     return [
       'ClassMeeting',
@@ -39,7 +31,7 @@ export class ClassMeeting extends CalendarEvent<{
     ];
   }
 
-  public async detail(info: EventClickArg) {
+  public async detail() {
     const course = await this.data.section.getCourse();
 
     if (course.isTeacher()) {
@@ -84,6 +76,12 @@ export class ClassMeeting extends CalendarEvent<{
 
       return elt;
     }
-    return super.detail(info);
+    return (
+      await Bootstrap.Modal.create({
+        title: this.data.event.title,
+        body: render(detail, this),
+        classNames: await this.classNames()
+      })
+    ).elt;
   }
 }

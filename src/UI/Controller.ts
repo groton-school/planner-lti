@@ -1,6 +1,6 @@
 import { DatesSetArg, EventClickArg } from '@fullcalendar/core/index.js';
-import { CalendarEvent, ClassMeeting, PlannerItem } from './Models';
-import { Assignment } from './Models/Assignment';
+import { Assignment, BaseEvent, CalendarEvent, ClassMeeting } from './Calendar';
+import { PlannerItem } from './PlannerItem';
 import { Canvas, FullCalendar, Google, init as servicesInit } from './Services';
 
 export async function init() {
@@ -19,7 +19,7 @@ export async function init() {
 
 async function eventClick(info: EventClickArg) {
   if (info.event.extendedProps?.model) {
-    (info.event.extendedProps?.model as CalendarEvent).detail(info);
+    (info.event.extendedProps?.model as BaseEvent).detail(info);
   }
 }
 
