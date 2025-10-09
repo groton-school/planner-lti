@@ -1,7 +1,3 @@
-:root {
-  --planner-border-width: 1pt;
-}
-
 #todo-wrapper:has(#incomplete:empty):has(#done:empty) {
   display: none;
 }
