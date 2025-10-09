@@ -2,7 +2,7 @@ import { Calendar, CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import './canvas-calendar.scss';
+import './canvaslms.scss';
 import './styles.scss';
 
 let instance: Calendar | undefined = undefined;
