@@ -25,6 +25,7 @@ export default bundle.fromTS.toSPA({
     bootstrap: 'bootstrap',
     ejs: 'ejs',
     '@fullcalendar/core': 'FullCalendar',
+    '@fullcalendar/bootstrap5': 'FullCalendar.Bootstrap5',
     '@fullcalendar/daygrid': 'FullCalendar.DayGrid',
     '@fullcalendar/timegrid': 'FullCalendar.TimeGrid',
     '@fullcalendar/list': 'FullCalendar.List'
