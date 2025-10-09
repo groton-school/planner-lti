@@ -7,11 +7,11 @@ export class Section extends BaseSection {
     return `course_${this.course_id}`;
   }
 
-  public get color() {
+  public get color_block() {
     const [, color] =
       this.name.match(/^.*\((?:[^()]* )?(RD|OR|YL|GR|LB|DB|PR)(?: .*|\))$/) ||
       [];
-    return color || 'no-color';
+    return color ? `${color}_block` : undefined;
   }
 
   public async getCourse() {

@@ -4,6 +4,8 @@ import { Canvas } from '../Services';
 import './styles.scss';
 
 export class PlannerItem {
+  public static readonly Done = 'done';
+
   private event?: PlannerEvent;
 
   public constructor(private item: Canvas.Planner.PlannerItem) {

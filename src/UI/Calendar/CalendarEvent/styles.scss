@@ -1,16 +1,16 @@
-@use 'sass:map';
-@use '@groton/colors';
+@use '@groton/colors/vars';
 
-.CalendarEvent,
-.CalendarEvent .fc-event-main {
-  color: map.get(colors.$variants, 'no-color');
-  background: white;
-  border: solid var(--planner-border-width)
-    map.get(colors.$variants, 'no-color');
+.fc-event.CalendarEvent {
+  border-color: var(--no-color);
+  background-color: white;
+
+  .fc-event-main,
+  a {
+    color: var(--text-on-no-color);
+  }
 }
 
-.CalendarEvent.modal-header {
-  color: map.get(colors.$variants, 'text-on-no-color');
-  background: map.get(colors.$variants, 'no-color');
-  border-color: map.get(colors.$variants, 'no-color');
+.modal-header.CalendarEvent {
+  color: var(--text-on-no-color);
+  background-color: var(--no-color);
 }

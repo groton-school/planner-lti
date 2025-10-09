@@ -18,12 +18,8 @@ export class ColorSet {
 
   public readonly contextCode: string;
   public readonly base: tinycolor.Instance;
-  public readonly baseText: tinycolor.Instance;
-  public readonly lighter: tinycolor.Instance;
-  public readonly lighterText: tinycolor.Instance;
-  public readonly darker: tinycolor.Instance;
-  public readonly darkerText: tinycolor.Instance;
-  public readonly whiteText: tinycolor.Instance;
+  public readonly textOnBase: tinycolor.Instance;
+  public readonly baseOnWhite: tinycolor.Instance;
 
   public constructor({
     contextCode: context_code,
@@ -31,24 +27,13 @@ export class ColorSet {
   }: ConstructorOptions) {
     this.contextCode = context_code;
     this.base = tinycolor(hex_color);
-    this.lighter = this.base.clone().lighten(25).desaturate(25);
-    this.darker = this.base.clone().darken(25);
 
-    this.baseText = ColorSet.readableText({ background: this.base });
-    this.lighterText = ColorSet.readableText({
-      background: this.lighter,
-      text: this.baseText,
-      darkTextPreference: this.darker
-    });
-    this.darkerText = ColorSet.readableText({
-      background: this.darker,
-      text: this.baseText,
-      lightTextPreference: this.lighter
-    });
-    this.whiteText = ColorSet.readableText({
+    this.textOnBase = ColorSet.readableText({ background: this.base });
+    this.baseOnWhite = ColorSet.readableText({
       background: ColorSet.white,
       text: this.base,
-      darkTextPreference: this.darker
+      darkTextPreference: this.base,
+      lightTextPreference: this.base
     });
   }
 

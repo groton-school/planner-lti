@@ -1,0 +1,40 @@
+@use '@groton/colors/vars';
+@use '../../PlannerItem/styles.scss';
+
+@each $color in ('RD', 'OR', 'YL', 'GR', 'LB', 'DB', 'PR') {
+  .fc-event.PlannerEvent.#{$color}_block {
+    color: var(--text-on-#{$color});
+    background-color: var(--#{$color});
+
+    .fc-event-main,
+    a {
+      color: var(--text-on-#{$color});
+    }
+  }
+
+  .fc-event.PlannerEvent.#{$color}_block.done {
+    background-color: hsl(
+      var(--#{$color}-h),
+      calc(var(--#{$color}-s) * var(--done-s-factor)),
+      calc(var(--#{$color}-l) * var(--done-l-factor))
+    );
+  }
+
+  .modal-header.PlannerEvent.#{$color}_block {
+    color: var(--text-on-#{$color});
+    background-color: var(--#{$color});
+
+    .form-check-input {
+      border-color: var(--text-on-#{$color});
+      background-color: var(--#{$color});
+    }
+  }
+
+  .modal-header.PlannerEvent.#{$color}_block.done {
+    background-color: hsl(
+      var(--#{$color}-h),
+      calc(var(--#{$color}-s) * var(--done-s-factor)),
+      calc(var(--#{$color}-l) * var(--done-l-factor))
+    );
+  }
+}

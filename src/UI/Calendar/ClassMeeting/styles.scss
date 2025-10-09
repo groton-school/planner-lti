@@ -1,0 +1,27 @@
+@use '@groton/colors/vars';
+
+.fc-event {
+  border-color: var(--no-color);
+  background-color: white;
+
+  .fc-event-main,
+  a {
+    color: var(--text-on-no-color);
+  }
+}
+
+@each $color in ('RD', 'OR', 'YL', 'GR', 'LB', 'DB', 'PR') {
+  .fc-event.ClassMeeting.#{$color}_block {
+    border-color: var(--#{$color});
+
+    .fc-event-main,
+    a {
+      color: var(--#{$color}-on-white);
+    }
+  }
+
+  .modal-header.ClassMeeting.#{$color}_block {
+    color: var(--text-on-#{$color});
+    background-color: var(--#{$color});
+  }
+}

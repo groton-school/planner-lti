@@ -16,13 +16,11 @@ export class CalendarEvent extends BaseEvent<{ event: Google.Calendar.Event }> {
     );
   }
 
+  protected async classNames(): Promise<string[]> {
+    return ['CalendarEvent'];
+  }
+
   public async detail() {
-    if (
-      !('event' in this.data) ||
-      !(this.data.event instanceof Google.Calendar.Event)
-    ) {
-      throw new Error('unexpected data');
-    }
     return (
       await Bootstrap.Modal.create({
         title: this.data.event.title,
@@ -30,9 +28,5 @@ export class CalendarEvent extends BaseEvent<{ event: Google.Calendar.Event }> {
         classNames: await this.classNames()
       })
     ).elt;
-  }
-
-  protected async classNames(): Promise<string[]> {
-    return ['CalendarEvent'];
   }
 }

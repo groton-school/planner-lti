@@ -4,6 +4,7 @@ import { Assignment } from '../Assignment';
 import { BaseEvent } from '../BaseEvent';
 import detail from '../CalendarEvent/detail.ejs';
 import new_assignment from './new_assignment.ejs';
+import './styles.scss';
 
 export class ClassMeeting extends BaseEvent<{
   event: Google.Calendar.Event;
@@ -24,11 +25,11 @@ export class ClassMeeting extends BaseEvent<{
   }
 
   protected async classNames(): Promise<string[]> {
-    return [
-      'ClassMeeting',
-      this.data.section.context_code,
-      this.data.section.color
-    ];
+    const classNames = ['ClassMeeting', this.data.section.context_code];
+    if (this.data.section.color_block) {
+      classNames.push(this.data.section.color_block);
+    }
+    return classNames;
   }
 
   public async detail() {

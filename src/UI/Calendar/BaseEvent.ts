@@ -3,10 +3,13 @@ import {
   EventClickArg,
   EventInput
 } from '@fullcalendar/core/index.js';
+import { EventImpl } from '@fullcalendar/core/internal';
 
 export abstract class BaseEvent<
   Data extends Record<string, unknown> = Record<string, unknown>
 > {
+  protected fcEvent: EventImpl | undefined = undefined;
+
   protected constructor(
     protected id: string,
     protected title: string,
@@ -31,8 +34,11 @@ export abstract class BaseEvent<
   }
 
   public async addTo(calendar: Calendar) {
-    if (!calendar.getEventById(this.id)) {
-      calendar.addEvent(await this.toEventInput());
+    if (!this.fcEvent) {
+      this.fcEvent = calendar.getEventById(this.id) || undefined;
+    }
+    if (!this.fcEvent) {
+      this.fcEvent = calendar.addEvent(await this.toEventInput()) || undefined;
     }
   }
 

@@ -1,0 +1,18 @@
+@use '@groton/colors/vars';
+
+@each $color in ('RD', 'OR', 'YL', 'GR', 'LB', 'DB', 'PR') {
+  .fc-event.Assignment.#{$color}_block {
+    border-color: var(--#{$color});
+    background-color: var(--#{$color});
+
+    .fc-event-main,
+    a {
+      color: var(--text-on-#{$color});
+    }
+  }
+
+  .modal-header.Assignment.#{$color}_block {
+    color: var(--text-on-#{$color});
+    background-color: var(--#{$color});
+  }
+}

@@ -1,13 +1,16 @@
-import { EventClickArg } from '@fullcalendar/core';
 import { render } from 'ejs';
+import { PlannerItem } from '../../PlannerItem';
 import { Bootstrap, Canvas } from '../../Services';
 import { BaseEvent } from '../BaseEvent';
 import detail from './detail.ejs';
+import './styles.scss';
 import toggleable from './toggleable.ejs';
 
 export class PlannerEvent extends BaseEvent<{
   item: Canvas.Planner.PlannerItem;
 }> {
+  private toggleElt: HTMLInputElement | undefined = undefined;
+
   public static fromAssignmentPlannerItem(item: Canvas.Planner.PlannerItem) {
     return new PlannerEvent(
       `${item.plannable_type}_${item.plannable.id}`,
@@ -19,7 +22,19 @@ export class PlannerEvent extends BaseEvent<{
     );
   }
 
-  public async detail(info: EventClickArg) {
+  protected async classNames(): Promise<string[]> {
+    const classNames = ['PlannerEvent'];
+    if (this.data.item.course_id) {
+      // TODO differentiate planner items by relevant section
+      classNames.push(`course_${this.data.item.course_id}`);
+    }
+    if (this.data.item.done) {
+      classNames.push('done');
+    }
+    return classNames;
+  }
+
+  public async detail() {
     if (!this.data.item.course_id) {
       throw new Error('Missing Course ID');
     }
@@ -41,33 +56,36 @@ export class PlannerEvent extends BaseEvent<{
       classNames: await this.classNames()
     });
 
-    const toggle = elt?.querySelector(`#toggle-${this.id}`) as HTMLInputElement;
-    toggle.checked = this.data.item.done;
-    toggle.addEventListener('click', async () => {
-      toggle.disabled = true;
-      toggle.checked = await this.data.item.toggle();
-      if (toggle.checked) {
-        info.el.classList.add('done');
-        elt?.classList.add('done');
-      } else {
-        info.el.classList.remove('done');
-        elt?.classList.remove('done');
-      }
-      toggle.disabled = false;
-    });
+    this.toggleElt = elt?.querySelector(
+      `#toggle-${this.id}`
+    ) as HTMLInputElement;
+    this.toggleElt.checked = this.data.item.done;
+    this.toggleElt.addEventListener('click', this.toggle.bind(this));
 
     return elt;
   }
 
-  protected async classNames(): Promise<string[]> {
-    const classNames = ['PlannerEvent'];
-    if (this.data.item.course_id) {
-      // TODO differentiate planner items by relevant section
-      classNames.push(`course_${this.data.item.course_id}`);
+  public async toggle() {
+    const header = this.toggleElt?.closest('.modal-header');
+    if (this.toggleElt) {
+      this.toggleElt.disabled = true;
+      this.toggleElt.checked = await this.data.item.toggle();
+      if (this.toggleElt.checked) {
+        header?.classList.add(PlannerItem.Done);
+        this.fcEvent?.setProp('classNames', [
+          ...this.fcEvent.classNames,
+          PlannerItem.Done
+        ]);
+      } else {
+        header?.classList.remove(PlannerItem.Done);
+        this.fcEvent?.setProp(
+          'classNames',
+          this.fcEvent.classNames.filter(
+            (className) => className !== PlannerItem.Done
+          )
+        );
+      }
+      this.toggleElt.disabled = false;
     }
-    if (this.data.item.done) {
-      classNames.push('done');
-    }
-    return classNames;
   }
 }

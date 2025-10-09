@@ -3,6 +3,7 @@ import { render } from 'ejs';
 import { Bootstrap, Canvas } from '../../Services';
 import { BaseEvent } from '../BaseEvent';
 import detail from './detail.ejs';
+import './styles.scss';
 
 export class Assignment extends BaseEvent<{
   assignment: Canvas.Assignments.Assignment;
@@ -62,8 +63,8 @@ export class Assignment extends BaseEvent<{
       'Assignment',
       `course_${this.data.assignment.course_id}`
     ];
-    if (this.data.section) {
-      classNames.push(this.data.section.color);
+    if (this.data.section && this.data.section.color_block) {
+      classNames.push(this.data.section.color_block);
     }
     return classNames;
   }

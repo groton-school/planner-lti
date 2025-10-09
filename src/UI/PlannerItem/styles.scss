@@ -1,7 +1,12 @@
+:root {
+  --done-s-factor: 1;
+  --done-l-factor: 1.25;
+}
+
 .done {
   .fc-event-title,
   .fc-list-event-title,
   .title {
-    text-decoration: line-through 1pt;
+    text-decoration: line-through solid 1pt;
   }
 }
