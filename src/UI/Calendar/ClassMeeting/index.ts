@@ -25,7 +25,10 @@ export class ClassMeeting extends BaseEvent<{
   }
 
   protected async classNames(): Promise<string[]> {
-    const classNames = ['ClassMeeting', this.data.section.context_code];
+    const classNames = [
+      'ClassMeeting',
+      (await this.data.section.course).context_code
+    ];
     if (this.data.section.color_block) {
       classNames.push(this.data.section.color_block);
     }
@@ -33,15 +36,12 @@ export class ClassMeeting extends BaseEvent<{
   }
 
   public async detail() {
-    const course = await this.data.section.getCourse();
+    const course = await this.data.section.course;
 
     if (course.isTeacher()) {
       // TODO figure out workflow for assigning to multiple sections
       const { modal, elt } = await Bootstrap.Modal.create({
-        ...Bootstrap.Modal.stackTitle(
-          'New Assignment',
-          (await this.data.section.getCourse()).name
-        ),
+        ...Bootstrap.Modal.stackTitle('New Assignment', course.name),
         body: render(new_assignment, {
           ...this,
           course,

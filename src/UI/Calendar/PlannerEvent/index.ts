@@ -42,7 +42,7 @@ export class PlannerEvent extends BaseEvent<{
       title: render(toggleable, {
         ...Bootstrap.Modal.stackTitle(
           `<span class="title">${this.title}</span>`,
-          (await Canvas.Courses.get(this.data.item.course_id.toString())).name
+          (await Canvas.Courses.get(this.data.item.course_id)).name
         ),
         id: this.id
       }),

@@ -59,10 +59,10 @@ export async function findSection({
   return undefined;
 }
 
-export async function get(id: string) {
+export async function get(id: string | number) {
   if (!(id in cache)) {
     // TODO unsafe for ID numbers > Number.MAX_SAFE_INTEGER (~2^53)
-    if (parseInt(id).toString() != id) {
+    if (parseInt(id.toString()).toString() != id) {
       id = `sis_course_id:${id}`;
     }
     insert(

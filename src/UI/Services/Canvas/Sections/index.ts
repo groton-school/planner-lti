@@ -1,4 +1,5 @@
 import { Canvas } from '@groton/canvas-api.client.web';
+import { Course } from '../Courses';
 import { Section } from './Section';
 
 export * from './Section';
@@ -18,9 +19,11 @@ export async function get({
   return cache[key];
 }
 
-export async function listFor(course_id: string) {
+export async function listFor(course: Course) {
   const sections = (
-    await Canvas.v1.Courses.Sections.list({ pathParams: { course_id } })
+    await Canvas.v1.Courses.Sections.list({
+      pathParams: { course_id: course.id.toString() }
+    })
   ).map((base) => Section.fromBase(base));
   for (const section of sections) {
     cache[JSON.stringify({ course_id: section.course_id, id: section.id })] =

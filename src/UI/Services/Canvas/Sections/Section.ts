@@ -3,10 +3,6 @@ import * as Courses from '../Courses';
 import { BaseSection } from './BaseSection';
 
 export class Section extends BaseSection {
-  public get context_code() {
-    return `course_${this.course_id}`;
-  }
-
   public get color_block() {
     const [, color] =
       this.name.match(/^.*\((?:[^()]* )?(RD|OR|YL|GR|LB|DB|PR)(?: .*|\))$/) ||
@@ -14,8 +10,8 @@ export class Section extends BaseSection {
     return color ? `${color}_block` : undefined;
   }
 
-  public async getCourse() {
-    return Courses.get(this.course_id.toString());
+  public get course() {
+    return Courses.get(this.course_id);
   }
 
   private constructor(base: BaseSection) {

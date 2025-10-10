@@ -61,7 +61,7 @@ export class Assignment extends BaseEvent<{
   public async classNames(): Promise<string[]> {
     const classNames = [
       'Assignment',
-      `course_${this.data.assignment.course_id}`
+      (await this.data.assignment.course).context_code
     ];
     if (this.data.section && this.data.section.color_block) {
       classNames.push(this.data.section.color_block);
@@ -77,11 +77,7 @@ export class Assignment extends BaseEvent<{
           this.title,
           this.data.section
             ? this.data.section.name
-            : (
-                await Canvas.Courses.get(
-                  this.data.assignment.course_id.toString()
-                )
-              ).name
+            : (await Canvas.Courses.get(this.data.assignment.course_id)).name
         ),
         body: render(detail, this),
         classNames: await this.classNames()
