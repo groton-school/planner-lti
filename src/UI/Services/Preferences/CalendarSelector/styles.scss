@@ -1,0 +1,21 @@
+@use '@groton/colors/vars';
+
+#calendar-selector {
+  // TODO style calendar selector
+  font-size: x-small;
+  list-style-type: none;
+  li {
+    margin-left: 1em;
+  }
+  @each $color in ('RD', 'OR', 'YL', 'GR', 'LB', 'DB', 'PR') {
+    li:has(.#{$color}_block) {
+      color: var(--text-on-#{$color});
+      background-color: var(--#{$color});
+
+      .form-check-input {
+        border-color: var(--text-on-#{$color});
+        background-color: var(--#{$color});
+      }
+    }
+  }
+}

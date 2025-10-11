@@ -1,4 +1,5 @@
 <style>
+  // TODO shift to sass-in-browser instead of ejs-generated CSS?
   <%
     for (const asset of assets) {
       const context_code = asset.contextCode;
@@ -62,8 +63,13 @@
       background-color: <%= color %>;
     }
 
-    #calendar-selector li.<%- selector %> {
+    #calendar-selector li:has(.<%= context_code %>) {
       color: <%= text_on_color %>;
+      background-color: <%= color %>;
+    }
+
+    #calendar-selector li:has(.<%= context_code %>) .form-check-input {
+      border-color: <%= text_on_color %>;
       background-color: <%= color %>;
     }
 

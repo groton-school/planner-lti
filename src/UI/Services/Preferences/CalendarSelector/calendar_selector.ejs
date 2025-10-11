@@ -1,0 +1,76 @@
+<div id="calendar-selector">
+  <ul>
+    <% for (const course of courses) { %>
+    <li>
+      <div class="<%= course.context_code %>">
+        <% const cid=crypto.randomUUID(); %>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            id="_<%= cid %>"
+            type="checkbox"
+            checked
+          />
+          <label class="form-check-label" for="_<%= cid %>">
+            <%= course.name %>
+          </label>
+        </div>
+        <ul>
+          <% for (const section of course.sections) { %>
+          <li>
+            <div class="<%= section.context_code %> <%= section.color_block %>">
+              <% const sid=crypto.randomUUID(); %>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  id="_<%= sid %>"
+                  type="checkbox"
+                  checked
+                />
+                <label class="form-check-label" for="_<%= sid %>">
+                  <%= section.name %>
+                </label>
+              </div>
+              <ul>
+                <li>
+                  <div class="Assignment PlannerEvent">
+                    <% const apid=crypto.randomUUID(); %>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        id="_<%= apid %>"
+                        type="checkbox"
+                        checked
+                      />
+                      <label class="form-check-label" for="_<%= apid %>"
+                        >Assignments & planner items</label
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="ClassMeeting CalendarEvent">
+                    <% const meid=crypto.randomUUID(); %>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        id="_<%= meid %>"
+                        type="checkbox"
+                        checked
+                      />
+                      <label class="form-check-label" for="_<%= meid %>"
+                        >Class meetings & events</label
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <% } %>
+        </ul>
+      </div>
+    </li>
+    <% } %>
+  </ul>
+</div>

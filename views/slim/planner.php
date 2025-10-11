@@ -1,26 +1,25 @@
-<div id="content" class="container">
+<div id="content">
     <div class="row">
-        <div id="calendar-wrapper">
+        <div id="calendar-wrapper" class="col-md-9">
             <div id="activity" data-processes="0" class="position-absolute top-50 start-50 translate-middle z-3">
                 <div class="spinner-border" role="status" style="width: 15vw; height: 15vw;">
                     <span class="visually-hidden">Loading...</span>
                 </div>
             </div>
-            <div id="calendar">
-                <div class="progress position-absolute top-50 start-50 translate-middle" role="progressbar" aria-label="Loading&hellip;" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+            <div id="calendar"></div>
+        </div>
+        <div class="col-md-3">
+            <div id="todo-wrapper">
+                <h2>To Do</h2>
+                <div id="todo">
+                    <div id="incomplete"></div>
+                    <div id="done"></div>
                 </div>
             </div>
-        </div>
-        <div id="todo-wrapper">
-            <h2>To Do</h2>
-            <div id="todo">
-                <div id="incomplete"></div>
-                <div id="done"></div>
-            </div>
+            <div id="preferences-wrapper"></div>
         </div>
     </div>
-    <div id="footer" class="container">
+    <div id="footer" class="container p-5">
         <div class="text-center">
             <small>This tool is built and maintained locally here at Groton. 🦓 If you
                 see anything weird, have questions or ideas,
