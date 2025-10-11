@@ -1,5 +1,5 @@
 <style>
-  <!
+  <%
     for (const asset of assets) {
       const context_code = asset.contextCode;
       const selector = `.${context_code}:not([class*="_block"])`;
@@ -7,65 +7,66 @@
       const color_on_white = asset.baseOnWhite.toHexString();
       const text_on_color = asset.textOnBase.toHexString();
       const hsl = asset.base.toHsl();
-  !>
+  %>
     :root {
-      --<!= context_code !>: <!= color !>;
-      --text-on-<!= context_code !>: <!= text_on_color !>;
-      --<!= context_code !>-on-white: <!= color_on_white !>;
-      --<!= context_code !>-h: <!= hsl.h !>;
-      --<!= context_code !>-s: <!= hsl.s * 100 !>%;
-      --<!= context_code !>-l: <!= hsl.l * 100 !>%;
+      --<%= context_code %>: <%= color %>;
+      --text-on-<%= context_code %>: <%= text_on_color %>;
+      --<%= context_code %>-on-white: <%= color_on_white %>;
+      --<%= context_code %>-h: <%= hsl.h %>;
+      --<%= context_code %>-s: <%= hsl.s * 100 %>%;
+      --<%= context_code %>-l: <%= hsl.l * 100 %>%;
     }
 
-    .fc-event<!- selector !> {
-      color: <!= color_on_white !>;
-      border-color: <!= color !>;
+    .fc-event<%- selector %> {
+      color: <%= color_on_white %>;
+      border-color: <%= color %>;
       background-color: white;
     }
 
-    .fc-event<!- selector !> .fc-event-main {
-      color: <!= color_on_white !>;
+    .fc-event<%- selector %> .fc-event-main {
+      color: <%= color_on_white %>;
     }
 
-    .fc-event.Assignment<!- selector !>,
-    .fc-event.PlannerEvent<!- selector !> {
-      color: <!= text_on_color !>;
-      border-color: <!= color !>;
-      background-color: <!= color !>;
+    .fc-event.Assignment<%- selector %>,
+    .fc-event.PlannerEvent<%- selector %> {
+      color: <%= text_on_color %>;
+      border-color: <%= color %>;
+      background-color: <%= color %>;
     }
 
-    .fc-event.Assignment<!- selector !> .fc-event-main,
-    .fc-event.PlannerEvent<!- selector !> .fc-event-main {
-      color: <!= text_on_color !>;
+    .fc-event.Assignment<%- selector %> .fc-event-main,
+    .fc-event.PlannerEvent<%- selector %> .fc-event-main {
+      color: <%= text_on_color %>;
     }
 
-    .modal-header<!- selector !> {
-      color: <!= text_on_color !>;
-      background-color: <!= color !>;
+    .modal-header<%- selector %> {
+      color: <%= text_on_color %>;
+      background-color: <%= color %>;
     }
 
-    .fc-list-event-hover<!- selector !> {
-      background-color: hsl(<!= hsl.h !>, calc(<!= hsl.s * 100 !>% * var(--done-s-factor)), calc(<!= hsl.l * 100 !>% * 0.85));
+    .fc-list-event-hover<%- selector %> {
+      background-color: hsl(<%= hsl.h %>, calc(<%= hsl.s * 100 %>% * var(--done-s-factor)), calc(<%= hsl.l * 100 %>% * 0.85));
     }
 
-    .fc-event<!- selector !>.done {
-      background-color: hsl(<!= hsl.h !>, calc(<!= hsl.s * 100 !>% * var(--done-s-factor)), calc(<!= hsl.l * 100 !>% * var(--done-l-factor)));
+    .fc-event<%- selector %>.done {
+      background-color: hsl(<%= hsl.h %>, calc(<%= hsl.s * 100 %>% * var(--done-s-factor)), calc(<%= hsl.l * 100 %>% * var(--done-l-factor)));
     }
 
 
-    .modal-header<!- selector !>.done {
-      background-color: hsl(<!= hsl.h !>, calc(<!= hsl.s * 100 !>% * var(--done-s-factor)), calc(<!= hsl.l * 100 !>% * var(--done-l-factor)));
+    .modal-header<%- selector %>.done {
+      background-color: hsl(<%= hsl.h %>, calc(<%= hsl.s * 100 %>% * var(--done-s-factor)), calc(<%= hsl.l * 100 %>% * var(--done-l-factor)));
     }
 
-    .modal-header<!- selector !> .form-check-input {
-      border-color: <!= text_on_color !>;
-      background-color: <!= color !>;
+    .modal-header<%- selector %> .form-check-input {
+      border-color: <%= text_on_color %>;
+      background-color: <%= color %>;
     }
 
-    #calendar-selector li.<!- selector !> {
-      color: <!= text_on_color !>;
-      background-color: <!= color !>;
+    #calendar-selector li.<%- selector %> {
+      color: <%= text_on_color %>;
+      background-color: <%= color %>;
     }
 
-  <! } !>
+  <% } %>
 </style>
+
