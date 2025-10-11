@@ -35,6 +35,7 @@ const views: Record<ViewStyle, Record<ViewDuration, string>> = {
   }
 };
 
+// TODO load current calendar duration from prefs
 let currentDuration: ViewDuration = 'week';
 let currentStyle: ViewStyle = 'grid';
 
@@ -61,7 +62,7 @@ function toggleActiveView(elt: HTMLElement) {
 }
 
 export function init({ selector = '#calendar', options }: Options) {
-  const elt = document.querySelector(selector) as HTMLElement;
+  const elt = document.querySelector<HTMLElement>(selector);
   if (!elt) {
     throw new Error(`${selector} not found in DOM`);
   }

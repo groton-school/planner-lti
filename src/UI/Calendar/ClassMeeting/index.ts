@@ -50,7 +50,7 @@ export class ClassMeeting extends BaseEvent<{
         classNames: await this.classNames()
       });
 
-      const form = elt?.querySelector('form');
+      const form = elt?.querySelector<HTMLFormElement>('form');
       form?.addEventListener('submit', async (e: SubmitEvent) => {
         if (e.submitter?.id === 'save') {
           e.stopImmediatePropagation();

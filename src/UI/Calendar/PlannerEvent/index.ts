@@ -9,7 +9,7 @@ import toggleable from './toggleable.ejs';
 export class PlannerEvent extends BaseEvent<{
   item: Canvas.Planner.PlannerItem;
 }> {
-  private toggleElt: HTMLInputElement | undefined = undefined;
+  private toggleElt: HTMLInputElement | null | undefined = undefined;
 
   public static fromAssignmentPlannerItem(item: Canvas.Planner.PlannerItem) {
     return new PlannerEvent(
@@ -56,12 +56,11 @@ export class PlannerEvent extends BaseEvent<{
       classNames: await this.classNames()
     });
 
-    this.toggleElt = elt?.querySelector(
-      `#toggle-${this.id}`
-    ) as HTMLInputElement;
-    this.toggleElt.checked = this.data.item.done;
-    this.toggleElt.addEventListener('click', this.toggle.bind(this));
-
+    this.toggleElt = elt?.querySelector<HTMLInputElement>(`#toggle-${this.id}`);
+    if (this.toggleElt && this.toggleElt !== null) {
+      this.toggleElt.checked = this.data.item.done;
+      this.toggleElt.addEventListener('click', this.toggle.bind(this));
+    }
     return elt;
   }
 
