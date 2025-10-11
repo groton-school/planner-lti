@@ -25,9 +25,11 @@ export class ClassMeeting extends BaseEvent<{
   }
 
   protected async classNames(): Promise<string[]> {
+    const course = await this.data.section.course;
     const classNames = [
       'ClassMeeting',
-      (await this.data.section.course).context_code
+      course.context_code,
+      this.data.section.context_code
     ];
     if (this.data.section.color_block) {
       classNames.push(this.data.section.color_block);

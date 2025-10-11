@@ -10,6 +10,10 @@ export class Section extends BaseSection {
     return color ? `${color}_block` : undefined;
   }
 
+  public get context_code() {
+    return `section_${this.id}`;
+  }
+
   public get course() {
     return Courses.get(this.course_id);
   }

@@ -59,10 +59,11 @@ export class Assignment extends BaseEvent<{
   }
 
   public async classNames(): Promise<string[]> {
-    const classNames = [
-      'Assignment',
-      (await this.data.assignment.course).context_code
-    ];
+    const course = await this.data.assignment.course;
+    const classNames = ['Assignment', course.context_code];
+    if (course.sections.length === 1) {
+      classNames.push(course.sections[0].context_code);
+    }
     if (this.data.section && this.data.section.color_block) {
       classNames.push(this.data.section.color_block);
     }

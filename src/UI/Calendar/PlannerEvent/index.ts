@@ -28,6 +28,9 @@ export class PlannerEvent extends BaseEvent<{
       const course = await Canvas.Courses.get(this.data.item.course_id);
       // TODO differentiate planner items by relevant section
       classNames.push(course.context_code);
+      if (course.sections.length === 1) {
+        classNames.push(course.sections[0].context_code);
+      }
     }
     if (this.data.item.done) {
       classNames.push('done');
