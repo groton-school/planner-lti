@@ -64,8 +64,11 @@ export class Assignment extends BaseEvent<{
     if (course.sections.length === 1) {
       classNames.push(course.sections[0].context_code);
     }
-    if (this.data.section && this.data.section.color_block) {
-      classNames.push(this.data.section.color_block);
+    if (this.data.section) {
+      classNames.push(
+        this.data.section.context_code,
+        this.data.section.color_block || ''
+      );
     }
     return classNames;
   }
