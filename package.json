@@ -31,7 +31,7 @@
     "@battis/eslint-config": "^2.0.6",
     "@battis/google.calendar": "^0.1.5",
     "@battis/partly-gcloudy": "^1.4.1",
-    "@battis/prettier-config": "^1.6.4",
+    "@battis/prettier-config": "^1.7.0",
     "@battis/typescript-tricks": "^0.7.4",
     "@battis/webpack": "^2.0.7",
     "@inquirer/input": "^4.2.4",
@@ -50,7 +50,8 @@
     "html-loader": "^5.1.0",
     "move-file-cli": "^3.0.0",
     "npm-run-all": "^4.1.5",
-    "open": "^10.2.0"
+    "open": "^10.2.0",
+    "prettier-plugin-ejs": "^1.0.3"
   },
   "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b"
 }
