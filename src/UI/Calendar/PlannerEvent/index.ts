@@ -25,8 +25,9 @@ export class PlannerEvent extends BaseEvent<{
   protected async classNames(): Promise<string[]> {
     const classNames = ['PlannerEvent'];
     if (this.data.item.course_id) {
+      const course = await Canvas.Courses.get(this.data.item.course_id);
       // TODO differentiate planner items by relevant section
-      classNames.push(`course_${this.data.item.course_id}`);
+      classNames.push(course.context_code);
     }
     if (this.data.item.done) {
       classNames.push('done');
