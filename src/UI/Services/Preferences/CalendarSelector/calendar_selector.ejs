@@ -1,6 +1,6 @@
 <%
   function newGUID(purpose) { 
-    return `${purpose.match(/^[a-z_]/i ? '' : '_')}${purpose}-${crypto.randomUUID()}`; 
+    return `${purpose.match(/^[a-z_]/i) ? '' : '_'}-${purpose}-${crypto.randomUUID()}`; 
   }
 %>
 <div id="calendar-selector" class="card">
@@ -35,7 +35,7 @@
               <div
                 class="<%= section.context_code %> <%= section.color_block %>"
               >
-                <% guid = newGUID(`${course.id}-${section.id}}`); %>
+                <% guid = newGUID(`${course.id}-${section.id}`); %>
                 <div class="d-flex justify-content-between">
                   <div class="form-check">
                     <input
