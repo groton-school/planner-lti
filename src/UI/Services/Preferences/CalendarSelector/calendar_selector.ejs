@@ -1,10 +1,118 @@
-<div id="calendar-selector">
-  <ul>
-    <% for (const course of courses) { %>
-    <li>
-      <div class="<%= course.context_code %>">
-        <% let guid=crypto.randomUUID(); %>
-        <div class="d-flex">
+<div id="calendar-selector" class="card">
+  <div class="card-body">
+    <h5 class="card-title">Calendars</h5>
+    <ul class="card-text">
+      <% for (const course of courses) { %>
+      <li>
+        <div class="<%= course.context_code %>">
+          <% let guid=crypto.randomUUID(); %>
+          <div class="d-flex justify-content-between">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                id="_<%= guid %>"
+                type="checkbox"
+                checked
+              />
+              <label class="form-check-label" for="_<%= guid %>">
+                <%= course.name %>
+              </label>
+            </div>
+            <% guid = crypto.randomUUID(); %>
+            <a data-bs-toggle="collapse" href="#<%= guid %>">
+              <i class="bi bi-dash-square collapse-toggle"></i>
+              <i class="bi bi-plus-square expand-toggle"></i>
+            </a>
+          </div>
+          <ul class="collapse show" id="<%= guid %>">
+            <% for (const section of course.sections) { %>
+            <li>
+              <div
+                class="<%= section.context_code %> <%= section.color_block %>"
+              >
+                <% guid = crypto.randomUUID(); %>
+                <div class="d-flex justify-content-between">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      id="_<%= guid %>"
+                      type="checkbox"
+                      checked
+                    />
+                    <label class="form-check-label" for="_<%= guid %>">
+                      <%= section.name %>
+                    </label>
+                  </div>
+                  <% guid = crypto.randomUUID(); %>
+                  <a
+                    data-bs-toggle="collapse"
+                    href="#<%= guid %>"
+                    class="collapsed"
+                  >
+                    <i class="bi bi-dash-square collapse-toggle"></i>
+                    <i class="bi bi-plus-square expand-toggle"></i>
+                  </a>
+                </div>
+                <ul class="collapse" id="<%= guid %>">
+                  <li>
+                    <div class="Assignment PlannerEvent">
+                      <% guid = crypto.randomUUID(); %>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          id="_<%= guid %>"
+                          type="checkbox"
+                          checked
+                        />
+                        <label class="form-check-label" for="_<%= guid %>"
+                          >Assignments & planner items</label
+                        >
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="ClassMeeting CalendarEvent">
+                      <% guid = crypto.randomUUID(); %>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          id="_<%= guid %>"
+                          type="checkbox"
+                          checked
+                        />
+                        <label class="form-check-label" for="_<%= guid %>"
+                          >Class meetings & events</label
+                        >
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+      </li>
+      <% } %>
+      <li>
+        <div class="Assignment PlannerEvent">
+          <% guid = crypto.randomUUID(); %>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="_<%= guid %>"
+              checked
+            />
+            <label class="form-check-label" for="_<%= guid %>"
+              >Assignments & planner items</label
+            >
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="ClassMeeting">
+          <% guid = crypto.randomUUID(); %>
           <div class="form-check">
             <input
               class="form-check-input"
@@ -12,129 +120,26 @@
               type="checkbox"
               checked
             />
-            <label class="form-check-label" for="_<%= guid %>">
-              <%= course.name %>
-            </label>
+            <label class="form-check-label" for="_<%= guid %>"
+              >Class meetings</label
+            >
           </div>
+        </div>
+      </li>
+      <li>
+        <div class="CalendarEvent">
           <% guid = crypto.randomUUID(); %>
-          <a data-bs-toggle="collapse" href="#<%= guid %>">
-            <i class="bi bi-dash-square collapse-toggle"></i>
-            <i class="bi bi-plus-square expand-toggle"></i>
-          </a>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              id="_<%= guid %>"
+              type="checkbox"
+              checked
+            />
+            <label class="form-check-label" for="_<%= guid %>">Events</label>
+          </div>
         </div>
-        <ul class="collapse show" id="<%= guid %>">
-          <% for (const section of course.sections) { %>
-          <li>
-            <div class="<%= section.context_code %> <%= section.color_block %>">
-              <% guid = crypto.randomUUID(); %>
-              <div class="d-flex">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    id="_<%= guid %>"
-                    type="checkbox"
-                    checked
-                  />
-                  <label class="form-check-label" for="_<%= guid %>">
-                    <%= section.name %>
-                  </label>
-                </div>
-                <% guid = crypto.randomUUID(); %>
-                <a
-                  data-bs-toggle="collapse"
-                  href="#<%= guid %>"
-                  class="collapsed"
-                >
-                  <i class="bi bi-dash-square collapse-toggle"></i>
-                  <i class="bi bi-plus-square expand-toggle"></i>
-                </a>
-              </div>
-              <ul class="collapse" id="<%= guid %>">
-                <li>
-                  <div class="Assignment PlannerEvent">
-                    <% guid = crypto.randomUUID(); %>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        id="_<%= guid %>"
-                        type="checkbox"
-                        checked
-                      />
-                      <label class="form-check-label" for="_<%= guid %>"
-                        >Assignments & planner items</label
-                      >
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="ClassMeeting CalendarEvent">
-                    <% guid = crypto.randomUUID(); %>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        id="_<%= guid %>"
-                        type="checkbox"
-                        checked
-                      />
-                      <label class="form-check-label" for="_<%= guid %>"
-                        >Class meetings & events</label
-                      >
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <% } %>
-        </ul>
-      </div>
-    </li>
-    <% } %>
-    <li>
-      <div class="Assignment PlannerEvent">
-        <% guid = crypto.randomUUID(); %>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="_<%= guid %>"
-            checked
-          />
-          <label class="form-check-label" for="_<%= guid %>"
-            >Assignments & planner items</label
-          >
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="ClassMeeting">
-        <% guid = crypto.randomUUID(); %>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            id="_<%= guid %>"
-            type="checkbox"
-            checked
-          />
-          <label class="form-check-label" for="_<%= guid %>"
-            >Class meetings</label
-          >
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="CalendarEvent">
-        <% guid = crypto.randomUUID(); %>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            id="_<%= guid %>"
-            type="checkbox"
-            checked
-          />
-          <label class="form-check-label" for="_<%= guid %>">Events</label>
-        </div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
 </div>
