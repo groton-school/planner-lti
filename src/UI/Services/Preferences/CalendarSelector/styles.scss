@@ -53,7 +53,10 @@
   [class*='course_'] {
     @each $color in ('RD', 'OR', 'YL', 'GR', 'LB', 'DB', 'PR') {
       .#{$color}_block {
-        .form-check-input {
+        .form-check-input,
+        a .collapse-toggle:before,
+        a .expand-toggle:before {
+          color: var(--text-on-#{$color});
           border-color: var(--text-on-#{$color});
           background-color: var(--#{$color});
         }

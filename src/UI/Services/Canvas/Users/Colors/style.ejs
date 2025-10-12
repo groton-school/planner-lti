@@ -63,7 +63,10 @@
       background-color: <%= color %>;
     }
 
-    #calendar-selector .<%= context_code %> .form-check-input {
+    #calendar-selector .<%= context_code %> .form-check-input,
+    #calendar-selector .<%= context_code %> a .collapse-toggle:before,
+    #calendar-selector .<%= context_code %> a .expand-toggle:before {
+      color: <%= text_on_color %>;
       border-color: <%= text_on_color %>;
       background-color: <%= color %>;
     }
@@ -85,3 +88,4 @@
 
   <% } %>
 </style>
+
