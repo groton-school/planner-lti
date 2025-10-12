@@ -1,20 +1,72 @@
+@use 'sass:map';
+@use '@groton/colors';
 @use '@groton/colors/vars';
 
 #calendar-selector {
   // TODO style calendar selector
-  font-size: x-small;
-  list-style-type: none;
-  li {
-    margin-left: 1em;
-  }
-  @each $color in ('RD', 'OR', 'YL', 'GR', 'LB', 'DB', 'PR') {
-    li:has(.#{$color}_block) {
-      color: var(--text-on-#{$color});
-      background-color: var(--#{$color});
+  font-size: small;
 
-      .form-check-input {
-        border-color: var(--text-on-#{$color});
-        background-color: var(--#{$color});
+  ul {
+    list-style-type: none;
+    padding-inline-start: 1em;
+  }
+
+  li {
+    display: block;
+  }
+
+  .expand-toggle {
+    display: none;
+  }
+
+  .collapsed > .collapse-toggle {
+    display: none;
+  }
+
+  .collapsed > .expand-toggle {
+    display: inherit;
+  }
+
+  .form-check-input {
+    border-color: var(--text-on-no-color);
+    background-color: var(--no-color);
+  }
+  .form-check-input:checked {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{map.get(colors.$variants, 'text-on-no-color')}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/></svg>");
+  }
+
+  .ClassMeeting,
+  .CalendarEvent {
+    .form-check-input {
+      border-color: var(--no-color-on-white);
+      background-color: white;
+    }
+    .form-check-input:checked {
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{map.get(colors.$variants, 'no-color-on-white')}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/></svg>");
+    }
+  }
+
+  [class*='course_'] {
+    @each $color in ('RD', 'OR', 'YL', 'GR', 'LB', 'DB', 'PR') {
+      .#{$color}_block {
+        .form-check-input {
+          border-color: var(--text-on-#{$color});
+          background-color: var(--#{$color});
+        }
+        .form-check-input:checked {
+          background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{map.get(colors.$variants, 'text-on-#{$color}')}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/></svg>");
+        }
+
+        .CalendarEvent,
+        .ClassMeeting {
+          .form-check-input {
+            border-color: var(--#{$color}-on-white);
+            background-color: white;
+          }
+          .form-check-input:checked {
+            background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{map.get(colors.$variants, '#{$color}-on-white')}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/></svg>");
+          }
+        }
       }
     }
   }
