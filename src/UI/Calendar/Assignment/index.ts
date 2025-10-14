@@ -9,6 +9,8 @@ export class Assignment extends BaseEvent<{
   assignment: Canvas.Assignments.Assignment;
   section?: Canvas.Sections.Section;
 }> {
+  public static readonly className = 'Assignment';
+
   public get dueAt() {
     return this.start;
   }
@@ -60,7 +62,7 @@ export class Assignment extends BaseEvent<{
 
   public async classNames(): Promise<string[]> {
     const course = await this.data.assignment.course;
-    const classNames = ['Assignment', course.context_code];
+    const classNames = [Assignment.className, course.context_code];
     if (course.sections.length === 1) {
       classNames.push(course.sections[0].context_code);
     }

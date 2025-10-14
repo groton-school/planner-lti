@@ -9,6 +9,8 @@ import toggleable from './toggleable.ejs';
 export class PlannerEvent extends BaseEvent<{
   item: Canvas.Planner.PlannerItem;
 }> {
+  public static readonly className = 'PlannerEvent';
+
   private toggleElt: HTMLInputElement | null | undefined = undefined;
 
   public static fromAssignmentPlannerItem(item: Canvas.Planner.PlannerItem) {
@@ -23,7 +25,7 @@ export class PlannerEvent extends BaseEvent<{
   }
 
   protected async classNames(): Promise<string[]> {
-    const classNames = ['PlannerEvent'];
+    const classNames = [PlannerEvent.className];
     if (this.data.item.course_id) {
       const course = await Canvas.Courses.get(this.data.item.course_id);
       // TODO differentiate planner items by relevant section

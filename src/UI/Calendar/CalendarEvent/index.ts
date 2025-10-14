@@ -5,6 +5,8 @@ import detail from './detail.ejs';
 import './styles.scss';
 
 export class CalendarEvent extends BaseEvent<{ event: Google.Calendar.Event }> {
+  public static readonly className = 'CalendarEvent';
+
   public static fromGoogleCalendarEvent(event: Google.Calendar.Event) {
     return new CalendarEvent(
       event.id,
@@ -17,7 +19,7 @@ export class CalendarEvent extends BaseEvent<{ event: Google.Calendar.Event }> {
   }
 
   protected async classNames(): Promise<string[]> {
-    return ['CalendarEvent'];
+    return [CalendarEvent.className];
   }
 
   public async detail() {

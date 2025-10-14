@@ -1,72 +1,75 @@
+import * as Calendar from '../../../Calendar';
 import { render } from '../../../Utilities';
 import * as Canvas from '../../Canvas';
 import calendarSelector from './calendar_selector.ejs';
+import { Checkbox, State } from './Checkbox';
 import './styles.scss';
-
-const stylesheet = new CSSStyleSheet();
-document.adoptedStyleSheets.push(stylesheet);
 
 export async function init() {
   const wrapper = document.getElementById('preferences-wrapper');
   if (wrapper) {
-    const selector = await render({
-      template: calendarSelector,
-      parent: wrapper,
-      data: { courses: await Canvas.Courses.list() }
-    });
-    selector
-      .querySelectorAll<HTMLInputElement>('input[type="checkbox"')
-      .forEach((check) => {
-        check.addEventListener('click', toggle.bind(check));
-      });
-  }
-}
-
-function toggle(this: HTMLInputElement) {
-  const classNames = Array.from(
-    document.querySelectorAll<HTMLDivElement>(
-      `#calendar-selector li:has(#${this.id}) > div`
-    )
-  ).map((div) => div.className.split(' '));
-  classNames.push(['fc-event']);
-  const selectorText = classNames
-    .reduce(
-      (selectors, classNames) => {
-        const newSelectors: string[] = [];
-        for (const className of classNames) {
-          newSelectors.push(
-            ...selectors.map((selector) =>
-              className.length ? `${selector}.${className}` : selector
-            )
+    const toggles: Checkbox[] = [];
+    const subCalendars = () => [
+      new Checkbox(
+        [Calendar.Assignment.className, Calendar.PlannerEvent.className],
+        'Assignments & planner Items',
+        State.Checked
+      ),
+      new Checkbox(
+        [Calendar.ClassMeeting.className, Calendar.CalendarEvent.className],
+        'Class meetings & events',
+        State.Checked
+      )
+    ];
+    for (const course of Canvas.Courses.list()) {
+      const courseToggle = new Checkbox(
+        [course.context_code],
+        course.name,
+        State.Checked
+      );
+      if (course.sections.length > 1) {
+        for (const section of course.sections) {
+          const classNames = [section.context_code];
+          if (section.color_block) {
+            classNames.push(section.color_block);
+          }
+          const sectionToggle = new Checkbox(
+            classNames,
+            section.name,
+            State.Checked,
+            courseToggle,
+            true
           );
+          sectionToggle.appendChild(...subCalendars());
         }
-        return newSelectors;
-      },
-      ['']
-    )
-    .join(', ');
-  if (this.checked) {
-    let i: number;
-    for (i = 0; i < stylesheet.cssRules.length; i++) {
-      if (
-        (stylesheet.cssRules.item(i) as CSSStyleRule | undefined)
-          ?.selectorText === selectorText
-      ) {
-        break;
+      } else {
+        courseToggle.appendChild(...subCalendars());
       }
+      toggles.push(courseToggle);
     }
-    if (i < stylesheet.cssRules.length) {
-      stylesheet.deleteRule(i);
-    }
-  } else {
-    stylesheet.insertRule(`${selectorText} { display: none; }`);
+    toggles.push(
+      new Checkbox(
+        [Calendar.Assignment.className],
+        'Assignments',
+        State.Checked
+      ),
+      new Checkbox(
+        [Calendar.ClassMeeting.className],
+        'Class Meetings',
+        State.Checked
+      ),
+      new Checkbox(
+        [Calendar.CalendarEvent.className],
+        'Other Events',
+        State.Checked
+      )
+    );
+    Checkbox.bind(
+      await render({
+        template: calendarSelector,
+        parent: wrapper,
+        data: { toggles }
+      })
+    );
   }
-  // TODO toggle sub-categories with parent category in calendar selector
-  /* TODO set parent checkboxes of heterogeneous groups of checkboxes to
-   * indeterminate
-   *
-   * Will also need to check to see if parents of checked boxes have now
-   * become homogenous and therefore need to be updated to a determiante
-   * value
-   */
 }

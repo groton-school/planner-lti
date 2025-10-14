@@ -10,6 +10,8 @@ export class ClassMeeting extends BaseEvent<{
   event: Google.Calendar.Event;
   section: Canvas.Sections.Section;
 }> {
+  public static readonly className = 'ClassMeeting';
+
   public static fromGoogleCalendarEventAndCanvasSection(
     event: Google.Calendar.Event,
     section: Canvas.Sections.Section
@@ -27,7 +29,7 @@ export class ClassMeeting extends BaseEvent<{
   protected async classNames(): Promise<string[]> {
     const course = await this.data.section.course;
     const classNames = [
-      'ClassMeeting',
+      ClassMeeting.className,
       course.context_code,
       this.data.section.context_code
     ];

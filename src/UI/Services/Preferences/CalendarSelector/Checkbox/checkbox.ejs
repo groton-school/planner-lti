@@ -1,0 +1,23 @@
+<div class="toggle <%= classNames.join(' ') %>" id="<%= id %>">
+  <div class="d-flex justify-content-between">
+    <div class="form-check">
+      <input class="form-check-input" id="toggle-<%= id %>" type="checkbox"<%= checked ? ' checked' : '' %><%= indeterminate ? ' indeterminate' : '' %> />
+      <label class="form-check-label" for="toggle-<%= id %>">
+        <%= label %>
+      </label>
+    </div>
+    <% if (children.length) { %>
+      <a data-bs-toggle="collapse" class="<%= collapsed ? ' collapsed' : '' %>" href="#collapse-<%= id %>">
+        <i class="bi bi-caret-up-square collapse-toggle"></i>
+        <i class="bi bi-caret-down-square expand-toggle"></i>
+      </a>
+  </div>
+  <ul class="collapse<%= collapsed ? '' : ' show' %>" id="collapse-<%= id %>">
+    <% for (const child of children) { %>
+      <li><%- child.render() %></li>
+      <% } %>
+  </ul>
+  <% } else { %>
+  </div>
+  <% } %>
+</div>
