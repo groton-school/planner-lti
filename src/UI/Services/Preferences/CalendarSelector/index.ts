@@ -1,9 +1,17 @@
+import * as cookie from 'cookie';
 import * as Calendar from '../../../Calendar';
 import { render } from '../../../Utilities';
 import * as Canvas from '../../Canvas';
 import calendarSelector from './calendar_selector.ejs';
 import { Checkbox, HierarchyUpdated, State } from './Checkbox';
 import './styles.scss';
+
+type Configuration<S = State> = {
+  n: string[];
+  s: S;
+  c?: Configuration[];
+  l?: boolean;
+};
 
 const toggles: Checkbox[] = [];
 const stylesheet = new CSSStyleSheet();
@@ -75,6 +83,7 @@ export async function init() {
         data: { toggles }
       })
     );
+    load();
     document.addEventListener(HierarchyUpdated, handleHierarchyUpdated);
   }
 }
@@ -82,8 +91,75 @@ export async function init() {
 function handleHierarchyUpdated() {
   // TODO cross-reference main Assignments and per-class Assigments toggles, etc
   stylesheet.replace(flatten(toggles.map((toggle) => toStyles(toggle))).join());
+  save();
 }
 
+// TODO refactor load-apply-save to be OO
+function load() {
+  const { calendars = undefined } = cookie.parse(document.cookie);
+  if (calendars) {
+    try {
+      const configs = JSON.parse(calendars || '') as Configuration<number>[];
+      for (const toggle of toggles) {
+        apply(toggle, configs);
+      }
+      handleHierarchyUpdated();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_) {
+      // ignore error
+    }
+  }
+}
+
+function apply(checkbox: Checkbox, configs: Configuration<number>[]) {
+  const [config = undefined] = configs.filter(
+    (config) => config.n.sort().join() == checkbox.classNames.sort().join()
+  );
+  if (config) {
+    switch (config.s) {
+      case 0:
+        checkbox.state = State.Checked;
+        break;
+      case 1:
+        checkbox.state = State.Unchecked;
+        break;
+      case 2:
+        checkbox.state = State.Indeterminate;
+    }
+    checkbox.collapsed = !!config.l;
+    if (config.c) {
+      for (const child of checkbox.children) {
+        apply(child, config.c);
+      }
+    }
+  }
+}
+
+function save() {
+  document.cookie = cookie.serialize(
+    'calendars',
+    JSON.stringify(toggles.map((toggle) => toConfig(toggle))),
+    { partitioned: true, path: '/', secure: true, sameSite: 'none' }
+  );
+}
+
+// TODO refactor toConfig to be OO
+function toConfig(checkbox: Checkbox): Configuration {
+  let config: Configuration = {
+    n: checkbox.classNames,
+    s: checkbox.state
+  };
+  if (checkbox.children.length > 0) {
+    config = {
+      ...config,
+      c: checkbox.children.map((child) => toConfig(child)),
+      l: checkbox.collapsed
+    };
+  }
+  return config;
+}
+
+// TODO refactor toStyles to be OO
 function toStyles(
   checkbox: Checkbox,
   selector: string = '.fc-event'

@@ -31,7 +31,7 @@ export class Checkbox {
     return this._state;
   }
 
-  private set state(state: State) {
+  public set state(state: State) {
     this._state = state;
     if (this.input) {
       this.input.checked = this.checked;
@@ -51,12 +51,30 @@ export class Checkbox {
     return this._children;
   }
 
+  public get collapsed() {
+    return this._collapsed;
+  }
+
+  public set collapsed(value: boolean) {
+    this._collapsed = value;
+    if (this._collapsed && this.input) {
+      this.input
+        .closest(`#${this.id}`)
+        ?.querySelector(`#collapse-${this.id}`)
+        ?.classList.remove('show');
+      this.input
+        .closest(`#${this.id}`)
+        ?.querySelector(`[href="#collapse-${this.id}"]`)
+        ?.classList.add('collapsed');
+    }
+  }
+
   public constructor(
     public readonly classNames: string[],
     public readonly label: string,
     private _state: State,
     private parent?: Checkbox,
-    public readonly collapsed = false
+    private _collapsed = false
   ) {
     this.parent?.appendChild(this);
     Checkbox.all[this.id] = this;
