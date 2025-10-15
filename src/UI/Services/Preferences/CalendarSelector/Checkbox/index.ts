@@ -1,6 +1,8 @@
 import { render } from 'ejs';
 import checkbox from './checkbox.ejs';
 
+export const HierarchyUpdated = 'checkbox-hierarchy-updated';
+
 export enum State {
   Checked,
   Unchecked,
@@ -86,6 +88,7 @@ export class Checkbox {
       this.propagateDown();
     }
     this.propagateUp();
+    document.dispatchEvent(new Event(HierarchyUpdated));
   }
 
   private propagateDown() {

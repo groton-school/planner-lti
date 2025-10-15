@@ -2,13 +2,17 @@ import * as Calendar from '../../../Calendar';
 import { render } from '../../../Utilities';
 import * as Canvas from '../../Canvas';
 import calendarSelector from './calendar_selector.ejs';
-import { Checkbox, State } from './Checkbox';
+import { Checkbox, HierarchyUpdated, State } from './Checkbox';
 import './styles.scss';
+
+const toggles: Checkbox[] = [];
+const stylesheet = new CSSStyleSheet();
+
+document.adoptedStyleSheets.push(stylesheet);
 
 export async function init() {
   const wrapper = document.getElementById('preferences-wrapper');
   if (wrapper) {
-    const toggles: Checkbox[] = [];
     const subCalendars = () => [
       new Checkbox(
         [Calendar.Assignment.className, Calendar.PlannerEvent.className],
@@ -71,5 +75,37 @@ export async function init() {
         data: { toggles }
       })
     );
+    document.addEventListener(HierarchyUpdated, handleHierarchyUpdated);
   }
+}
+
+function handleHierarchyUpdated() {
+  stylesheet.replace(flatten(toggles.map((toggle) => toStyles(toggle))).join());
+}
+
+function toStyles(
+  checkbox: Checkbox,
+  selector: string = '.fc-event'
+): string[] {
+  if (checkbox.state === State.Unchecked) {
+    return checkbox.classNames.map(
+      (className) => `${selector}.${className} { display: none; }`
+    );
+  }
+  return flatten(
+    checkbox.classNames.map((className) =>
+      flatten(
+        checkbox.children.map((child) =>
+          toStyles(child, `${selector}.${className}`)
+        )
+      )
+    )
+  );
+}
+
+function flatten(inflated: string[][]): string[] {
+  return inflated.reduce((acc, arr) => {
+    acc.push(...arr);
+    return acc;
+  }, [] as string[]);
 }
