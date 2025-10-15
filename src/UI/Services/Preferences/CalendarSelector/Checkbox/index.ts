@@ -21,7 +21,7 @@ export class Checkbox {
     });
   }
 
-  public readonly id: string = crypto.randomUUID();
+  public readonly id: string = `x${crypto.randomUUID()}`;
   private _children: Checkbox[] = [];
   private input?: HTMLInputElement = undefined;
 
