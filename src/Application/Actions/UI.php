@@ -18,7 +18,7 @@ class UI extends AbstractAction
     {
     }
 
-    protected function invokeHook(
+    protected function action(
         ServerRequest $request,
         Response $response,
         array $args = []

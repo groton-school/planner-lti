@@ -14,7 +14,7 @@ use Slim\Http\Response;
 
 class Stylesheet extends AbstractAction
 {
-    protected function invokeHook(
+    protected function action(
         ServerRequest $request,
         Response $response,
         array $args = []

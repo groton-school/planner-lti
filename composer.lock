@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08418c47054b18065e4b6d2bf27974f7",
+    "content-hash": "cfa172ebaf143eba84586d7376c8e369",
     "packages": [
         {
             "name": "battis/lazy-secrets",
@@ -981,16 +981,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.415.0",
+            "version": "v0.416.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "080bdeb1d5243429164dc589b69426bae98dad1d"
+                "reference": "a7b96415b22d85cee12ab730089f1d1b66bc191f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/080bdeb1d5243429164dc589b69426bae98dad1d",
-                "reference": "080bdeb1d5243429164dc589b69426bae98dad1d",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/a7b96415b22d85cee12ab730089f1d1b66bc191f",
+                "reference": "a7b96415b22d85cee12ab730089f1d1b66bc191f",
                 "shasum": ""
             },
             "require": {
@@ -1019,9 +1019,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.415.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.416.0"
             },
-            "time": "2025-10-05T01:02:15+00:00"
+            "time": "2025-10-13T01:08:26+00:00"
         },
         {
             "name": "google/auth",
@@ -1875,16 +1875,16 @@
         },
         {
             "name": "groton-school/slim-norms",
-            "version": "2.1.1",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/slim-norms.git",
-                "reference": "b5afd522f3c3d1aa764219e9b09db334f62c6988"
+                "reference": "4472f982a56905f24412114eccd3491aae05d73f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/slim-norms/zipball/b5afd522f3c3d1aa764219e9b09db334f62c6988",
-                "reference": "b5afd522f3c3d1aa764219e9b09db334f62c6988",
+                "url": "https://api.github.com/repos/groton-school/slim-norms/zipball/4472f982a56905f24412114eccd3491aae05d73f",
+                "reference": "4472f982a56905f24412114eccd3491aae05d73f",
                 "shasum": ""
             },
             "require": {
@@ -1894,8 +1894,8 @@
                 "slim/slim": "^4.12"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.76",
-                "marcocesarato/php-conventional-changelog": "^1.17"
+                "friendsofphp/php-cs-fixer": "*",
+                "marcocesarato/php-conventional-changelog": "*"
             },
             "type": "library",
             "autoload": {
@@ -1916,9 +1916,9 @@
             "description": "Define some normal interfaces and abstract classes for working with the Slim Framework",
             "support": {
                 "issues": "https://github.com/groton-school/slim-norms/issues",
-                "source": "https://github.com/groton-school/slim-norms/tree/v2.1.1"
+                "source": "https://github.com/groton-school/slim-norms/tree/v2.2.0"
             },
-            "time": "2025-09-19T01:23:33+00:00"
+            "time": "2025-10-15T19:06:03+00:00"
         },
         {
             "name": "groton-school/slim-oauth2-api-proxy",
@@ -2467,16 +2467,16 @@
         },
         {
             "name": "laravel/serializable-closure",
-            "version": "v2.0.5",
+            "version": "v2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/serializable-closure.git",
-                "reference": "3832547db6e0e2f8bb03d4093857b378c66eceed"
+                "reference": "038ce42edee619599a1debb7e81d7b3759492819"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/3832547db6e0e2f8bb03d4093857b378c66eceed",
-                "reference": "3832547db6e0e2f8bb03d4093857b378c66eceed",
+                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/038ce42edee619599a1debb7e81d7b3759492819",
+                "reference": "038ce42edee619599a1debb7e81d7b3759492819",
                 "shasum": ""
             },
             "require": {
@@ -2524,7 +2524,7 @@
                 "issues": "https://github.com/laravel/serializable-closure/issues",
                 "source": "https://github.com/laravel/serializable-closure"
             },
-            "time": "2025-09-22T17:29:40+00:00"
+            "time": "2025-10-09T13:42:30+00:00"
         },
         {
             "name": "league/oauth2-client",

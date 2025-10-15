@@ -33,7 +33,7 @@
     "groton-school/slim-lti-infrastructure-gae": "^3.0",
     "groton-school/slim-lti-partitioned-session": "^2.2",
     "groton-school/slim-lti-shim": "^4.1",
-    "groton-school/slim-norms": "^2.1",
+    "groton-school/slim-norms": "^2.2",
     "groton-school/slim-oauth2-api-proxy": "^3.1",
     "groton-school/slim-oauth2-api-proxy-gae-repository": "^1.0",
     "guzzlehttp/guzzle": "^7.9",
