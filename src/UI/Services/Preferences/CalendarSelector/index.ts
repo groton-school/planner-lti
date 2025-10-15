@@ -90,7 +90,8 @@ export async function init() {
 
 function handleHierarchyUpdated() {
   // TODO cross-reference main Assignments and per-class Assigments toggles, etc
-  stylesheet.replace(flatten(toggles.map((toggle) => toStyles(toggle))).join());
+  const css = flatten(toggles.map((toggle) => toStyles(toggle))).join('');
+  stylesheet.replace(css);
   save();
 }
 
@@ -160,7 +161,6 @@ function toConfig(checkbox: Checkbox): Configuration {
 }
 
 // TODO refactor toStyles to be OO
-// FIXME checkboxes from multiple hierarchies are not being effectively merged
 function toStyles(
   checkbox: Checkbox,
   selector: string = '.fc-event'
