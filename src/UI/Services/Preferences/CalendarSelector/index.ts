@@ -80,6 +80,7 @@ export async function init() {
 }
 
 function handleHierarchyUpdated() {
+  // TODO cross-reference main Assignments and per-class Assigments toggles, etc
   stylesheet.replace(flatten(toggles.map((toggle) => toStyles(toggle))).join());
 }
 
