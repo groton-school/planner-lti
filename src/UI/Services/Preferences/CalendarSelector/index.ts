@@ -160,6 +160,7 @@ function toConfig(checkbox: Checkbox): Configuration {
 }
 
 // TODO refactor toStyles to be OO
+// FIXME checkboxes from multiple hierarchies are not being effectively merged
 function toStyles(
   checkbox: Checkbox,
   selector: string = '.fc-event'
