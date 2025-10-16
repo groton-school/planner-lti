@@ -20,6 +20,7 @@
     "@groton/colors": "^0.4.2",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
+    "change-case-all": "^2.1.0",
     "cookie": "^1.0.2",
     "ejs": "^3.1.10",
     "p-queue": "^8.1.1",

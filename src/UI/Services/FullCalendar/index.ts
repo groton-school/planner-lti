@@ -3,6 +3,8 @@ import { Calendar, CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import { titleCase } from 'change-case-all';
+import { CalendarView } from '../Preferences';
 import './canvaslms.scss';
 import './styles.scss';
 
@@ -35,7 +37,6 @@ const views: Record<ViewStyle, Record<ViewDuration, string>> = {
   }
 };
 
-// TODO load current calendar duration from prefs
 let currentDuration: ViewDuration = 'week';
 let currentStyle: ViewStyle = 'grid';
 
@@ -48,6 +49,7 @@ export function changeView(
   currentDuration = duration;
   toggleActiveView(elt);
   getInstance().changeView(views[currentStyle][currentDuration]);
+  CalendarView.save(currentDuration, currentStyle);
 }
 
 function toggleActiveView(elt: HTMLElement) {
@@ -66,11 +68,14 @@ export function init({ selector = '#calendar', options }: Options) {
   if (!elt) {
     throw new Error(`${selector} not found in DOM`);
   }
+  const { d, s } = CalendarView.load();
+  currentDuration = d;
+  currentStyle = s;
   elt.innerHTML = '';
   instance = new Calendar(elt, {
     plugins: [dayGridPlugin, listPlugin, timeGridPlugin, bootstrap5Plugin],
     themeSystem: 'bootstrap5',
-    initialView: 'timeGridWeek',
+    initialView: views[currentStyle][currentDuration],
     eventDisplay: 'block',
 
     customButtons: {
@@ -104,7 +109,6 @@ export function init({ selector = '#calendar', options }: Options) {
     headerToolbar: {
       start: 'today prev,next',
       center: 'title',
-      // TODO separate duration/presentation options
       end: 'toDay,toWeek,toMonth toGrid,toList'
     },
 
@@ -112,9 +116,8 @@ export function init({ selector = '#calendar', options }: Options) {
   });
   instance.render();
 
-  // TODO store user view preferences
   for (const button of document.querySelectorAll(
-    '.fc-toWeek-button, .fc-toGrid-button'
+    `.fc-to${titleCase(currentDuration)}-button, .fc-to${titleCase(currentStyle)}-button`
   )) {
     button.classList.add(Active);
     button.setAttribute('disabled', 'true');
