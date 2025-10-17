@@ -162,7 +162,10 @@ function toConfig(checkbox: Checkbox): Configuration {
 }
 
 // TODO refactor toStyles to be OO
-function toStyles(checkbox: Checkbox, selector: string = fcEvent): string[] {
+function toStyles(
+  checkbox: Checkbox,
+  selector: string = `.${fcEvent}`
+): string[] {
   if (checkbox.state === State.Unchecked) {
     return checkbox.classNames.map(
       (className) => `${selector}.${className} { display: none; }`
