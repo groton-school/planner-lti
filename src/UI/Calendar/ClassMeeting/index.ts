@@ -72,8 +72,8 @@ export class ClassMeeting extends BaseEvent<{
                 )
               )
             )
-          ).forEach((assignment) =>
-            assignment.addTo(FullCalendar.getInstance())
+          ).forEach(async (assignment) =>
+            assignment.addTo(await FullCalendar.instance)
           );
           modal.hide();
         }

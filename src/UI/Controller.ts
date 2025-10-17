@@ -1,16 +1,17 @@
 import { DatesSetArg, EventClickArg } from '@fullcalendar/core/index.js';
 import { Assignment, BaseEvent, CalendarEvent, ClassMeeting } from './Calendar';
 import { PlannerItem } from './PlannerItem';
-import { Canvas, FullCalendar, Google, init as servicesInit } from './Services';
+import { Canvas, FullCalendar, Google } from './Services';
 
-export async function init() {
-  await servicesInit({ options: { datesSet, eventClick } });
-  for (const course of Canvas.Courses.list()) {
+async function init() {
+  FullCalendar.setDatesSetHandler(datesSet);
+  (await FullCalendar.instance).setOption('eventClick', eventClick);
+  for (const course of await Canvas.Courses.list()) {
     if (course.isTeacher()) {
       (await Canvas.Assignments.listForTeacherOf(course)).map(
         async (assignment) =>
-          (await Assignment.fromAssignment(assignment)).map((assignment) =>
-            assignment.addTo(FullCalendar.getInstance())
+          (await Assignment.fromAssignment(assignment)).map(
+            async (assignment) => assignment.addTo(await FullCalendar.instance)
           )
       );
     }
@@ -41,14 +42,16 @@ async function datesSet(info: DatesSetArg) {
       ClassMeeting.fromGoogleCalendarEventAndCanvasSection(
         event,
         section
-      ).addTo(FullCalendar.getInstance());
+      ).addTo(await FullCalendar.instance);
     } else {
       CalendarEvent.fromGoogleCalendarEvent(event).addTo(
-        FullCalendar.getInstance()
+        await FullCalendar.instance
       );
     }
   }
   for (const item of items) {
-    new PlannerItem(item).addTo(FullCalendar.getInstance());
+    new PlannerItem(item).addTo(await FullCalendar.instance);
   }
 }
+
+init();

@@ -5,7 +5,7 @@ import './styles.scss';
 const activity = document.getElementById('activity');
 const queue = new PQueue({ concurrency: 1 });
 
-export function init() {
+function init() {
   document.addEventListener(RequestStarted, () => show());
   document.addEventListener(RequestComplete, () => hide());
 }
@@ -36,3 +36,5 @@ export function reset() {
     activity.dataset.processes = '0';
   }
 }
+
+init();

@@ -7,9 +7,8 @@ import * as cookie from 'cookie';
 import { render } from 'ejs';
 import * as Activity from '../Activity';
 import * as Bootstrap from '../Bootstrap';
-import * as Courses from './Courses';
-import * as Users from './Users';
 import authorize from './authorize.ejs';
+import { CanvasReadyEvent } from './CanvasReady';
 
 export * as AssignmentGroups from './AssignmentGroups';
 export * as Assignments from './Assignments';
@@ -20,10 +19,10 @@ export * as Users from './Users';
 
 export const v1 = Canvas.v1;
 
-export async function init() {
+function init() {
   document.addEventListener(AuthorizationRequired, handleAuthorization);
   Canvas.init();
-  await Promise.all([Courses.init(), Users.init()]);
+  document.dispatchEvent(new CanvasReadyEvent());
 }
 
 async function handleAuthorization(event: Event) {
@@ -40,3 +39,5 @@ async function handleAuthorization(event: Event) {
     modal.hide();
   });
 }
+
+init();

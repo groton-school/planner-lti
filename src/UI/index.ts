@@ -1,4 +1,2 @@
-import { init } from './Controller';
+import './Controller';
 import './layout.scss';
-
-init();

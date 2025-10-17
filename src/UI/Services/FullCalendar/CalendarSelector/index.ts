@@ -18,7 +18,7 @@ const stylesheet = new CSSStyleSheet();
 
 document.adoptedStyleSheets.push(stylesheet);
 
-export async function init() {
+async function init() {
   const wrapper = document.getElementById('preferences-wrapper');
   if (wrapper) {
     const subCalendars = () => [
@@ -33,7 +33,7 @@ export async function init() {
         State.Checked
       )
     ];
-    for (const course of Canvas.Courses.list()) {
+    for (const course of await Canvas.Courses.list()) {
       const courseToggle = new Checkbox(
         [course.context_code],
         course.name,
@@ -187,3 +187,5 @@ function flatten(inflated: string[][]): string[] {
     return acc;
   }, [] as string[]);
 }
+
+init();

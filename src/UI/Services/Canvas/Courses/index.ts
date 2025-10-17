@@ -1,42 +1,41 @@
 import { Canvas } from '@groton/canvas-api.client.web';
+import { CanvasReadyEvent } from '../CanvasReady';
 import { Course } from './Course';
 
 export * from './Course';
 
-const cache: Record<Course['id'], Course> = {};
+type Cache = Record<Course['id'], Course>;
 
-export async function init() {
-  await Promise.all(
-    (
-      await Canvas.v1.Courses.list({
-        searchParams: {
-          state: ['available'],
-          include: ['sections', 'permissions']
-        }
-      })
-    ).map(async (base) => {
-      const course = await Course.fromBase(base);
-      insert(course);
-      return course;
-    })
-  );
-}
+const cache = new Promise<Cache>((resolve) => {
+  document.addEventListener(CanvasReadyEvent.name, async () => {
+    resolve(
+      (
+        await Promise.all(
+          (
+            await Canvas.v1.Courses.list({
+              searchParams: {
+                state: ['available'],
+                include: ['sections', 'permissions']
+              }
+            })
+          ).map(async (base) => Course.fromBase(base))
+        )
+      ).reduce((cache, course) => {
+        cache[course.id] = course;
+        return cache;
+      }, {} as Cache)
+    );
+  });
+});
 
-export function list() {
-  const courses = [];
-  for (const id in cache) {
-    if (id === cache[id].id) {
-      courses.push(cache[id]);
+export async function list() {
+  const courses: Course[] = [];
+  for (const id in await cache) {
+    if (id === (await cache)[id].id) {
+      courses.push((await cache)[id]);
     }
   }
   return courses;
-}
-
-function insert(course: Course) {
-  cache[course.id] = course;
-  if (course.sis_course_id) {
-    cache[course.sis_course_id] = course;
-  }
 }
 
 export async function findSection({
@@ -46,8 +45,8 @@ export async function findSection({
   sis_course_id?: string;
   title: string;
 }) {
-  for (const id in cache) {
-    for (const section of cache[id]!.sections || []) {
+  for (const id in await cache) {
+    for (const section of (await cache)[id]!.sections || []) {
       if (
         (sis_course_id && sis_course_id === section.sis_section_id) ||
         (title && title === section.name)
@@ -60,14 +59,11 @@ export async function findSection({
 }
 
 export async function get(id: string | number) {
-  if (!(id in cache)) {
-    // TODO unsafe for ID numbers > Number.MAX_SAFE_INTEGER (~2^53)
-    if (parseInt(id.toString()).toString() != id) {
-      id = `sis_course_id:${id}`;
-    }
-    insert(
-      await Course.fromBase(await Canvas.v1.Courses.get({ pathParams: { id } }))
+  if (!(id in (await cache))) {
+    const course = await Course.fromBase(
+      await Canvas.v1.Courses.get({ pathParams: { id } })
     );
+    (await cache)[course.id] = course;
   }
-  return cache[id];
+  return (await cache)[id];
 }
