@@ -12,7 +12,7 @@ type Options = {
  * @returns Rendered template element (or first element of rendered template if
  *   more than one)
  */
-export async function render<T = Element>({
+export async function renderAs<T = Element>({
   template,
   data,
   options,

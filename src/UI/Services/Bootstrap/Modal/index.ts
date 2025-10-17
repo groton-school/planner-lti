@@ -1,5 +1,5 @@
 import bootstrap from 'bootstrap';
-import { render } from '../../../Utilities';
+import { renderAs } from '../../DOM';
 import modalTemplate from './modal.ejs';
 
 type ModalOptions = {
@@ -16,7 +16,7 @@ export async function create({
   classNames = [],
   ...rest
 }: ModalOptions) {
-  const elt = await render({
+  const elt = await renderAs({
     template: modalTemplate,
     parent: document.body,
     data: { ...rest, titleClassNames, classNames, closeable }

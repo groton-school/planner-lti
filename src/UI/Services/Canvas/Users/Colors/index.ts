@@ -1,7 +1,7 @@
 import { ColorString } from '@battis/descriptive-types';
 import { Canvas } from '@groton/canvas-api.client.web';
 import { NoColor } from '@groton/colors';
-import { render } from '../../../../Utilities';
+import { renderAs } from '../../../DOM';
 import { CanvasReadyEvent } from '../../CanvasReady';
 import { ColorSet } from './ColorSet';
 import style from './style.ejs';
@@ -31,7 +31,7 @@ function init() {
     }
 
     document.head.appendChild(
-      await render({ template: style, data: { assets } })
+      await renderAs({ template: style, data: { assets } })
     );
   });
 }

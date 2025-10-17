@@ -1,7 +1,7 @@
 import * as cookie from 'cookie';
 import * as Calendar from '../../../Calendar';
-import { render } from '../../../Utilities';
 import * as Canvas from '../../Canvas';
+import { renderAs } from '../../DOM';
 import { fcEvent } from '../fc-class-names';
 import calendarSelector from './calendar_selector.ejs';
 import { Checkbox, HierarchyUpdated, State } from './Checkbox';
@@ -78,7 +78,7 @@ async function init() {
       )
     );
     Checkbox.bind(
-      await render({
+      await renderAs({
         template: calendarSelector,
         parent: wrapper,
         data: { toggles }
