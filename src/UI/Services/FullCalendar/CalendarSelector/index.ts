@@ -2,6 +2,7 @@ import * as cookie from 'cookie';
 import * as Calendar from '../../../Calendar';
 import { render } from '../../../Utilities';
 import * as Canvas from '../../Canvas';
+import { fcEvent } from '../fc-class-names';
 import calendarSelector from './calendar_selector.ejs';
 import { Checkbox, HierarchyUpdated, State } from './Checkbox';
 import './styles.scss';
@@ -161,10 +162,7 @@ function toConfig(checkbox: Checkbox): Configuration {
 }
 
 // TODO refactor toStyles to be OO
-function toStyles(
-  checkbox: Checkbox,
-  selector: string = '.fc-event'
-): string[] {
+function toStyles(checkbox: Checkbox, selector: string = fcEvent): string[] {
   if (checkbox.state === State.Unchecked) {
     return checkbox.classNames.map(
       (className) => `${selector}.${className} { display: none; }`

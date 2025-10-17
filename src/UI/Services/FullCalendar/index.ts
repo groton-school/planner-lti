@@ -9,6 +9,8 @@ import './canvaslms.scss';
 import './styles.scss';
 import { ViewSelector } from './ViewSelector';
 
+export * as ClassNames from './fc-class-names';
+
 export const element =
   document.getElementById('calendar') || document.createElement('div');
 

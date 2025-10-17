@@ -1,7 +1,11 @@
 import { Calendar, CustomButtonInput } from '@fullcalendar/core';
 import { camelCase } from 'change-case-all';
 import * as Cookies from '../Cookies';
-import { ButtonActive, customButton, HeaderToolbar } from './fc-class-names';
+import {
+  fcButtonActive,
+  fcCustomButton,
+  fcHeaderToolbar
+} from './fc-class-names';
 
 type Style = 'grid' | 'list';
 type Duration = 'day' | 'week' | 'month';
@@ -84,14 +88,14 @@ export class ViewSelector {
         for (const node of mutation.addedNodes) {
           if (
             node instanceof Element &&
-            node.classList.contains(HeaderToolbar)
+            node.classList.contains(fcHeaderToolbar)
           ) {
             for (const button of node.querySelectorAll(
-              `.${customButton(
+              `.${fcCustomButton(
                 camelCase(`to ${this.duration}`)
-              )}, .${customButton(camelCase(`to ${this.style}`))}`
+              )}, .${fcCustomButton(camelCase(`to ${this.style}`))}`
             )) {
-              button.classList.add(ButtonActive);
+              button.classList.add(fcButtonActive);
               button.setAttribute('disabled', 'true');
             }
           }
@@ -116,11 +120,11 @@ export class ViewSelector {
   private toggleActiveView(elt: HTMLElement) {
     for (const button of elt.closest('.btn-group')?.querySelectorAll('.btn') ||
       []) {
-      button.classList.remove(ButtonActive);
+      button.classList.remove(fcButtonActive);
       button.removeAttribute('disabled');
     }
     const button = elt.closest('.btn');
-    button?.classList.add(ButtonActive);
+    button?.classList.add(fcButtonActive);
     button?.setAttribute('disabled', 'true');
   }
 }

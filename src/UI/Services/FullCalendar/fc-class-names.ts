@@ -1,5 +1,7 @@
-export const ButtonActive = 'fc-button-active';
-export const HeaderToolbar = 'fc-header-toolbar';
-export function customButton(name: string) {
+export const fcButtonActive = 'fc-button-active';
+export const fcHeaderToolbar = 'fc-header-toolbar';
+export const fcEvent = 'fc-event';
+
+export function fcCustomButton(name: string) {
   return `fc-${name}-button`;
 }
