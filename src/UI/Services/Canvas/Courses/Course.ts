@@ -1,3 +1,4 @@
+import * as AssignmentGroups from '../AssignmentGroups';
 import * as Sections from '../Sections';
 import { BaseCourse } from './BaseCourse';
 
@@ -29,7 +30,9 @@ export class Course extends BaseCourse {
         Sections.Section.fromBase({ ...section, course_id: course.id })
       );
     }
-
+    if (course.isTeacher()) {
+      AssignmentGroups.listFor(course);
+    }
     return course;
   }
 }

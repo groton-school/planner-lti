@@ -14,7 +14,7 @@ export class PlannerEvent extends BaseEvent<{
   private toggleElt: HTMLInputElement | null | undefined = undefined;
 
   public static fromAssignmentPlannerItem(item: Canvas.Planner.PlannerItem) {
-    return new PlannerEvent(
+    const plannerEvent = new PlannerEvent(
       `${item.plannable_type}_${item.plannable.id}`,
       item.plannable.title,
       new Date(item.plannable.due_at),
@@ -22,6 +22,13 @@ export class PlannerEvent extends BaseEvent<{
       false,
       { item }
     );
+    if (plannerEvent.data.item.course_id) {
+      Canvas.Assignments.get({
+        course_id: plannerEvent.data.item.course_id,
+        id: plannerEvent.data.item.plannable_id
+      });
+    }
+    return plannerEvent;
   }
 
   protected async classNames(): Promise<string[]> {
