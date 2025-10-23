@@ -34,16 +34,17 @@ class Client {
     const start = new Events.RequestStartedEvent();
     const { requestId } = start;
     document.dispatchEvent(start);
-    const result = await fetch(endpoint, init);
-    document.dispatchEvent(
-      new Events.RequestCompleteEvent({ requestId, result })
-    );
+    const response = await fetch(endpoint, init);
 
-    if (result) {
-      if (result.status >= 400 && result.status < 500) {
+    if (response) {
+      if (response.status >= 400 && response.status < 500) {
         this.authorize();
       }
-      return (await result.json()) as T;
+      const result = (await response.json()) as T;
+      document.dispatchEvent(
+        new Events.RequestCompleteEvent({ requestId, result })
+      );
+      return result;
     }
     throw new Error('no fetch result');
   }

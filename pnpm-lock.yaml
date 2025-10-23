@@ -24,8 +24,8 @@ importers:
         specifier: ^6.1.19
         version: 6.1.19(@fullcalendar/core@6.1.19)
       '@groton/canvas-api.client.web':
-        specifier: ^0.2.2
-        version: 0.2.2
+        specifier: ^0.2.3
+        version: 0.2.3
       '@groton/colors':
         specifier: ^0.4.2
         version: 0.4.2
@@ -612,8 +612,8 @@ packages:
   '@groton/canvas-api.client.base@0.2.2':
     resolution: {integrity: sha512-VfXT142Ed5T5x/YE7AFBjZxyXbqm0ih1gJYnxutIhxsodZBZhwLF09a21i1UPE0KQM8bJFr6uc6sT9pMTgHSbA==}
 
-  '@groton/canvas-api.client.web@0.2.2':
-    resolution: {integrity: sha512-0BdiEgBH65YwDUQv1FX5gjys8dL9kGC0XiCyPwXd7XaTM2M+MzdUMNfvCTAJ0b+ct/ukKtNkU7JyFxtXG0W4Qg==}
+  '@groton/canvas-api.client.web@0.2.3':
+    resolution: {integrity: sha512-Katdih4utN1YARi1rNvHXSuVCgfbR/vTAKSmtiJfG3SORtOJQEVkbPeC0DuYHAhn6yLSknU9wmYx7QfLXCgkvQ==}
 
   '@groton/canvas-api.utilities@0.2.0':
     resolution: {integrity: sha512-uAaUMqKxJGs185HeNdJ5lNrZjeh6ln3b3Rq1OygBBCE/38pqPtWZzsFAGcAm6dMhedn/FHPSsNZDoDHR6CrZPw==}
@@ -6474,7 +6474,7 @@ snapshots:
     dependencies:
       '@groton/canvas-api.utilities': 0.2.0
 
-  '@groton/canvas-api.client.web@0.2.2':
+  '@groton/canvas-api.client.web@0.2.3':
     dependencies:
       '@groton/canvas-api': 0.3.4
       '@groton/canvas-api.client.base': 0.2.2
