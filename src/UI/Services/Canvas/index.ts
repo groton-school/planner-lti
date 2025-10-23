@@ -1,8 +1,4 @@
-import {
-  AuthorizationEvent,
-  AuthorizationRequired,
-  Canvas
-} from '@groton/canvas-api.client.web';
+import { Canvas, Events } from '@groton/canvas-api.client.web';
 import * as cookie from 'cookie';
 import { render } from 'ejs';
 import * as Activity from '../Activity';
@@ -20,13 +16,16 @@ export * as Users from './Users';
 export const v1 = Canvas.v1;
 
 function init() {
-  document.addEventListener(AuthorizationRequired, handleAuthorization);
+  document.addEventListener(
+    Events.AuthorizationEvent.name,
+    handleAuthorization
+  );
   Canvas.init();
   document.dispatchEvent(new CanvasReadyEvent());
 }
 
 async function handleAuthorization(event: Event) {
-  const { authorize_url } = event as AuthorizationEvent;
+  const { authorize_url } = event as Events.AuthorizationEvent;
   const { 'planner-session': session } = cookie.parse(document.cookie);
   Activity.reset();
   const { modal, elt } = await Bootstrap.Modal.create({
