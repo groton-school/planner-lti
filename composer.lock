@@ -1922,22 +1922,22 @@
         },
         {
             "name": "groton-school/slim-oauth2-api-proxy",
-            "version": "3.1.3",
+            "version": "3.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/groton-school/slim-oauth2-api-proxy.git",
-                "reference": "8b24af7a12c0b852ad4448b782c69a75f2565b96"
+                "reference": "cb299b2344f24d5018110092a999ea746ab69706"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/groton-school/slim-oauth2-api-proxy/zipball/8b24af7a12c0b852ad4448b782c69a75f2565b96",
-                "reference": "8b24af7a12c0b852ad4448b782c69a75f2565b96",
+                "url": "https://api.github.com/repos/groton-school/slim-oauth2-api-proxy/zipball/cb299b2344f24d5018110092a999ea746ab69706",
+                "reference": "cb299b2344f24d5018110092a999ea746ab69706",
                 "shasum": ""
             },
             "require": {
                 "dflydev/fig-cookies": "^3.2",
                 "groton-school/oauth2-canvaslms": "^1.1",
-                "groton-school/slim-norms": "^2.1",
+                "groton-school/slim-norms": "^2.2",
                 "league/oauth2-client": "^2.8",
                 "league/uri": "^7.5",
                 "odan/session": "^6.4",
@@ -1949,8 +1949,8 @@
                 "slim/slim": "^4.12"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.76",
-                "marcocesarato/php-conventional-changelog": "^1.17"
+                "friendsofphp/php-cs-fixer": "*",
+                "marcocesarato/php-conventional-changelog": "*"
             },
             "type": "library",
             "autoload": {
@@ -1971,9 +1971,9 @@
             "description": "Server-side actions and routes for authenticating to and accessing an REST API from a web client",
             "support": {
                 "issues": "https://github.com/groton-school/slim-oauth2-api-proxy/issues",
-                "source": "https://github.com/groton-school/slim-oauth2-api-proxy/tree/v3.1.3"
+                "source": "https://github.com/groton-school/slim-oauth2-api-proxy/tree/v3.1.4"
             },
-            "time": "2025-10-08T17:47:43+00:00"
+            "time": "2025-10-24T13:56:35+00:00"
         },
         {
             "name": "groton-school/slim-oauth2-api-proxy-gae-repository",
@@ -6243,16 +6243,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.89.0",
+            "version": "v3.89.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "4dd6768cb7558440d27d18f54909eee417317ce9"
+                "reference": "f34967da2866ace090a2b447de1f357356474573"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/4dd6768cb7558440d27d18f54909eee417317ce9",
-                "reference": "4dd6768cb7558440d27d18f54909eee417317ce9",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/f34967da2866ace090a2b447de1f357356474573",
+                "reference": "f34967da2866ace090a2b447de1f357356474573",
                 "shasum": ""
             },
             "require": {
@@ -6334,7 +6334,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.89.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.89.1"
             },
             "funding": [
                 {
@@ -6342,7 +6342,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-18T19:30:16+00:00"
+            "time": "2025-10-24T12:05:10+00:00"
         },
         {
             "name": "jangregor/phpstan-prophecy",

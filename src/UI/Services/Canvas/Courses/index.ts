@@ -18,7 +18,17 @@ const cache = new Promise<Cache>((resolve) => {
                 include: ['sections', 'permissions']
               }
             })
-          ).map(async (base) => Course.fromBase(base))
+          )
+            .filter((c) =>
+              c.enrollments.reduce(
+                (participant, enrollment) =>
+                  participant ||
+                  enrollment.type === 'student' ||
+                  enrollment.type === 'teacher',
+                false
+              )
+            )
+            .map(async (base) => Course.fromBase(base))
         )
       ).reduce((cache, course) => {
         cache[course.id] = course;
