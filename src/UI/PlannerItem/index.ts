@@ -19,6 +19,8 @@ export class PlannerItem {
   public addTo(calendar: Calendar) {
     if (this.event) {
       this.event.addTo(calendar);
+    } else {
+      console.error('Could not add Planner Item to calendar', this);
     }
   }
 
