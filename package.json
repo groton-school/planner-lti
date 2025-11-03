@@ -7,7 +7,7 @@
     "deploy": "run-s deploy:*",
     "deploy:build": "run-s build",
     "deploy:ui-template": "move-file ./public/index.html ./views/slim/UI.php",
-    "deploy:gae": "op run --no-masking --env-file ./.env -- node ./scripts/deploy.js -v",
+    "deploy:gae": "op run --no-masking --env-file ./.env -- ./scripts/deploy.js -v",
     "release": "commit-and-tag-version"
   },
   "dependencies": {
