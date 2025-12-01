@@ -6,6 +6,7 @@ import { ArrayElement } from '@battis/typescript-tricks';
 import { Canvas } from '@groton/canvas-api.client.web';
 
 // TODO @groton/canvas-api should export PlannerItem
+// Issue URL: https://github.com/groton-school/planner-lti/issues/72
 type TPlannerItem = ArrayElement<
   Awaited<ReturnType<typeof Canvas.v1.Planner.Items.list>>
 >;

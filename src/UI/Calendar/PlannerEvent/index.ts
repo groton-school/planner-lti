@@ -36,6 +36,7 @@ export class PlannerEvent extends BaseEvent<{
     if (this.data.item.course_id) {
       const course = await Canvas.Courses.get(this.data.item.course_id);
       // TODO differentiate planner items by relevant section
+      // Issue URL: https://github.com/groton-school/planner-lti/issues/65
       classNames.push(course.context_code);
       if (course.sections.length === 1) {
         classNames.push(course.sections[0].context_code);

@@ -66,6 +66,7 @@ return function (ContainerBuilder $containerBuilder) {
         },
 
         // TODO package this a default dependency in groton-school/slim-canvas-api-proxy
+        // Issue URL: https://github.com/groton-school/planner-lti/issues/62
         CanvasLMS\APIProxy::class => function (SettingsInterface $settings, SessionInterface $session, SessionManagerInterface $sessionManager) {
             $secrets = new LazySecrets\Cache();
             if (!$sessionManager->isStarted()) {

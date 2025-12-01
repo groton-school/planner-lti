@@ -24,6 +24,7 @@ export async function get({
 
 export async function listForTeacherOf(course: Course) {
   // TODO is it worthwhile to cache assignment lists?
+  // Issue URL: https://github.com/groton-school/planner-lti/issues/70
   return (
     await Canvas.v1.Courses.Assignments.list({
       pathParams: { course_id: course.id },
@@ -36,6 +37,7 @@ export async function listForTeacherOf(course: Course) {
 
 export async function create(course: Course, data: Record<string, unknown>) {
   // TODO cache created assignment for reuse
+  // Issue URL: https://github.com/groton-school/planner-lti/issues/69
   return Assignment.fromBase(
     await Canvas.v1.Courses.Assignments.create({
       pathParams: { course_id: course.id },

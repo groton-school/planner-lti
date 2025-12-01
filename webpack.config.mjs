@@ -21,6 +21,7 @@ export default bundle.fromTS.toSPA({
     symlinks: true
   },
   // TODO review externals and bundle configuration
+  // Issue URL: https://github.com/groton-school/planner-lti/issues/81
   externals: {
     bootstrap: 'bootstrap',
     ejs: 'ejs',

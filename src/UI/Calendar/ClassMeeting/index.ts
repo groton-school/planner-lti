@@ -44,6 +44,7 @@ export class ClassMeeting extends BaseEvent<{
 
     if (course.isTeacher()) {
       // TODO figure out workflow for assigning to multiple sections
+      // Issue URL: https://github.com/groton-school/planner-lti/issues/64
       const { modal, elt } = await Bootstrap.Modal.create({
         ...Bootstrap.Modal.stackTitle('New Assignment', course.name),
         body: render(new_assignment, {

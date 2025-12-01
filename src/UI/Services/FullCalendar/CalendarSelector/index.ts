@@ -91,12 +91,14 @@ async function init() {
 
 function handleHierarchyUpdated() {
   // TODO cross-reference main Assignments and per-class Assigments toggles, etc
+  // Issue URL: https://github.com/groton-school/planner-lti/issues/77
   const css = flatten(toggles.map((toggle) => toStyles(toggle))).join('');
   stylesheet.replace(css);
   save();
 }
 
 // TODO refactor load-apply-save to be OO
+// Issue URL: https://github.com/groton-school/planner-lti/issues/76
 function load() {
   const { calendars = undefined } = cookie.parse(document.cookie);
   if (calendars) {
@@ -146,6 +148,7 @@ function save() {
 }
 
 // TODO refactor toConfig to be OO
+// Issue URL: https://github.com/groton-school/planner-lti/issues/75
 function toConfig(checkbox: Checkbox): Configuration {
   let config: Configuration = {
     n: checkbox.classNames,
@@ -162,6 +165,7 @@ function toConfig(checkbox: Checkbox): Configuration {
 }
 
 // TODO refactor toStyles to be OO
+// Issue URL: https://github.com/groton-school/planner-lti/issues/74
 function toStyles(
   checkbox: Checkbox,
   selector: string = `.${fcEvent}`

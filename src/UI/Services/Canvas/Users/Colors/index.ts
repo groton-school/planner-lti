@@ -15,6 +15,7 @@ export type Colors = {
 function init() {
   document.addEventListener(CanvasReadyEvent.name, async () => {
     // TODO update @groton/canvas-api overrides to reflect actual behavior for Canvas.v1.Users.Colors.list()
+    // Issue URL: https://github.com/groton-school/planner-lti/issues/73
     const colors = (await Canvas.v1.Users.Colors.list({
       pathParams: { id: 'self' }
     })) as unknown as Colors;
