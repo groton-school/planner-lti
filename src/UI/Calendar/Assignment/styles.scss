@@ -16,3 +16,8 @@
     background-color: var(--#{$color});
   }
 }
+
+.important_dates {
+  font-weight: bold;
+  border: solid red !important;
+}

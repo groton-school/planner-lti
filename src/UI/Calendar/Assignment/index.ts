@@ -72,6 +72,9 @@ export class Assignment extends BaseEvent<{
         this.data.section.color_block || ''
       );
     }
+    if (this.data.assignment.important_dates) {
+      classNames.push('important_dates');
+    }
     return classNames;
   }
 
