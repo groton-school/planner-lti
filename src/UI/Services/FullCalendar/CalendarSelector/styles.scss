@@ -51,6 +51,18 @@
     }
   }
 
+  .important_dates {
+    font-weight: bold;
+    .form-check-input {
+      border-color: red;
+      background-color: white;
+      font-weight: bold;
+    }
+    .form-check-input:checked {
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='red' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/></svg>");
+    }
+  }
+
   [class*='course_'] {
     @each $color in ('RD', 'OR', 'YL', 'GR', 'LB', 'DB', 'PR') {
       .#{$color}_block {

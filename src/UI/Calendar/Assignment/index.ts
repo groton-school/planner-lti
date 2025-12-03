@@ -10,6 +10,8 @@ export class Assignment extends BaseEvent<{
   section?: Canvas.Sections.Section;
 }> {
   public static readonly className = 'Assignment';
+  public static readonly majorCommitmentName = 'important_dates';
+  public static readonly regularAssignmetnName = 'regular_assignment';
 
   public get dueAt() {
     return this.start;
@@ -73,7 +75,9 @@ export class Assignment extends BaseEvent<{
       );
     }
     if (this.data.assignment.important_dates) {
-      classNames.push('important_dates');
+      classNames.push(Assignment.majorCommitmentName);
+    } else {
+      classNames.push(Assignment.regularAssignmetnName);
     }
     return classNames;
   }
