@@ -59,17 +59,15 @@ export class ClassMeeting extends BaseEvent<{
       form?.addEventListener('submit', async (e: SubmitEvent) => {
         e.stopImmediatePropagation();
         e.preventDefault();
-        fieldsets?.forEach((fieldSet) => (fieldSet.disabled = true));
-        const assignment = await Canvas.Assignments.create(
-          course,
-          Array.from(new FormData(form).entries()).reduce(
-            (data, [key, value]) => {
-              data[`assignment[${key}]`] = value;
-              return data;
-            },
-            {} as Record<string, unknown>
-          )
+        const params = Array.from(new FormData(form).entries()).reduce(
+          (data, [key, value]) => {
+            data[`assignment[${key}]`] = value;
+            return data;
+          },
+          {} as Record<string, unknown>
         );
+        fieldsets?.forEach((fieldset) => (fieldset.disabled = true));
+        const assignment = await Canvas.Assignments.create(course, params);
         if (e.submitter?.id === 'save') {
           (await Assignment.fromAssignment(assignment)).forEach(
             async (assignment) => assignment.addTo(await FullCalendar.instance)
@@ -81,7 +79,7 @@ export class ClassMeeting extends BaseEvent<{
            * …however, there is some sort of timing issue in which navigating directly
            * to the assignment's `${html_url}/edit` seems not to load the stored values.
            */
-          window.parent.location.href = assignment.html_url;
+          window.parent.location.href = `${assignment.html_url}/edit`;
         }
       });
 
