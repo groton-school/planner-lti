@@ -1,4 +1,4 @@
-import { Canvas } from '@groton/canvas-api.client.web';
+import { Canvas } from '../../../CanvasAPIClient';
 import { PlannerItem } from './PlannerItem';
 
 export * from './PlannerItem';

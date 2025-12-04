@@ -1,6 +1,6 @@
 import { ColorString } from '@battis/descriptive-types';
-import { Canvas } from '@groton/canvas-api.client.web';
 import { NoColor } from '@groton/colors';
+import { Canvas } from '../../../../CanvasAPIClient';
 import { renderAs } from '../../../DOM';
 import { CanvasReadyEvent } from '../../CanvasReady';
 import { ColorSet } from './ColorSet';
