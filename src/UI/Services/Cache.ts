@@ -2,6 +2,10 @@ const encoder = new TextEncoder();
 const ascii = new TextDecoder('us-ascii');
 const utf8 = new TextDecoder('utf-8');
 
+type Options = {
+  maxAgeMillis?: number;
+};
+
 type CachedResponse = RequestInit & {
   timestamp: number;
   body: string;
@@ -10,7 +14,9 @@ type CachedResponse = RequestInit & {
 export async function fetchCached(
   endpoint: string,
   init?: RequestInit,
-  maxAgeMillis = 15 /* min */ * 60 /* sec */ * 1000 /* milliseconds */
+  {
+    maxAgeMillis = 15 /* min */ * 60 /* sec */ * 1000 /* milliseconds */
+  }: Options = {}
 ) {
   const key = await storageKey(endpoint, init);
   const { timestamp, body, ...responseInit } = key

@@ -3,7 +3,7 @@ import * as Canvas from '@groton/canvas-api';
 import * as Base from '@groton/canvas-api.client.base';
 import PQueue from 'p-queue';
 import path from 'path-browserify';
-import { fetchCached } from '../Services/LocalStorage';
+import { fetchCached } from '../Services/Cache';
 import {
   AuthorizationEvent,
   RequestCompleteEvent,

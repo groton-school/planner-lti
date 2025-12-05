@@ -3,7 +3,7 @@ import * as cookie from 'cookie';
 import { render } from 'ejs';
 import path from 'path-browserify';
 import * as Bootstrap from '../Bootstrap';
-import { fetchCached } from '../LocalStorage';
+import { fetchCached } from '../Cache';
 import authorize from './authorize.ejs';
 
 export type Options = {
@@ -36,11 +36,9 @@ class Client {
     const { requestId } = start;
     document.dispatchEvent(start);
 
-    const response = await fetchCached(
-      endpoint.toString(),
-      init,
-      60 /* min */ * 60 /* sec */ * 1000 /* milliseconds */
-    );
+    const response = await fetchCached(endpoint.toString(), init, {
+      maxAgeMillis: 60 /* min */ * 60 /* sec */ * 1000 /* milliseconds */
+    });
     if (response) {
       if (response.status >= 400 && response.status < 500) {
         this.authorize();
