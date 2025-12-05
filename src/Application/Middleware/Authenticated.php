@@ -17,7 +17,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Log\LoggerInterface;
 use Slim\Psr7\Response;
 use Slim\Views\PhpRenderer;
 
@@ -34,7 +33,6 @@ class Authenticated implements MiddlewareInterface
         private SessionInterface $session,
         private UserRepositoryInterface $users,
         private PhpRenderer $views,
-        private LoggerInterface $logger
     ) {
     }
 
