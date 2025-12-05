@@ -1,3 +1,5 @@
+import * as Activity from './Activity';
+
 const encoder = new TextEncoder();
 const ascii = new TextDecoder('us-ascii');
 const utf8 = new TextDecoder('utf-8');
@@ -61,4 +63,10 @@ async function hash(value: unknown, algorithm = 'SHA-1') {
     algorithm,
     encoder.encode(JSON.stringify(value))
   );
+}
+
+export function refresh() {
+  Activity.show();
+  localStorage.clear();
+  window.location.reload();
 }

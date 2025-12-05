@@ -4,6 +4,8 @@ import { Calendar, DatesSetArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import * as Activity from '../Activity';
+import * as Cache from '../Cache';
 import './CalendarSelector';
 import './canvaslms.scss';
 import './styles.scss';
@@ -69,19 +71,12 @@ async function initialize() {
   setInitialView(viewSelector.view);
   (await instance).setOption('customButtons', {
     ...viewSelector.CustomButtons,
-    refreshCache: {
-      text: 'Refresh',
-      icon: 'arrow-clockwise',
-      click: () => {
-        localStorage.clear();
-        window.location.reload();
-      }
-    }
+    ...Activity.customButtons({ text: 'Refresh', click: Cache.refresh })
   });
   (await instance).setOption('headerToolbar', {
     start: 'today prev,next',
     center: 'title',
-    end: `${viewSelector.toolbar} refreshCache`
+    end: `${viewSelector.toolbar} activity`
   });
   (await instance).render();
 }
