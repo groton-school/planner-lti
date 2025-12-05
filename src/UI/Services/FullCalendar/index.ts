@@ -67,11 +67,21 @@ export const instance = new Promise<Calendar>(async (resolve) => {
 async function initialize() {
   const viewSelector = new ViewSelector(instance);
   setInitialView(viewSelector.view);
-  (await instance).setOption('customButtons', viewSelector.CustomButtons);
+  (await instance).setOption('customButtons', {
+    ...viewSelector.CustomButtons,
+    refreshCache: {
+      text: 'Refresh',
+      icon: 'arrow-clockwise',
+      click: () => {
+        localStorage.clear();
+        window.location.reload();
+      }
+    }
+  });
   (await instance).setOption('headerToolbar', {
     start: 'today prev,next',
     center: 'title',
-    end: viewSelector.toolbar
+    end: `${viewSelector.toolbar} refreshCache`
   });
   (await instance).render();
 }
