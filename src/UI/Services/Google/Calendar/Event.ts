@@ -5,21 +5,21 @@ const JSONObjectPattern = /^(.*)(\{(.|\n)*\})(.*)$/;
 
 export class Event extends BaseEvent {
   public get title() {
-    return this.summary.replace(/^\* /, '');
+    return this.summary?.replace(/^\* /, '');
   }
 
   public get startDate() {
-    if (this.start.dateTime) {
+    if (this.start?.dateTime) {
       return new Date(this.start.dateTime);
     }
-    return new Date(`${this.start.date}T00:00`);
+    return new Date(`${this.start?.date}T00:00`);
   }
 
   public get endDate() {
-    if (this.end.dateTime) {
-      return new Date(this.end.dateTime);
+    if (this.end?.dateTime) {
+      return new Date(this.end?.dateTime);
     }
-    return new Date(`${this.end.date}T00:00`);
+    return new Date(`${this.end?.date}T00:00`);
   }
 
   private _cleanDescription: string | undefined = undefined;
@@ -28,7 +28,7 @@ export class Event extends BaseEvent {
     if (this._sis_course_id) {
       if (!this._cleanDescription) {
         this._cleanDescription = this.description
-          .replace(JSONObjectPattern, '$1\n\n$3')
+          ?.replace(JSONObjectPattern, '$1\n\n$3')
           .trim();
       }
       return this._cleanDescription;

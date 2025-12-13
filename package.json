@@ -32,11 +32,11 @@
   "devDependencies": {
     "@battis/descriptive-types": "^0.2.6",
     "@battis/eslint-config": "^2.0.7",
-    "@battis/google.calendar": "^0.1.5",
     "@battis/partly-gcloudy": "^2.0.0",
     "@battis/prettier-config": "^1.7.1",
     "@battis/typescript-tricks": "^0.7.5",
     "@battis/webpack": "^2.0.8",
+    "@googleapis/calendar": "^14.1.0",
     "@inquirer/input": "^5.0.1",
     "@qui-cli/colors": "^3.1.0",
     "@qui-cli/core": "^5.0.0",
