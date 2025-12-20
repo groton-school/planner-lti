@@ -54,6 +54,7 @@ class Client {
 
   public async authorize() {
     // TODO don't hard code session name
+    // Issue URL: https://github.com/groton-school/planner-lti/issues/80
     const { 'planner-session': session } = cookie.parse(document.cookie);
     const { modal, elt } = await Bootstrap.Modal.create({
       title: 'Authorization',

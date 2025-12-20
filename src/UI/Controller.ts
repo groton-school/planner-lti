@@ -25,6 +25,7 @@ async function eventClick(info: EventClickArg) {
 }
 
 // TODO preload subsequent and previous timeframes
+// Issue URL: https://github.com/groton-school/planner-lti/issues/66
 async function datesSet(info: DatesSetArg) {
   const [events, items] = await Promise.all([
     await Google.Calendar.listEventsBetween(

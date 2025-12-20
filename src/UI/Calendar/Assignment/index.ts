@@ -24,6 +24,7 @@ export class Assignment extends BaseEvent<{
       const assignments: Assignment[] = [];
       for (const override of assignment.overrides) {
         // TODO deal with individual student overrides
+        // Issue URL: https://github.com/groton-school/planner-lti/issues/63
         if (override.course_section_id) {
           const start = override.all_day
             ? new Date(override.all_day_date)

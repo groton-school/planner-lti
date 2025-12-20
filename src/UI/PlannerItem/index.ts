@@ -10,7 +10,9 @@ export class PlannerItem {
 
   public constructor(private item: Canvas.Planner.PlannerItem) {
     // TODO handle with non-assignment planner items
+    // Issue URL: https://github.com/groton-school/planner-lti/issues/68
     // TODO handle assignments without due dates
+    // Issue URL: https://github.com/groton-school/planner-lti/issues/67
     if (item.plannable_type === 'assignment' && item.plannable.due_at) {
       this.event = PlannerEvent.fromAssignmentPlannerItem(item);
     }

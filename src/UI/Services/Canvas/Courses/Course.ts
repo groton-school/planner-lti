@@ -15,6 +15,7 @@ export class Course extends BaseCourse {
   }
 
   // TODO find reliable way of ascertaining "user has permission to create assigments in this section"
+  // Issue URL: https://github.com/groton-school/planner-lti/issues/71
   public isTeacher() {
     return !!this.enrollments.find(
       (enrollment) => enrollment.role === 'TeacherEnrollment'

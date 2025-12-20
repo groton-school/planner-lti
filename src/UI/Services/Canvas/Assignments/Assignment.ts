@@ -22,6 +22,7 @@ export class Assignment extends BaseAssignment {
       await Canvas.v1.Courses.Assignments.update({
         pathParams: this,
         // TODO fix assignment update params list
+        // Issue URL: https://github.com/groton-school/planner-lti/issues/85
         // @ts-expect-error 2353
         params: { 'assignment[important_dates]': important_dates }
       })

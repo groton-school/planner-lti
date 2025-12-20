@@ -1,6 +1,7 @@
 import { BaseEvent } from './BaseEvent';
 
 // TODO Update to https://stackoverflow.com/a/10574546 ?
+// Issue URL: https://github.com/groton-school/planner-lti/issues/79
 const JSONObjectPattern = /^(.*)(\{(.|\n)*\})(.*)$/;
 
 export class Event extends BaseEvent {
