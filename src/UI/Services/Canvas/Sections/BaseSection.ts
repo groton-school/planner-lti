@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import { Canvas } from '@groton/canvas-api.client.web';
+import { Canvas } from '../../../CanvasAPIClient';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ISection extends Canvas.Sections.Section {}

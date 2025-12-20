@@ -1,6 +1,6 @@
-import { Canvas, Events } from '@groton/canvas-api.client.web';
 import * as cookie from 'cookie';
 import { render } from 'ejs';
+import { Canvas, Events } from '../../CanvasAPIClient';
 import * as Activity from '../Activity';
 import * as Bootstrap from '../Bootstrap';
 import authorize from './authorize.ejs';

@@ -23,6 +23,12 @@ importers:
       '@fullcalendar/timegrid':
         specifier: ^6.1.19
         version: 6.1.19(@fullcalendar/core@6.1.19)
+      '@groton/canvas-api':
+        specifier: ^0.3.4
+        version: 0.3.4
+      '@groton/canvas-api.client.base':
+        specifier: ^0.2.2
+        version: 0.2.2
       '@groton/canvas-api.client.web':
         specifier: ^0.2.6
         version: 0.2.6

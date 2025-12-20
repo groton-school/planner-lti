@@ -37,6 +37,7 @@ export class ViewSelector {
     return 'toDay,toWeek,toMonth toGrid,toList';
   }
 
+  /** Define custom `toDay`, `toWeek`, `toMonth`, `toGrid`, and `toList` buttons */
   public readonly CustomButtons: Record<string, CustomButtonInput> = {
     toDay: {
       text: 'Day',

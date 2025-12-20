@@ -3,7 +3,7 @@
 
 import { DateTimeString } from '@battis/descriptive-types';
 import { ArrayElement } from '@battis/typescript-tricks';
-import { Canvas } from '@groton/canvas-api.client.web';
+import { Canvas } from '../../../CanvasAPIClient';
 
 // TODO @groton/canvas-api should export PlannerItem
 // Issue URL: https://github.com/groton-school/planner-lti/issues/72

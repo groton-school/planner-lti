@@ -1,14 +1,42 @@
-import { Events } from '@groton/canvas-api.client.web';
+import { CustomButtonInput } from '@fullcalendar/core';
 import PQueue from 'p-queue';
+import { Events } from '../../CanvasAPIClient';
 import './styles.scss';
 
-const activity = document.getElementById('activity');
 const queue = new PQueue({ concurrency: 1 });
 const backgroundRequests: string[] = [];
+let processes = 0;
+
+/** Define custom `activity` button */
+export function customButtons({
+  text,
+  click
+}: {
+  text?: string;
+  click: CustomButtonInput['click'];
+}) {
+  return {
+    activity: {
+      text,
+      icon: 'arrow-clockwise',
+      click
+    }
+  };
+}
 
 function init() {
   document.addEventListener(Events.RequestStartedEvent.name, show);
   document.addEventListener(Events.RequestCompleteEvent.name, hide);
+}
+
+let _elt: HTMLButtonElement | null = null;
+function elt() {
+  if (null === _elt) {
+    _elt = document.querySelector<HTMLButtonElement>(
+      'button.fc-activity-button'
+    );
+  }
+  return _elt;
 }
 
 export function prepareBackgroundRequest() {
@@ -25,29 +53,27 @@ function isBackground(event: Event): boolean {
   return isBackground;
 }
 
-export function show(event: Event) {
+export function show(event?: Event) {
   queue.add(async () => {
-    if (activity && !isBackground(event)) {
-      activity.dataset.processes = (
-        parseInt(activity.dataset.processes || '0') + 1
-      ).toString();
+    processes++;
+    if (elt() && (!event || !isBackground(event))) {
+      elt()!.dataset.processes = `${processes}`;
     }
   });
 }
 
-export function hide(event: Event) {
+export function hide(event?: Event) {
   queue.add(async () => {
-    if (activity && !isBackground(event)) {
-      activity.dataset.processes = (
-        parseInt(activity.dataset.processes || '1') - 1
-      ).toString();
+    processes--;
+    if (elt() && (!event || !isBackground(event))) {
+      elt()!.dataset.processes = `${processes}`;
     }
   });
 }
 
 export function reset() {
-  if (activity) {
-    activity.dataset.processes = '0';
+  if (elt()) {
+    elt()!.dataset.processes = '0';
   }
 }
 

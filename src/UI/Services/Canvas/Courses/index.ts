@@ -1,4 +1,4 @@
-import { Canvas } from '@groton/canvas-api.client.web';
+import { Canvas } from '../../../CanvasAPIClient';
 import { CanvasReadyEvent } from '../CanvasReady';
 import { Course } from './Course';
 

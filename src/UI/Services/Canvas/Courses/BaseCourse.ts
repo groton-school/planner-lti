@@ -2,7 +2,7 @@
 // @ts-nocheck
 
 import { JSONObject } from '@battis/typescript-tricks';
-import { Canvas } from '@groton/canvas-api.client.web';
+import { Canvas } from '../../../CanvasAPIClient';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ICourse extends Canvas.Courses.Course {}
