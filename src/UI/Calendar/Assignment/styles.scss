@@ -16,3 +16,9 @@
     background-color: var(--#{$color});
   }
 }
+
+.fc-event.Assignment.important_dates,
+.modal-header.Assignment.important_dates {
+  font-weight: bold;
+  border: solid red !important;
+}

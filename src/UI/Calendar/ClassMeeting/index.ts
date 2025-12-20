@@ -56,27 +56,31 @@ export class ClassMeeting extends BaseEvent<{
       });
 
       const form = elt?.querySelector<HTMLFormElement>('form');
+      const fieldsets = form?.querySelectorAll<HTMLFieldSetElement>('fieldset');
       form?.addEventListener('submit', async (e: SubmitEvent) => {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        const params = Array.from(new FormData(form).entries()).reduce(
+          (data, [key, value]) => {
+            data[`assignment[${key}]`] = value;
+            return data;
+          },
+          {} as Record<string, unknown>
+        );
+        fieldsets?.forEach((fieldset) => (fieldset.disabled = true));
+        const assignment = await Canvas.Assignments.create(course, params);
         if (e.submitter?.id === 'save') {
-          e.stopImmediatePropagation();
-          e.preventDefault();
-          (
-            await Assignment.fromAssignment(
-              await Canvas.Assignments.create(
-                course,
-                Array.from(new FormData(form).entries()).reduce(
-                  (data, [key, value]) => {
-                    data[`assignment[${key}]`] = value;
-                    return data;
-                  },
-                  {} as Record<string, unknown>
-                )
-              )
-            )
-          ).forEach(async (assignment) =>
-            assignment.addTo(await FullCalendar.instance)
+          (await Assignment.fromAssignment(assignment)).forEach(
+            async (assignment) => assignment.addTo(await FullCalendar.instance)
           );
           modal.hide();
+        } else {
+          /* FIXME more options _should_ lead to the assignment editor
+           *
+           * …however, there is some sort of timing issue in which navigating directly
+           * to the assignment's `${html_url}/edit` seems not to load the stored values.
+           */
+          window.parent.location.href = `${assignment.html_url}/edit`;
         }
       });
 

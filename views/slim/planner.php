@@ -1,7 +1,7 @@
 <div id="content">
     <div class="row">
         <div id="calendar-wrapper" class="col-md-9">
-            <div id="activity" data-processes="0" class="position-absolute top-50 start-50 translate-middle z-3">
+            <div id="activity" data-processes="0" class="position-absolute top-50 start-50 translate-middle">
                 <div class="spinner-border" role="status" style="width: 15vw; height: 15vw;">
                     <span class="visually-hidden">Loading...</span>
                 </div>

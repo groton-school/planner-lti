@@ -60,12 +60,27 @@ async function init() {
       }
       toggles.push(courseToggle);
     }
-    toggles.push(
+
+    const assignmentsToggle = new Checkbox(
+      [Calendar.Assignment.className],
+      'All Assignments',
+      State.Checked
+    );
+    assignmentsToggle.appendChild(
       new Checkbox(
-        [Calendar.Assignment.className],
-        'Assignments',
+        [Calendar.Assignment.majorCommitmentName],
+        'Major Commitments',
         State.Checked
       ),
+      new Checkbox(
+        [Calendar.Assignment.regularAssignmetnName],
+        'Assignments',
+        State.Checked
+      )
+    );
+
+    toggles.push(
+      assignmentsToggle,
       new Checkbox(
         [Calendar.ClassMeeting.className],
         'Class Meetings',

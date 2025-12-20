@@ -4,26 +4,32 @@ import gcloud from '@battis/partly-gcloudy';
 import input from '@inquirer/input';
 import { Colors } from '@qui-cli/colors';
 import { Core } from '@qui-cli/core';
-import { Env } from '@qui-cli/env';
+import '@qui-cli/env-1password';
 import { Log } from '@qui-cli/log';
-import { Root } from '@qui-cli/root';
+import * as Plugin from '@qui-cli/plugin';
 import { Shell } from '@qui-cli/shell';
 import chalk from 'chalk';
-import path from 'node:path';
 
-(async () => {
-  Root.configure({ root: path.dirname(import.meta.dirname) });
-  Env.configure();
-  const {
-    values: { force }
-  } = await Core.init({
+const name = 'deploy';
+let force = false;
+
+function options() {
+  return {
     flag: {
-      force: {
-        short: 'f',
-        default: false
-      }
+      force: { short: 'f' }
     }
-  });
+  };
+}
+
+function configure(config = {}) {
+  force = Plugin.hydrate(config.force, force);
+}
+
+function init({ values }) {
+  configure(values);
+}
+
+async function run() {
   const configure = force || !process.env.PROJECT;
 
   Log.info(
@@ -102,4 +108,7 @@ You will then need to enable the app following these directions:\n${Colors.url(
       )}`
     );
   }
-})();
+}
+
+await Plugin.register({ name, options, configure, init, run });
+await Core.run();

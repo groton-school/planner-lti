@@ -1,6 +1,6 @@
 import { EventClickArg } from '@fullcalendar/core';
 import { render } from 'ejs';
-import { Bootstrap, Canvas } from '../../Services';
+import { Bootstrap, Canvas, FullCalendar } from '../../Services';
 import { BaseEvent } from '../BaseEvent';
 import detail from './detail.ejs';
 import './styles.scss';
@@ -10,6 +10,8 @@ export class Assignment extends BaseEvent<{
   section?: Canvas.Sections.Section;
 }> {
   public static readonly className = 'Assignment';
+  public static readonly majorCommitmentName = 'important_dates';
+  public static readonly regularAssignmetnName = 'regular_assignment';
 
   public get dueAt() {
     return this.start;
@@ -73,22 +75,57 @@ export class Assignment extends BaseEvent<{
         this.data.section.color_block || ''
       );
     }
+    if (this.data.assignment.important_dates) {
+      classNames.push(Assignment.majorCommitmentName);
+    } else {
+      classNames.push(Assignment.regularAssignmetnName);
+    }
     return classNames;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async detail(info: EventClickArg) {
-    return (
-      await Bootstrap.Modal.create({
-        ...Bootstrap.Modal.stackTitle(
-          this.title,
-          this.data.section
-            ? this.data.section.name
-            : (await Canvas.Courses.get(this.data.assignment.course_id)).name
-        ),
-        body: render(detail, this),
-        classNames: await this.classNames()
-      })
-    ).elt;
+    const { elt, modal } = await Bootstrap.Modal.create({
+      ...Bootstrap.Modal.stackTitle(
+        this.title,
+        this.data.section
+          ? this.data.section.name
+          : (await Canvas.Courses.get(this.data.assignment.course_id)).name
+      ),
+      body: render(detail, this),
+      classNames: await this.classNames()
+    });
+
+    const importantDates =
+      elt.querySelector<HTMLButtonElement>('#important_dates');
+    importantDates?.addEventListener(
+      'click',
+      (async () => {
+        importantDates.disabled = true;
+
+        await this.data.assignment.setImportantDates(
+          !this.data.assignment.important_dates
+        );
+        const event = (await FullCalendar.instance).getEventById(this.id);
+        if (event) {
+          if (this.data.assignment.important_dates) {
+            event.setProp('classNames', [
+              ...event.classNames,
+              Assignment.majorCommitmentName
+            ]);
+          } else {
+            event.setProp(
+              'classNames',
+              event.classNames.filter(
+                (className) => className !== Assignment.majorCommitmentName
+              )
+            );
+          }
+        }
+        modal.hide();
+      }).bind(this)
+    );
+
+    return elt;
   }
 }
