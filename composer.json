@@ -25,7 +25,7 @@
     "php": "^7.4 || ^8.0",
     "ext-json": "*",
     "battis/lazy-secrets": "^1.1",
-    "google/apiclient": "^2.18",
+    "google/apiclient": "^2.20",
     "google/cloud-firestore": "^1.50",
     "groton-school/oauth2-canvaslms": "^1.1",
     "groton-school/slim-canvas-api-proxy": "^2.1",
