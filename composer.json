@@ -39,7 +39,7 @@
     "guzzlehttp/guzzle": "^7.9",
     "league/oauth2-google": "^4.0",
     "monolog/monolog": "^2.9",
-    "odan/session": "^6.3",
+    "odan/session": "^6.5",
     "php-di/php-di": "^7.0",
     "psr/container": "^2.0",
     "psr/http-message": "^2.0",
